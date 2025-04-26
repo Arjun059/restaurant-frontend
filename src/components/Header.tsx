@@ -11,18 +11,19 @@ const Header = () => {
               <span className="font-bold">Restaurant Name</span>
             </Link>
           </div>
+          
           <nav className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
               <Link to="/">Home</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/menu">Menu</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/reservations">Reservations</Link>
+              <Link to="/login">Login</Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link to="/contact">Contact</Link>
+              <Link to="/scan-qr">Scan QR</Link>
             </Button>
           </nav>
         </div>
