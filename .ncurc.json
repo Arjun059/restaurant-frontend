@@ -6,6 +6,6 @@
     "root": true,
     "deep": false,
     "install": "always",
-    "packageManager": "pnpm",
+    "packageManager": "npm",
     "reject": []
 }

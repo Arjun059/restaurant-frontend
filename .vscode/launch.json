@@ -5,7 +5,7 @@
             "name": "vite:dev",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "pnpm",
+            "runtimeExecutable": "npm",
             "runtimeArgs": ["dev"],
             "skipFiles": ["<node_internals>/**"],
             "serverReadyAction": {
@@ -51,7 +51,7 @@
             "name": "vite:test",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "pnpm",
+            "runtimeExecutable": "npm",
             "runtimeArgs": ["test:ui"],
             "skipFiles": ["<node_internals>/**"],
             "console": "internalConsole",
