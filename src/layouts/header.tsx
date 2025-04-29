@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from './ui/button'
+import { Button } from '#/components/ui/button'
 
 const Header = () => {
   return (
@@ -13,17 +13,20 @@ const Header = () => {
           </div>
           
           <nav className="flex items-center space-x-4">
-            <Button variant="ghost" asChild>
+            {/* <Button variant="ghost" asChild>
               <Link to="/">Home</Link>
-            </Button>
-            <Button variant="ghost" asChild>
+            </Button> */}
+            {/* <Button variant="ghost" asChild>
               <Link to="/dashboard">Dashboard</Link>
             </Button>
             <Button variant="ghost" asChild>
               <Link to="/login">Login</Link>
-            </Button>
+            </Button> */}
             <Button variant="ghost" asChild>
               <Link to="/scan-qr">Scan QR</Link>
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link to="/dishes-list">Dishes List</Link>
             </Button>
           </nav>
         </div>

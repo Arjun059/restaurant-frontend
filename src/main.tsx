@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
+import { Toaster } from "#/components/ui/toaster"
 
 import { router } from './routes'
 
 import './assets/styles/fontface.css'
 import './assets/styles/tailwind.css'
+
 
 const rootElement = document.getElementById('root')
 
@@ -20,5 +22,6 @@ if (!rootElement) {
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <Toaster />
   </React.StrictMode>
 )

@@ -8,6 +8,7 @@ import { useAuthentication } from '#/context/auth/AuthProvider'
 // Instead, we use `src/assets` directory.
 import ViteLogo from '../assets/images/vite.svg'
 
+
 export default function Home() {
   const { user, loggedIn } = useAuthentication()
 
@@ -68,3 +69,4 @@ export default function Home() {
     </div>
   )
 }
+
