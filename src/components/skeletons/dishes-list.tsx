@@ -1,11 +1,11 @@
-import { Skeleton } from "#/components/ui/skeleton"
+import { Skeleton } from '#/components/ui/skeleton'
 
 export default function SkeletonDishesList() {
   return (
-    <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       {/* Filters and Sort Section */}
       <section className="mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        <div className="mb-4 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <Skeleton className="h-7 w-48" />
           <div className="flex items-center space-x-3">
             <Skeleton className="h-9 w-24 rounded-full" />
@@ -13,28 +13,28 @@ export default function SkeletonDishesList() {
             <Skeleton className="h-9 w-20 rounded-full" />
           </div>
         </div>
-        <div className="flex items-center space-x-3 overflow-x-auto py-2 scrollbar-hide">
+        <div className="scrollbar-hide flex items-center space-x-3 overflow-x-auto py-2">
           {Array(8)
-            .fill("skeleton-dish-list")
+            .fill('skeleton-dish-list')
             .map((_, i) => (
-              <Skeleton key={`${i}-${_}`} className="h-8 w-24 rounded-full flex-shrink-0" />
+              <Skeleton key={`${i}-${_}`} className="h-8 w-24 flex-shrink-0 rounded-full" />
             ))}
         </div>
       </section>
 
       {/* Restaurant/Food Grid */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array(12)
           .fill(0)
           .map((_, i) => (
             <div
               key={i}
-              className="rounded-lg overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
+              className="overflow-hidden rounded-lg border border-gray-100 transition-shadow hover:shadow-md"
             >
               {/* Food Image */}
               <div className="relative">
                 <Skeleton className="h-48 w-full" />
-                <div className="absolute bottom-2 right-2">
+                <div className="absolute right-2 bottom-2">
                   <Skeleton className="h-7 w-16 rounded-md" />
                 </div>
                 <div className="absolute top-2 left-2">
@@ -43,11 +43,11 @@ export default function SkeletonDishesList() {
               </div>
 
               {/* Content */}
-              <div className="p-3 space-y-2">
+              <div className="space-y-2 p-3">
                 {/* Restaurant/Food Name */}
-                <div className="flex justify-between items-start">
+                <div className="flex items-start justify-between">
                   <Skeleton className="h-5 w-[70%]" />
-                  <div className="flex items-center space-x-1 bg-green-50 px-1.5 py-0.5 rounded">
+                  <div className="flex items-center space-x-1 rounded bg-green-50 px-1.5 py-0.5">
                     <Skeleton className="h-4 w-6 rounded-sm bg-green-200" />
                     <Skeleton className="h-3 w-3 rounded-sm bg-green-200" />
                   </div>
@@ -67,7 +67,7 @@ export default function SkeletonDishesList() {
                 </div>
 
                 {/* Divider */}
-                <div className="border-t my-2" />
+                <div className="my-2 border-t" />
 
                 {/* Offers */}
                 <div className="flex items-center space-x-2">
@@ -80,19 +80,22 @@ export default function SkeletonDishesList() {
       </section>
 
       {/* Load More Button */}
-      <div className="flex justify-center mt-10 mb-6">
+      <div className="mt-10 mb-6 flex justify-center">
         <Skeleton className="h-10 w-32 rounded-md" />
       </div>
 
       {/* Popular Localities Section */}
       <section className="mt-12 mb-8">
-        <Skeleton className="h-7 w-64 mb-6 mx-auto" />
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <Skeleton className="mx-auto mb-6 h-7 w-64" />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {Array(8)
-            .fill("skeleton-locality-list")
+            .fill('skeleton-locality-list')
             .map((_, i) => (
-              <div key={`${i}-${_}`} className="border rounded-lg p-3 hover:shadow-sm transition-shadow">
-                <Skeleton className="h-5 w-[70%] mb-1" />
+              <div
+                key={`${i}-${_}`}
+                className="rounded-lg border p-3 transition-shadow hover:shadow-sm"
+              >
+                <Skeleton className="mb-1 h-5 w-[70%]" />
                 <Skeleton className="h-4 w-[50%]" />
               </div>
             ))}

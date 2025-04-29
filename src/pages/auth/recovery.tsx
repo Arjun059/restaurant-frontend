@@ -57,22 +57,19 @@ export default function Recovery() {
                   id="email"
                   type="email"
                   {...register('email', { required: true })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={errors.email ? 'border-destructive' : ''}
                 />
               </div>
             </div>
             <div className="mt-6 grid w-full">
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" disabled={isSubmitting}>
                 Recover Password
               </Button>
             </div>
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               {'Remember your password? '}
               <Link to="/login" className="text-primary hover:underline">
                 Sign in here

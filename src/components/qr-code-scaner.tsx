@@ -1,79 +1,72 @@
-import { Html5QrcodeScanner, type Html5QrcodeCameraScanConfig } from 'html5-qrcode';
-import { useEffect } from 'react';
-import { Button } from './ui/button'; // Assuming you're using shadcn/ui components
+import { Html5QrcodeScanner, type Html5QrcodeCameraScanConfig } from 'html5-qrcode'
+import { useEffect } from 'react'
 
-const qrcodeRegionId = "html5qr-code-full-region";
+const qrcodeRegionId = 'html5qr-code-full-region'
 
 interface ScannerConfig extends Partial<Html5QrcodeCameraScanConfig> {
-  fps?: number;
-  qrbox?: number | { width: number; height: number };
-  aspectRatio?: number;
-  disableFlip?: boolean;
+  fps?: number
+  qrbox?: number | { width: number; height: number }
+  aspectRatio?: number
+  disableFlip?: boolean
 }
 
 interface ScannerProps {
-  fps?: number;
-  qrbox?: number | { width: number; height: number };
-  aspectRatio?: number;
-  disableFlip?: boolean;
-  verbose?: boolean;
-  qrCodeSuccessCallback: (decodedText: string) => void;
-  qrCodeErrorCallback?: (error: string) => void;
+  fps?: number
+  qrbox?: number | { width: number; height: number }
+  aspectRatio?: number
+  disableFlip?: boolean
+  verbose?: boolean
+  qrCodeSuccessCallback: (decodedText: string) => void
+  qrCodeErrorCallback?: (error: string) => void
 }
 
 const createConfig = (props: ScannerConfig): Html5QrcodeCameraScanConfig => {
   const config: Html5QrcodeCameraScanConfig = {
     fps: 10,
     qrbox: { width: 250, height: 250 },
-    rememberLastUsedCamera: true,
-    showZoomSliderIfSupported: true,
-    supportedScanTypes: [],
-  };
+  }
 
-  if (props.fps) config.fps = props.fps;
-  if (props.qrbox) config.qrbox = props.qrbox;
-  if (props.aspectRatio) config.aspectRatio = props.aspectRatio;
-  if (props.disableFlip !== undefined) config.disableFlip = props.disableFlip;
+  if (props.fps) config.fps = props.fps
+  if (props.qrbox) config.qrbox = props.qrbox
+  if (props.aspectRatio) config.aspectRatio = props.aspectRatio
+  if (props.disableFlip !== undefined) config.disableFlip = props.disableFlip
 
-  return config;
-};
+  return config
+}
 
 const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
+
   useEffect(() => {
     if (!props.qrCodeSuccessCallback) {
-      throw "qrCodeSuccessCallback is required callback.";
+      throw 'qrCodeSuccessCallback is required callback.'
     }
 
-    const config = createConfig(props);
-    const verbose = props.verbose === true;
+    const config = createConfig(props)
+    const verbose = props.verbose === true
 
-    const html5QrcodeScanner = new Html5QrcodeScanner(
-      qrcodeRegionId, 
-      config, 
-      verbose
-    );
+    const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose)
 
-    html5QrcodeScanner.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback);
+    html5QrcodeScanner.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback)
 
     return () => {
-      html5QrcodeScanner.clear().catch(error => {
-        console.error("Failed to clear html5QrcodeScanner. ", error);
-      });
-    };
-  }, [props.qrCodeSuccessCallback, props.qrCodeErrorCallback]);
+      html5QrcodeScanner.clear().catch((error) => {
+        console.error('Failed to clear html5QrcodeScanner. ', error)
+      })
+    }
+  }, [props])
 
   return (
-    <div className="w-full max-w-sm mx-auto h-full align-middle flex justify-center items-center min-h-[calc(100vh-55px)]">
-      <div className="rounded-lg text-card-foreground shadow-sm align-middle min-h-[300px] min-w-[300px]">
+    <div className="mx-auto flex h-full min-h-[calc(100vh-55px)] w-full max-w-sm items-center justify-center align-middle">
+      <div className="min-h-[300px] min-w-[300px] rounded-lg align-middle text-card-foreground shadow-sm">
         <div id={qrcodeRegionId} className="relative aspect-square w-full">
           {/* Scanner will be injected here */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-64 h-64 border-4 border-primary/50 rounded-lg animate-pulse" />
+            <div className="h-64 w-64 animate-pulse rounded-lg border-4 border-primary/50" />
           </div>
         </div>
       </div>
 
-      <style jsx global>{`
+      <style>{`
         #${qrcodeRegionId} {
           position: relative;
           width: 100%;
@@ -209,7 +202,7 @@ const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
         }
       `}</style>
     </div>
-  );
-};
+  )
+}
 
-export default Html5QrcodePlugin;
+export default Html5QrcodePlugin

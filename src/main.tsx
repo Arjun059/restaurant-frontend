@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
-import { Toaster } from "#/components/ui/toaster"
+import { Toaster } from '#/components/ui/toaster'
 
 import { router } from './routes'
 
 import './assets/styles/fontface.css'
 import './assets/styles/tailwind.css'
-
 
 const rootElement = document.getElementById('root')
 

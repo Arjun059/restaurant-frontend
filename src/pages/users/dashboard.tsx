@@ -14,9 +14,7 @@ export default function UserDashboard() {
           <CardTitle>Welcome back, {user?.email}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
-            This should be a dashboard page for general user.
-          </p>
+          <p className="text-muted-foreground">This should be a dashboard page for general user.</p>
           <div className="mt-8 flex flex-col items-center gap-2 sm:flex-row sm:gap-3">
             <Link to="/">
               <Button>Back to homepage</Button>

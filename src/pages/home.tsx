@@ -8,7 +8,6 @@ import { useAuthentication } from '#/context/auth/AuthProvider'
 // Instead, we use `src/assets` directory.
 import ViteLogo from '../assets/images/vite.svg'
 
-
 export default function Home() {
   const { user, loggedIn } = useAuthentication()
 
@@ -21,7 +20,7 @@ export default function Home() {
         <div className="mx-auto flex w-full border-collapse items-center justify-center">
           <img src={ViteLogo} alt="Vite logo" className="h-28" />
         </div>
-        <div className="text-center text-muted-foreground text-lg sm:mt-8">
+        <div className="text-center text-lg text-muted-foreground sm:mt-8">
           <p className="leading-8">This is an example starter template React with Vite.</p>
           <p className="leading-8">
             Vite + React + Typescript + Tailwind CSS + React Hook Form + Vitest
@@ -69,4 +68,3 @@ export default function Home() {
     </div>
   )
 }
-

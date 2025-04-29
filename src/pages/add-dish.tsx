@@ -1,8 +1,8 @@
-"use client";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "#/components/ui/button";
+'use client'
+import { useForm, type SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Button } from '#/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,85 +11,88 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "#/components/ui/form";
-import { Input } from "#/components/ui/input";
-import { Textarea } from "#/components/ui/textarea";
+} from '#/components/ui/form'
+import { Input } from '#/components/ui/input'
+import { Textarea } from '#/components/ui/textarea'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "#/components/ui/select";
-import { Switch } from "#/components/ui/switch";
-import { toast } from "#/hooks/use-toast";
-import ImageUploader from "#/components/image-uploader";
+} from '#/components/ui/select'
+import { Switch } from '#/components/ui/switch'
+import { toast } from '#/hooks/use-toast'
+import ImageUploader from '#/components/image-uploader'
 
 // Form validation schema
 const foodFormSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: 'Name must be at least 2 characters.',
   }),
   description: z.string().min(10, {
-    message: "Description must be at least 10 characters.",
+    message: 'Description must be at least 10 characters.',
   }),
   price: z.coerce.number().min(1, {
-    message: "Price must be at least ₹1.",
+    message: 'Price must be at least ₹1.',
   }),
   category: z.string({
-    required_error: "Please select a category.",
+    required_error: 'Please select a category.',
   }),
   veg: z.boolean().default(true),
   preparationTime: z.string().min(1, {
-    message: "Please enter preparation time.",
+    message: 'Please enter preparation time.',
   }),
   bestSeller: z.boolean().default(false),
-  images: z.array(z.instanceof(File, {
-    message: "Please upload at least one image."
-  })).min(1, {
-    message: "Please upload at least one image.",
-  }).default([]),
-});
+  images: z
+    .array(
+      z.instanceof(File, {
+        message: 'Please upload at least one image.',
+      })
+    )
+    .min(1, {
+      message: 'Please upload at least one image.',
+    })
+    .default([]),
+})
 
-type FoodFormValues = z.infer<typeof foodFormSchema>;
-
+type FoodFormValues = z.infer<typeof foodFormSchema>
 
 export default function AddDish() {
   const form = useForm<FoodFormValues>({
+    // @ts-ignore
     resolver: zodResolver(foodFormSchema),
     defaultValues: {
-      name: "",
-      description: "",
+      name: '',
+      description: '',
       price: 0,
-      category: "",
+      category: '',
       veg: true,
-      preparationTime: "",
+      preparationTime: '',
       images: [],
       bestSeller: false,
     },
-    mode: "onChange",
-  });
+    mode: 'onChange',
+  })
 
-  const onSubmit: SubmitHandler<FoodFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<any> = async () => {
     toast({
-      description: "Dish added successfully",
+      description: 'Dish added successfully',
       duration: 3000,
-      variant: "success"
-    });
-    console.log(data);
-  };
+      variant: 'success',
+    })
+  }
 
   return (
+    <div className="mx-auto my-4 max-w-2xl rounded-lg bg-white p-6 shadow-md">
+      <h2 className="mb-6 font-bold text-2xl text-gray-800">Add Dish</h2>
 
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md my-4">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Add Dish</h2>
-      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Name */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="name"
               render={({ field }) => (
                 <FormItem>
@@ -103,8 +106,8 @@ export default function AddDish() {
             />
 
             {/* Price */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="price"
               render={({ field }) => (
                 <FormItem>
@@ -118,8 +121,8 @@ export default function AddDish() {
             />
 
             {/* Category */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="category"
               render={({ field }) => (
                 <FormItem>
@@ -144,8 +147,8 @@ export default function AddDish() {
             />
 
             {/* Preparation Time */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="preparationTime"
               render={({ field }) => (
                 <FormItem>
@@ -159,61 +162,48 @@ export default function AddDish() {
             />
 
             {/* Veg/Non-Veg */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="veg"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Vegetarian</FormLabel>
-                    <FormDescription>
-                      Is this a vegetarian item?
-                    </FormDescription>
+                    <FormDescription>Is this a vegetarian item?</FormDescription>
                   </div>
                   <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Switch checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                 </FormItem>
               )}
             />
 
             {/* Best Seller */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="bestSeller"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Best Seller</FormLabel>
-                    <FormDescription>
-                      Mark as a best selling item
-                    </FormDescription>
+                    <FormDescription>Mark as a best selling item</FormDescription>
                   </div>
                   <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Switch checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
                 </FormItem>
               )}
             />
 
             {/* Image Upload */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="images"
               render={({ field }) => (
                 <FormItem className="md:col-span-2">
                   <FormLabel>Dish Images</FormLabel>
                   <FormControl>
-                    <ImageUploader
-                      onChange={field.onChange}
-                      maxFiles={5}
-                    />
+                    <ImageUploader onChange={field.onChange} maxFiles={5} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -221,8 +211,8 @@ export default function AddDish() {
             />
 
             {/* Description */}
-            <FormField<FoodFormValues>
-              control={form.control}
+            <FormField
+              control={form.control as any}
               name="description"
               render={({ field }) => (
                 <FormItem className="md:col-span-2">
@@ -249,5 +239,5 @@ export default function AddDish() {
         </form>
       </Form>
     </div>
-  );
+  )
 }

@@ -11,7 +11,7 @@ const Header = () => {
               <span className="font-bold">Restaurant Name</span>
             </Link>
           </div>
-          
+
           <nav className="flex items-center space-x-4">
             {/* <Button variant="ghost" asChild>
               <Link to="/">Home</Link>
@@ -35,4 +35,4 @@ const Header = () => {
   )
 }
 
-export default Header 
+export default Header

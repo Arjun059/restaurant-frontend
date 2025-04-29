@@ -92,22 +92,19 @@ export default function ResetPassword() {
                         message: 'Password must have at least 8 characters',
                       },
                     })}
-                    className={errors.password ? "border-destructive" : ""}
+                    className={errors.password ? 'border-destructive' : ''}
                   />
                 </div>
               </div>
               <div className="mt-6 grid w-full">
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                >
+                <Button type="submit" disabled={isSubmitting}>
                   Reset Password
                 </Button>
               </div>
             </form>
 
             <div className="mt-8 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 {'Remember your password? '}
                 <Link to="/login" className="text-primary hover:underline">
                   Sign in here
