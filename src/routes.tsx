@@ -10,10 +10,11 @@ const Login = lazy(() => import('./pages/auth').then((module) => ({ default: mod
 const UserDashboard = lazy(() =>
   import('./pages/users').then((module) => ({ default: module.UserDashboard }))
 )
-const Dashboard = lazy(() => import('./pages/dashboard'))
+const DashboardLayout = lazy(() => import('./layouts/dashboard-layout'))
+const Dashboard = lazy(() => import('./pages/restaurant-dashboard/dashboard'))
 const ScanQr = lazy(() => import('./pages/qr-code-page'))
 const ProductList = lazy(() => import('./pages/dishes-list'))
-const AddDish = lazy(() => import('./pages/add-dish'))
+const AddDish = lazy(() => import('./pages/restaurant-dashboard/add-dish'))
 const Error404 = lazy(() => import('./pages/404'))
 const ErrorBoundaryPage = lazy(() => import('./pages/error-boundary'))
 
@@ -55,22 +56,33 @@ export const router = createBrowserRouter(
             </Suspense>
           }
         />
-        <Route
-          path="/add-dish"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <AddDish />
-            </Suspense>
-          }
-        />
+       
         <Route
           path="/dashboard"
           element={
             <Suspense fallback={<SkeletonPage />}>
-              <Dashboard />
+              <DashboardLayout />
             </Suspense>
           }
-        />
+        >
+          <Route
+            path="add-dish"
+            element={
+              <Suspense fallback={<SkeletonPage />}>
+                <AddDish />
+              </Suspense>
+            }
+          />
+          <Route
+              path=""
+              element={
+                <Suspense fallback={<SkeletonPage />}>
+                  <Dashboard />
+                </Suspense>
+              }
+            />
+        </Route>
+
         <Route
           path="/scan-qr"
           element={
@@ -92,7 +104,7 @@ export const router = createBrowserRouter(
         />
       </Route>
 
-      <Route path="/dashboard" element={<AppLayout />}>
+      <Route path="/dashboard-user" element={<AppLayout />}>
         <Route
           path="overview"
           element={

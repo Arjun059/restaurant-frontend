@@ -46,25 +46,25 @@ export default function SkeletonDishesList() {
               <div className="space-y-2 p-3">
                 {/* Restaurant/Food Name */}
                 <div className="flex items-start justify-between">
-                  <Skeleton className="h-5 w-[70%]" />
                   <div className="flex items-center space-x-1 rounded bg-green-50 px-1.5 py-0.5">
                     <Skeleton className="h-4 w-6 rounded-sm bg-green-200" />
                     <Skeleton className="h-3 w-3 rounded-sm bg-green-200" />
                   </div>
+                  <Skeleton className="h-5 w-[70%]" />
                 </div>
 
                 {/* Cuisine Types */}
-                <div className="flex items-center space-x-1">
+                {/* <div className="flex items-center space-x-1">
                   <Skeleton className="h-4 w-16" />
                   <div className="h-1 w-1 rounded-full bg-gray-300" />
                   <Skeleton className="h-4 w-20" />
-                </div>
+                </div> */}
 
                 {/* Distance and Time */}
-                <div className="flex items-center justify-between pt-1">
+                {/* <div className="flex items-center justify-between pt-1">
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-4 w-16" />
-                </div>
+                </div> */}
 
                 {/* Divider */}
                 <div className="my-2 border-t" />
@@ -80,12 +80,12 @@ export default function SkeletonDishesList() {
       </section>
 
       {/* Load More Button */}
-      <div className="mt-10 mb-6 flex justify-center">
+      {/* <div className="mt-10 mb-6 flex justify-center">
         <Skeleton className="h-10 w-32 rounded-md" />
-      </div>
+      </div> */}
 
       {/* Popular Localities Section */}
-      <section className="mt-12 mb-8">
+      {/* <section className="mt-12 mb-8">
         <Skeleton className="mx-auto mb-6 h-7 w-64" />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {Array(8)
@@ -100,7 +100,7 @@ export default function SkeletonDishesList() {
               </div>
             ))}
         </div>
-      </section>
+      </section> */}
     </main>
   )
 }

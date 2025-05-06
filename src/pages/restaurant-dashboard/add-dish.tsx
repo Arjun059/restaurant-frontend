@@ -84,7 +84,7 @@ export default function AddDish() {
   }
 
   return (
-    <div className="mx-auto my-4 max-w-2xl rounded-lg bg-white p-6 shadow-md">
+    <div className="rounded-lg bg-white">
       <h2 className="mb-6 font-bold text-2xl text-gray-800">Add Dish</h2>
 
       <Form {...form}>
