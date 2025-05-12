@@ -10,7 +10,7 @@ const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
     <div className="mx-auto flex h-full min-h-[calc(100vh-55px)] w-full max-w-sm items-center justify-center align-middle">
       <div className="min-h-[300px] min-w-[300px] rounded-lg align-middle text-card-foreground shadow-sm">
         <QrScanner
-          onScan	={(result:any) => {props.qrCodeSuccessCallback(result[0])}}
+          onScan	={(result:any) => {props.qrCodeSuccessCallback(result[0]?.rawValue)}}
           onError={(error: any) => props.qrCodeErrorCallback?.(error?.message || 'Unknown error')}
           constraints={{
             facingMode: 'environment'
