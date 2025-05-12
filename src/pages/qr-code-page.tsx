@@ -1,8 +1,12 @@
+"use client";
+
 import QRScanner from '#/components/qr-code-scaner'
 import { useCallback } from 'react'
 const ScanQr = () => {
   const onScanSuccess = useCallback((decodedText: string) => {
-    console.log(decodedText)
+    // TODO: remove location.href add custome logic to navigate retaurant owner page
+     window.location.href = decodedText
+    
   }, [])
 
   const onScanError = useCallback((error: string) => {
