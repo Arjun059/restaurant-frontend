@@ -7,6 +7,7 @@ import { AuthLayout } from './layouts/auth-layout'
 // Lazy load all page components
 const Home = lazy(() => import('./pages/home'))
 const Login = lazy(() => import('./pages/auth').then((module) => ({ default: module.Login })))
+const Signup = lazy(() => import('./pages/auth').then((module) => ({ default: module.Signup })))
 const UserDashboard = lazy(() =>
   import('./pages/users').then((module) => ({ default: module.UserDashboard }))
 )
@@ -56,7 +57,7 @@ export const router = createBrowserRouter(
             </Suspense>
           }
         />
-       
+
         <Route
           path="/dashboard"
           element={
@@ -74,13 +75,13 @@ export const router = createBrowserRouter(
             }
           />
           <Route
-              path=""
-              element={
-                <Suspense fallback={<SkeletonPage />}>
-                  <Dashboard />
-                </Suspense>
-              }
-            />
+            path=""
+            element={
+              <Suspense fallback={<SkeletonPage />}>
+                <Dashboard />
+              </Suspense>
+            }
+          />
         </Route>
 
         <Route
@@ -99,6 +100,17 @@ export const router = createBrowserRouter(
           element={
             <Suspense fallback={<SkeletonPage />}>
               <Login />
+            </Suspense>
+          }
+        />
+      </Route>
+
+      <Route element={<AuthLayout />}>
+        <Route
+          path="/signup"
+          element={
+            <Suspense fallback={<SkeletonPage />}>
+              <Signup />
             </Suspense>
           }
         />

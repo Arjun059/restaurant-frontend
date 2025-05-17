@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
+
 export function NavBarExpand() {
   return (
     <div className="flex h-full min-h-screen w-56 flex-col items-center overflow-hidden rounded-r bg-white text-gray-600 shadow-sm dark:border-gray-800 dark:border-r dark:bg-gray-900 dark:text-gray-400">
-      <a className="mt-3 flex w-full items-center px-3" href="/">
+      <Link className="mt-3 flex w-full items-center px-3" to="/">
         <svg
           className="h-8 w-8 fill-current"
           xmlns="http://www.w3.org/2000/svg"
@@ -11,12 +13,12 @@ export function NavBarExpand() {
           <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
         </svg>
         <span className="ml-2 font-bold text-sm">ReactiVite</span>
-      </a>
+      </Link>
       <div className="w-full px-2">
         <div className="mt-3 flex w-full flex-col items-center border-gray-200 border-t dark:border-gray-700">
-          <a
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -33,10 +35,10 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">Dasboard</span>
-          </a>
-          <a
+          </Link>
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -53,10 +55,10 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">Search</span>
-          </a>
-          <a
+          </Link>
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded bg-gray-200 px-3 dark:bg-gray-700 dark:text-gray-200"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -73,10 +75,10 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">Insights</span>
-          </a>
-          <a
+          </Link>
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -93,12 +95,12 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">Docs</span>
-          </a>
+          </Link>
         </div>
         <div className="mt-2 flex w-full flex-col items-center border-gray-200 border-t dark:border-gray-700">
-          <a
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -115,10 +117,10 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">Products</span>
-          </a>
-          <a
+          </Link>
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -135,10 +137,10 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">Settings</span>
-          </a>
-          <a
+          </Link>
+          <Link
             className="relative mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -156,15 +158,15 @@ export function NavBarExpand() {
             </svg>
             <span className="ml-2 font-medium text-sm">Messages</span>
             <span className="absolute top-0 left-0 mt-2 ml-2 h-2 w-2 rounded-full bg-destructive-500" />
-          </a>
+          </Link>
         </div>
       </div>
 
       <div className="mt-auto mb-2 w-full px-2">
         <div className="mt-3 flex w-full flex-col items-center border-gray-200 border-t dark:border-gray-700">
-          <a
+          <Link
             className="mt-2 flex h-12 w-full items-center rounded px-3 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-            href="/"
+            to="/"
           >
             <svg
               className="h-6 w-6 stroke-current"
@@ -181,7 +183,7 @@ export function NavBarExpand() {
               />
             </svg>
             <span className="ml-2 font-medium text-sm">My Account</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

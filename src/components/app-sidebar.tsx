@@ -1,4 +1,5 @@
 import type * as React from 'react'
+import { Link } from 'react-router-dom'
 import {
   ArrowUpCircleIcon,
   BarChartIcon,
@@ -155,10 +156,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="/dashboard">
+              <Link to="/dashboard">
                 <ArrowUpCircleIcon className="h-5 w-5" />
                 <span className="font-semibold text-base">Acme Inc.</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

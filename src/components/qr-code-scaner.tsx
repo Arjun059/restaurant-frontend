@@ -7,7 +7,7 @@ interface ScannerProps {
 
 const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
   return (
-    <div className="mx-auto flex h-full min-h-[calc(100vh-55px)] w-full max-w-sm items-center justify-center align-middle">
+    <div className="mx-auto flex h-full min-h-[calc(100vh-150px)] w-full max-w-sm items-center justify-center align-middle">
       <div className="min-h-[300px] min-w-[300px] rounded-lg align-middle text-card-foreground shadow-sm">
         <QrScanner
           onScan	={(result:any) => {props.qrCodeSuccessCallback(result[0]?.rawValue)}}
