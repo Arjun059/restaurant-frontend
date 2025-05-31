@@ -1,5 +1,5 @@
 import type * as React from 'react'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {
   ArrowUpCircleIcon,
   BarChartIcon,
@@ -18,10 +18,10 @@ import {
   UsersIcon,
 } from 'lucide-react'
 
-import { NavDocuments } from '#/components/nav-documents'
-import { NavMain } from '#/components/nav-main'
-import { NavSecondary } from '#/components/nav-secondary'
-import { NavUser } from '#/components/nav-user'
+import {NavDocuments} from '#/components/nav-documents'
+import {NavMain} from '#/components/nav-main'
+import {NavSecondary} from '#/components/nav-secondary'
+import {NavUser} from '#/components/nav-user'
 import {
   Sidebar,
   SidebarContent,
@@ -31,6 +31,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '#/components/ui/sidebar'
+import {ROUTES} from '../constants/page-routes'
 
 const data = {
   user: {
@@ -41,12 +42,12 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: '/dashboard',
+      url: ROUTES.DASHBOARD,
       icon: LayoutDashboardIcon,
     },
     {
       title: 'Add Dish',
-      url: '/dashboard/add-dish',
+      url: ROUTES.DASHBOARD_ADD_DISH,
       icon: ListIcon,
     },
     {
@@ -149,7 +150,7 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

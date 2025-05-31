@@ -14,7 +14,7 @@ export const fetcher = async <T = any>(url: string, options?: RequestInit): Prom
 
   if (!res.ok) {
     // Optional: throw structured error
-    const message = data?.error || data?.message || 'An error occurred'
+    const message = data?.message || 'An error occurred'
     throw new Error(message)
   }
 

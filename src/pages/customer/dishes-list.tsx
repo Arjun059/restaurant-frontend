@@ -1,6 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card'
-import { Badge } from '#/components/ui/badge'
-// import { Button } from "#/components/ui/button"
+import {Card, CardContent, CardHeader, CardTitle} from '#/components/ui/card'
+import {Badge} from '#/components/ui/badge'
+import {useState} from 'react'
+import {DishDetail} from './dish-detail'
+import RatingStars from '../../components/rating-stars'
 
 const images = [
   'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -9,11 +11,13 @@ const images = [
   'https://images.unsplash.com/photo-1578167731266-cabac4159bed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU2fHx8ZW58MHx8fHx8',
   'https://plus.unsplash.com/premium_photo-1663853051660-91bd9b822799?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzNHx8fGVufDB8fHx8fA%3D%3D',
 ]
-function getRandomImage() {
-  return images[Math.floor(Math.random() * images.length)]
+
+function getRandomImages(count: number = 3): string[] {
+  const shuffled = [...images].sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, count)
 }
 
-const foodProducts = [
+const dishes = [
   {
     id: 1,
     name: 'Chicken Biryani',
@@ -21,7 +25,7 @@ const foodProducts = [
     price: 249,
     rating: 4.5,
     deliveryTime: '30-40 mins',
-    image: getRandomImage(),
+    images: getRandomImages(),
     restaurant: 'Biryani House',
     veg: false,
     bestSeller: true,
@@ -33,7 +37,7 @@ const foodProducts = [
     price: 199,
     rating: 4.2,
     deliveryTime: '25-35 mins',
-    image: getRandomImage(),
+    images: getRandomImages(),
     restaurant: 'North Indian Delight',
     veg: true,
     bestSeller: true,
@@ -44,7 +48,7 @@ const foodProducts = [
     description: 'Loaded with capsicum, onion, corn, olives and jalapenos',
     price: 299,
     rating: 4.0,
-    image: getRandomImage(),
+    images: getRandomImages(),
     restaurant: 'Pizza Hub',
     veg: true,
     bestSeller: false,
@@ -56,7 +60,7 @@ const foodProducts = [
     price: 149,
     rating: 3.9,
     deliveryTime: '20-30 mins',
-    image: getRandomImage(),
+    images: getRandomImages(),
     restaurant: 'Burger King',
     veg: false,
     bestSeller: false,
@@ -68,7 +72,7 @@ const foodProducts = [
     price: 99,
     rating: 4.3,
     deliveryTime: '15-25 mins',
-    image: getRandomImage(),
+    images: getRandomImages(),
     restaurant: 'South Indian Cafe',
     veg: true,
     bestSeller: true,
@@ -80,80 +84,72 @@ const foodProducts = [
     price: 179,
     rating: 4.6,
     deliveryTime: '10-15 mins',
-    image: getRandomImage(),
+    images: getRandomImages(),
     restaurant: 'Dessert Palace',
     veg: true,
     bestSeller: true,
   },
 ]
 
-export default function ProductList() {
+export default function DishesList() {
+  const [selectedDish, setSelectedDish] = useState<typeof dishes[0] | null>(null)
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-6 font-bold text-2xl text-gray-800">Popular Dishes Near You</h1>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {foodProducts.map((product) => (
-          <Card key={product.id} className="transition-shadow hover:shadow-lg">
+        {dishes.map((dish) => (
+          <Card
+            key={dish.id}
+            className="cursor-pointer transition-shadow hover:shadow-lg"
+            onClick={() => setSelectedDish(dish)}
+          >
             <div className="relative">
               <img
-                src={product.image}
-                alt={product.name}
+                src={dish.images[0]}
+                alt={dish.name}
                 className="h-48 w-full rounded-t-lg object-cover"
               />
-              {product.bestSeller && (
+              {dish.bestSeller && (
                 <Badge className="absolute top-2 left-2 bg-amber-400 text-amber-900">
                   Bestseller
                 </Badge>
               )}
               <div
-                className={`absolute bottom-2 left-2 flex h-5 w-5 items-center justify-center rounded-full ${product.veg ? 'bg-green-500' : 'bg-red-500'}`}
+                className={`absolute bottom-2 left-2 flex h-5 w-5 items-center justify-center rounded-full ${dish.veg ? 'bg-green-500' : 'bg-red-500'
+                  }`}
               >
-                <div className={`h-2 w-2 rounded-full ${product.veg ? 'bg-white' : 'bg-white'}`} />
+                <div className="h-2 w-2 rounded-full bg-white" />
               </div>
             </div>
 
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">{product.name}</CardTitle>
+              <CardTitle className="text-lg">{dish.name}</CardTitle>
             </CardHeader>
 
             <CardContent>
-              <p className="mb-3 line-clamp-2 text-gray-600 text-sm">{product.description}</p>
+              <p className="mb-3 line-clamp-2 text-gray-600 text-sm">{dish.description}</p>
 
               <div className="mb-3 flex items-center justify-between text-sm">
                 <span className="flex items-center font-medium text-green-600">
-                  <StarIcon className="mr-1 h-4 w-4" />
-                  {product.rating}
+                  <RatingStars rating={dish.rating} />
                 </span>
-                <span className="font-bold">₹{product.price}</span>
+                <span className="font-bold">₹{dish.price}</span>
               </div>
-
-              {/* <Button variant="outline" className="w-full border-green-500 text-green-600 hover:bg-green-50">
-                Add to Cart
-              </Button> */}
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {selectedDish && (
+        <DishDetail
+          dish={selectedDish}
+          isOpen={!!selectedDish}
+          onClose={() => setSelectedDish(null)}
+        />
+      )}
     </div>
   )
 }
 
-function StarIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  )
-}

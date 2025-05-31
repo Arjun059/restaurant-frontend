@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
-import { useAuthentication } from '#/context/auth/AuthProvider'
-import { Button } from '#/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card'
-import { Container } from '#/components/ui/container'
+import {Link} from 'react-router-dom'
+import {useAuthentication} from '#/context/auth/AuthProvider'
+import {Button} from '#/components/ui/button'
+import {Card, CardContent, CardHeader, CardTitle} from '#/components/ui/card'
+import {Container} from '#/components/ui/container'
 
 export default function UserDashboard() {
-  const { user, logout } = useAuthentication()
+  const {user, logout} = useAuthentication()
 
   return (
     <Container>

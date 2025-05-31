@@ -1,26 +1,25 @@
-import { Route, createBrowserRouter, createRoutesFromElements, defer } from 'react-router-dom'
-import { lazy, Suspense } from 'react'
+import {createBrowserRouter, defer} from 'react-router-dom'
+import {lazy, Suspense} from 'react'
 
-import { AppLayout, PublicLayout, RootLayout } from './layouts'
-import { AuthLayout } from './layouts/auth-layout'
+import {CustomerLayout, AdminLayout, RootLayout} from './layouts'
+import {AuthLayout} from './layouts/auth-layout'
+import {ROUTES} from './constants/page-routes'
 
 // Lazy load all page components
 const Home = lazy(() => import('./pages/home'))
-const Login = lazy(() => import('./pages/auth').then((module) => ({ default: module.Login })))
-const Signup = lazy(() => import('./pages/auth').then((module) => ({ default: module.Signup })))
-const UserDashboard = lazy(() =>
-  import('./pages/users').then((module) => ({ default: module.UserDashboard }))
-)
-const DashboardLayout = lazy(() => import('./layouts/dashboard-layout'))
+const Login = lazy(() => import('./pages/auth/login'))
+const Signup = lazy(() => import('./pages/auth/signup'))
+const UserDashboard = lazy(() => import('./pages/customer/dashboard'))
 const Dashboard = lazy(() => import('./pages/restaurant-dashboard/dashboard'))
 const ScanQr = lazy(() => import('./pages/qr-code-page'))
-const ProductList = lazy(() => import('./pages/dishes-list'))
 const AddDish = lazy(() => import('./pages/restaurant-dashboard/add-dish'))
+const DishesList = lazy(() => import('./pages/customer/dishes-list'))
 const Error404 = lazy(() => import('./pages/404'))
 const ErrorBoundaryPage = lazy(() => import('./pages/error-boundary'))
 
-import SkeletonDishesList from './components/skeletons/dishes-list'
 import SkeletonPage from '#/components/skeletons/page'
+
+
 
 // Ideally this would be an API call to server to get logged in user data
 const getUserData = () => {
@@ -33,108 +32,99 @@ const getUserData = () => {
   )
 }
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route
-      element={<RootLayout />}
-      loader={() => defer({ userPromise: getUserData() })}
-      errorElement={<ErrorBoundaryPage />}
-    >
-      <Route element={<PublicLayout />}>
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <Home />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/dishes-list"
-          element={
-            <Suspense fallback={<SkeletonDishesList />}>
-              <ProductList />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="/dashboard"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <DashboardLayout />
-            </Suspense>
-          }
-        >
-          <Route
-            path="add-dish"
-            element={
+export const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    loader: () => defer({userPromise: getUserData()}),
+    errorElement: <ErrorBoundaryPage />,
+    children: [
+      {
+        element: <AuthLayout />,
+        children: [
+          {
+            path: ROUTES.LOGIN,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <Login />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.SIGNUP,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <Signup />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        element: <AdminLayout />,
+        children: [
+          {
+            path: ROUTES.ADMIN_DASHBOARD_ADD_DISH,
+            element: (
               <Suspense fallback={<SkeletonPage />}>
                 <AddDish />
               </Suspense>
-            }
-          />
-          <Route
-            path=""
-            element={
+            ),
+          },
+          {
+            path: ROUTES.ADMIN_DASHBOARD,
+            element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Dashboard />
               </Suspense>
-            }
-          />
-        </Route>
-
-        <Route
-          path="/scan-qr"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <ScanQr />
-            </Suspense>
-          }
-        />
-      </Route>
-
-      <Route element={<AuthLayout />}>
-        <Route
-          path="/login"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <Login />
-            </Suspense>
-          }
-        />
-      </Route>
-
-      <Route element={<AuthLayout />}>
-        <Route
-          path="/signup"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <Signup />
-            </Suspense>
-          }
-        />
-      </Route>
-
-      <Route path="/dashboard-user" element={<AppLayout />}>
-        <Route
-          path="overview"
-          element={
-            <Suspense fallback={<SkeletonPage />}>
-              <UserDashboard />
-            </Suspense>
-          }
-        />
-      </Route>
-
-      <Route
-        path="*"
-        element={
+            ),
+          },
+        ],
+      },
+      {
+        element: <CustomerLayout />,
+        children: [
+          {
+            path: ROUTES.HOME,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <Home />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.CUSTOMER_DASHBOARD,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <UserDashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.SCAN_QR,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <ScanQr />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.DISHES_LIST,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <DishesList />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: ROUTES.NOT_FOUND,
+        element: (
           <Suspense fallback={<SkeletonPage />}>
             <Error404 />
           </Suspense>
-        }
-      />
-    </Route>
-  )
-)
+        ),
+      },
+    ],
+  },
+])

@@ -45,11 +45,7 @@ const foodFormSchema = z.object({
   }),
   bestSeller: z.boolean().default(false),
   images: z
-    .array(
-      z.instanceof(File, {
-        message: 'Please upload at least one image.',
-      })
-    )
+    .array(z.any())
     .min(1, {
       message: 'Please upload at least one image.',
     })
@@ -82,6 +78,8 @@ export default function AddDish() {
       variant: 'success',
     })
   }
+  const value = form.watch('images')
+  console.log('image value on any time', value)
 
   return (
     <div className="rounded-lg bg-white">
@@ -154,7 +152,12 @@ export default function AddDish() {
                 <FormItem>
                   <FormLabel>Preparation Time</FormLabel>
                   <FormControl>
-                    <Input placeholder="30-40 mins" {...field} />
+                    <div className="relative">
+                      <Input placeholder="30-40" {...field} className="pr-16" />
+                      <span className="absolute select-none inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
+                        minutes
+                      </span>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -203,7 +206,16 @@ export default function AddDish() {
                 <FormItem className="md:col-span-2">
                   <FormLabel>Dish Images</FormLabel>
                   <FormControl>
-                    <ImageUploader onChange={field.onChange} maxFiles={5} />
+                    <ImageUploader
+                      setFiles={(newFiles) => {
+                        // Ensure we're always passing an array to the form
+                        if (Array.isArray(newFiles) && newFiles.length > 0) {
+                          field.onChange(newFiles)
+                        }
+                      }}
+                      files={field.value || []}
+                      maxFiles={5}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

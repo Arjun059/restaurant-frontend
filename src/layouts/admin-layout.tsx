@@ -1,10 +1,10 @@
-import { AppSidebar } from '#/components/app-sidebar'
-import { SiteHeader } from '#/components/site-header'
-import { SidebarInset, SidebarProvider } from '#/components/ui/sidebar'
+import {AppSidebar} from '#/components/app-sidebar'
+import {SiteHeader} from '#/components/site-header'
+import {SidebarInset, SidebarProvider} from '#/components/ui/sidebar'
 
-import { Outlet } from 'react-router-dom'
+import {Outlet} from 'react-router-dom'
 
-export default function Page() {
+export function AdminLayout() {
   return (
     <SidebarProvider>
       <AppSidebar variant="inset" />

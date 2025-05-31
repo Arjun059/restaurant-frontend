@@ -4,13 +4,13 @@
         "enabled": true
     },
     "vcs": {
-        "enabled": true,
+        "enabled": false,
         "clientKind": "git",
         "useIgnoreFile": true,
         "defaultBranch": "main"
     },
     "linter": {
-        "enabled": true,
+        "enabled": false,
         "rules": {
             "recommended": true,
             "a11y": {
