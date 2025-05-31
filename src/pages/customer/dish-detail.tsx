@@ -1,7 +1,7 @@
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from '#/components/ui/dialog'
 import {Badge} from '#/components/ui/badge'
 import {Button} from '#/components/ui/button'
-import {ChevronLeft, ChevronRight, Clock, Star, Utensils} from 'lucide-react'
+import {ChevronLeft, ChevronRight, Clock, Utensils} from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 import {useCallback, useEffect, useState} from 'react'
 import RatingStars from '../../components/rating-stars'
@@ -27,7 +27,6 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
-  const [quantity, setQuantity] = useState(1)
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
@@ -43,12 +42,6 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
     setScrollSnaps(emblaApi.scrollSnapList())
     emblaApi.on('select', onSelect)
   }, [emblaApi, onSelect])
-
-  const handleAddToCart = () => {
-    // TODO: Implement cart functionality
-    console.log('Added to cart:', {dish, quantity})
-    onClose()
-  }
 
 
 

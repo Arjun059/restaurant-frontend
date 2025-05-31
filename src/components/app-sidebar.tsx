@@ -42,12 +42,12 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: ROUTES.DASHBOARD,
+      url: ROUTES.ADMIN_DASHBOARD,
       icon: LayoutDashboardIcon,
     },
     {
       title: 'Add Dish',
-      url: ROUTES.DASHBOARD_ADD_DISH,
+      url: ROUTES.ADMIN_DASHBOARD_ADD_DISH,
       icon: ListIcon,
     },
     {
