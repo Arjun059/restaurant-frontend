@@ -23,7 +23,7 @@ import {
 } from '#/components/ui/select'
 import {Switch} from '#/components/ui/switch'
 import {toast} from '#/hooks/use-toast'
-import ImageUploader from '#/components/image-uploader'
+import ImageHandler from '#/components/image-uploader'
 
 // Form validation schema
 const foodFormSchema = z.object({
@@ -78,8 +78,6 @@ export default function AddDish() {
       variant: 'success',
     })
   }
-  const value = form.watch('images')
-  console.log('image value on any time', value)
 
   return (
     <div className="rounded-lg bg-white">
@@ -205,12 +203,10 @@ export default function AddDish() {
                 <FormItem className="md:col-span-2">
                   <FormLabel>Dish Images</FormLabel>
                   <FormControl>
-                    <ImageUploader
+                    <ImageHandler
                       setFiles={(newFiles) => {
                         // Ensure we're always passing an array to the form
-                        if (Array.isArray(newFiles) && newFiles.length > 0) {
-                          field.onChange(newFiles)
-                        }
+                        field.onChange(newFiles)
                       }}
                       files={field.value || []}
                       maxFiles={5}

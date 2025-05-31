@@ -59,6 +59,7 @@
         "react-dom": "^18.3.1",
         "react-dropzone": "^14.3.8",
         "react-hook-form": "^7.56.3",
+        "react-images-uploading": "^3.1.7",
         "react-router-dom": "^6.27.0",
         "recharts": "^2.15.3",
         "sonner": "^2.0.3",

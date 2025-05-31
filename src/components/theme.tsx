@@ -1,15 +1,15 @@
 import * as Lucide from 'lucide-react'
-import { useCallback } from 'react'
-import { useLocalStorage } from '#/context/hooks/useLocalStorage'
+import {useCallback} from 'react'
+import {useLocalStorage} from '#/context/hooks/useLocalStorage'
 
-import { Button } from '#/components/ui/button'
-import { cn } from '#/lib/utils'
+import {Button} from '#/components/ui/button'
+import {cn} from '#/lib/utils'
 
 interface ThemeSwitcherProps {
   className?: string
 }
 
-export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
+export function ThemeSwitcher({className}: ThemeSwitcherProps) {
   const [savedTheme, setSavedTheme] = useLocalStorage('ui_theme', null)
   const IconComponent = savedTheme === 'dark' ? Lucide.Moon : Lucide.SunDim
 
