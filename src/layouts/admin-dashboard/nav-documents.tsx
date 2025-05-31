@@ -1,7 +1,7 @@
 'use client'
 
-import { FolderIcon, MoreHorizontalIcon, ShareIcon, type LucideIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import {FolderIcon, MoreHorizontalIcon, ShareIcon, type LucideIcon} from 'lucide-react'
+import {Link} from 'react-router-dom'
 
 import {
   DropdownMenu,
@@ -28,7 +28,7 @@ export function NavDocuments({
     icon: LucideIcon
   }[]
 }) {
-  const { isMobile } = useSidebar()
+  const {isMobile} = useSidebar()
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">

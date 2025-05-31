@@ -1,8 +1,8 @@
 'use client'
-import { useForm, type SubmitHandler } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Button } from '#/components/ui/button'
+import {useForm, type SubmitHandler} from 'react-hook-form'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {z} from 'zod'
+import {Button} from '#/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormLabel,
   FormMessage,
 } from '#/components/ui/form'
-import { Input } from '#/components/ui/input'
-import { Textarea } from '#/components/ui/textarea'
+import {Input} from '#/components/ui/input'
+import {Textarea} from '#/components/ui/textarea'
 import {
   Select,
   SelectContent,
@@ -21,8 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#/components/ui/select'
-import { Switch } from '#/components/ui/switch'
-import { toast } from '#/hooks/use-toast'
+import {Switch} from '#/components/ui/switch'
+import {toast} from '#/hooks/use-toast'
 import ImageUploader from '#/components/image-uploader'
 
 // Form validation schema
@@ -83,7 +83,6 @@ export default function AddDish() {
 
   return (
     <div className="rounded-lg bg-white">
-      <h2 className="mb-6 font-bold text-2xl text-gray-800">Add Dish</h2>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -92,7 +91,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="name"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Food Name</FormLabel>
                   <FormControl>
@@ -107,7 +106,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="price"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Price (₹)</FormLabel>
                   <FormControl>
@@ -122,7 +121,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="category"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -148,7 +147,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="preparationTime"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Preparation Time</FormLabel>
                   <FormControl>
@@ -168,7 +167,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="veg"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Vegetarian</FormLabel>
@@ -185,7 +184,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="bestSeller"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Best Seller</FormLabel>
@@ -202,7 +201,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="images"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem className="md:col-span-2">
                   <FormLabel>Dish Images</FormLabel>
                   <FormControl>
@@ -226,7 +225,7 @@ export default function AddDish() {
             <FormField
               control={form.control as any}
               name="description"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem className="md:col-span-2">
                   <FormLabel>Description</FormLabel>
                   <FormControl>

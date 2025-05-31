@@ -9,7 +9,8 @@ import {
   SidebarMenuItem,
 } from '#/components/ui/sidebar'
 import {useNavigate} from 'react-router-dom'
-import {ROUTES} from '../constants/page-routes'
+import {ROUTES} from '#/constants/page-routes'
+import useStore from '#/store'
 export function NavMain({
   items,
 }: {
@@ -20,13 +21,18 @@ export function NavMain({
   }[]
 }) {
   const navigate = useNavigate()
+  const {setActiveAdminDashboardMenu} = useStore()
+  const handleMenuClick = (url: string, title: string) => {
+    setActiveAdminDashboardMenu(title)
+    navigate(url)
+  }
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
-              onClick={() => navigate(ROUTES.ADMIN_DASHBOARD_ADD_DISH)}
+              onClick={() => handleMenuClick(ROUTES.ADMIN_DASHBOARD_ADD_DISH, 'Add Dish')}
               tooltip="Add Dish"
               className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
             >
@@ -47,7 +53,7 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title} onClick={() => navigate(item.url)}>
+              <SidebarMenuButton tooltip={item.title} onClick={() => handleMenuClick(item.url, item.title)}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </SidebarMenuButton>

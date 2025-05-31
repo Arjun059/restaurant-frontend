@@ -12,16 +12,15 @@ import {
   FolderIcon,
   HelpCircleIcon,
   LayoutDashboardIcon,
-  ListIcon,
+  Plus,
   SearchIcon,
   SettingsIcon,
   UsersIcon,
 } from 'lucide-react'
 
-import {NavDocuments} from '#/components/nav-documents'
-import {NavMain} from '#/components/nav-main'
-import {NavSecondary} from '#/components/nav-secondary'
-import {NavUser} from '#/components/nav-user'
+import {NavMain} from './nav-main'
+import {NavSecondary} from './nav-secondary'
+import {NavUser} from './nav-user'
 import {
   Sidebar,
   SidebarContent,
@@ -31,7 +30,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '#/components/ui/sidebar'
-import {ROUTES} from '../constants/page-routes'
+import {ROUTES} from '#/constants/page-routes'
+import {NavDocuments} from './nav-documents'
 
 const data = {
   user: {
@@ -48,7 +48,7 @@ const data = {
     {
       title: 'Add Dish',
       url: ROUTES.ADMIN_DASHBOARD_ADD_DISH,
-      icon: ListIcon,
+      icon: Plus,
     },
     {
       title: 'Analytics',

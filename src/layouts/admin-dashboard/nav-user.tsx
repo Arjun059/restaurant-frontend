@@ -6,7 +6,7 @@ import {
   UserCircleIcon,
 } from 'lucide-react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar'
+import {Avatar, AvatarFallback, AvatarImage} from '#/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +32,7 @@ export function NavUser({
     avatar: string
   }
 }) {
-  const { isMobile } = useSidebar()
+  const {isMobile} = useSidebar()
 
   return (
     <SidebarMenu>

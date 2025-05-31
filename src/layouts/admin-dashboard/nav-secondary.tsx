@@ -1,8 +1,8 @@
 'use client'
 
 import type * as React from 'react'
-import type { LucideIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import type {LucideIcon} from 'lucide-react'
+import {Link} from 'react-router-dom'
 
 import {
   SidebarGroup,
