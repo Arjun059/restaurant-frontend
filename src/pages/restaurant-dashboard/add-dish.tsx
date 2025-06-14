@@ -28,6 +28,7 @@ import ImageHandler from '#/components/image-uploader'
 import {fetcher} from '#/utils/fetcher'
 import {useMutation} from '@tanstack/react-query'
 import {Dish_Categories} from '../../utils/constants'
+import RatingStars from '../../components/rating-stars'
 
 // Form validation schema
 const foodFormSchema = z.object({
@@ -50,6 +51,7 @@ const foodFormSchema = z.object({
     message: 'Please enter preparation time.',
   }),
   bestSeller: z.boolean().default(false),
+  rating: z.number().default(0),
   images: z
     .array(z.any())
     .min(1, {
@@ -90,6 +92,7 @@ export default function AddDish() {
       preparationTime: '10',
       images: [],
       bestSeller: false,
+      rating: 0,
     },
     mode: 'onChange',
   })
@@ -208,6 +211,21 @@ export default function AddDish() {
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control as any}
+              name="rating"
+              render={({field}) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">Rating</FormLabel>
+                    <FormDescription>This rating have been shown in dish detail page</FormDescription>
+                  </div>
+                  <FormControl>
+                    <RatingStars rating={field.value} onChange={field.onChange}></RatingStars>
                   </FormControl>
                 </FormItem>
               )}

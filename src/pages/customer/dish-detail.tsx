@@ -125,7 +125,7 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
           <div className="flex justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="flex">
-                <RatingStars rating={dish.rating} />
+                <RatingStars rating={dish.rating} readOnly />
                 <span className="font-medium">({dish.rating})</span>
               </div>
             </div>

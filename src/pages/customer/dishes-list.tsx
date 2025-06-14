@@ -104,6 +104,8 @@ export default function DishesList() {
     throw new Error()
   }
 
+  console.log(queryResp.data, 'response data')
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-6 font-bold text-2xl text-gray-800">Popular Dishes Near You</h1>
@@ -144,7 +146,7 @@ export default function DishesList() {
 
               <div className="mb-3 flex items-center justify-between text-sm">
                 <span className="flex items-center font-medium text-green-600">
-                  <RatingStars rating={dish.rating} />
+                  <RatingStars rating={dish.rating} readOnly />
                 </span>
                 <span className="font-bold">₹{dish.price}</span>
               </div>
