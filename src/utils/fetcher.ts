@@ -41,12 +41,25 @@ function isJson(value: any) {
 
 export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
   try {
+    const rawHeaders = options?.headers || {}
+
+    // Build final headers
+    let headers: Record<string, any> = {
+      'Content-Type': 'application/json',
+      ...rawHeaders,
+    }
+
+    // Detect and remove content-type regardless of casing if set to null or undefined
+    for (const key of Object.keys(rawHeaders)) {
+      // @ts-ignore
+      if (key.toLowerCase() === 'content-type' && rawHeaders[key] === 'unset') {
+        delete headers[key]
+      }
+    }
+
     const res = await fetch(BASE_URL + url, {
       ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...(options?.headers || {}),
-      },
+      headers,
     })
 
     if (!res.ok) {

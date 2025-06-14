@@ -67,7 +67,10 @@ export default function AddDish() {
     mutationFn: (formData: any) => {
       return fetcher('/admin/dashboard/dish/add', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: formData,
+        headers: {
+          'Content-Type': "unset"
+        }
       })
     },
     onSuccess: (data) => {
@@ -88,7 +91,7 @@ export default function AddDish() {
       description: ' tasti dahi balle',
       price: 40,
       category: Dish_Categories[0]?.value,
-      veg: true,
+      veg: false,
       preparationTime: '10',
       images: [],
       bestSeller: false,
@@ -98,8 +101,26 @@ export default function AddDish() {
   })
 
   const onSubmit: SubmitHandler<any> = async (values) => {
-    console.log(values, 'add dish value')
-    mutation.mutate(values)
+
+
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('description', values.description);
+    formData.append('price', String(values.price));
+    formData.append('category', values.category);
+    formData.append('veg', String(values.veg));
+    formData.append('preparationTime', values.preparationTime);
+    formData.append('bestSeller', String(values.bestSeller));
+    formData.append('rating', String(values.rating));
+
+    // Append multiple images
+    values.images.forEach((image: File) => {
+      formData.append('images', image); // same key 'images' for all
+    });
+
+    console.log(values, 'json value add dish')
+    console.log(formData, "formdata value")
+    mutation.mutate(formData)
   }
 
   return (
