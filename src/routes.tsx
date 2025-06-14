@@ -18,6 +18,7 @@ const Error404 = lazy(() => import('./pages/404'))
 const ErrorBoundaryPage = lazy(() => import('./pages/error-boundary'))
 
 import SkeletonPage from '#/components/skeletons/page'
+import SkeletonDishesList from './components/skeletons/dishes-list'
 
 
 
@@ -110,7 +111,7 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.DISHES_LIST,
             element: (
-              <Suspense fallback={<SkeletonPage />}>
+              <Suspense fallback={<SkeletonDishesList />}>
                 <DishesList />
               </Suspense>
             ),

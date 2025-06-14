@@ -22,8 +22,12 @@ import {
   SelectValue,
 } from '#/components/ui/select'
 import {Switch} from '#/components/ui/switch'
-import {toast} from '#/hooks/use-toast'
+import {toast} from 'sonner'
+
 import ImageHandler from '#/components/image-uploader'
+import {fetcher} from '#/utils/fetcher'
+import {useMutation} from '@tanstack/react-query'
+import {Dish_Categories} from '../../utils/constants'
 
 // Form validation schema
 const foodFormSchema = z.object({
@@ -38,6 +42,8 @@ const foodFormSchema = z.object({
   }),
   category: z.string({
     required_error: 'Please select a category.',
+  }).min(1, {
+    message: 'Please select a category.',
   }),
   veg: z.boolean().default(true),
   preparationTime: z.string().min(1, {
@@ -55,28 +61,42 @@ const foodFormSchema = z.object({
 type FoodFormValues = z.infer<typeof foodFormSchema>
 
 export default function AddDish() {
+  const mutation = useMutation({
+    mutationFn: (formData: any) => {
+      return fetcher('/admin/dashboard/dish/add', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+      })
+    },
+    onSuccess: (data) => {
+      console.log(data, 'response data')
+      toast.success('Dish added successfully')
+    },
+    onError: (err: any) => {
+      console.log(err, 'this is error add dish')
+
+      toast.error('Error occur on dish add')
+    },
+  })
   const form = useForm<FoodFormValues>({
     // @ts-ignore
     resolver: zodResolver(foodFormSchema),
     defaultValues: {
-      name: '',
-      description: '',
-      price: 0,
-      category: '',
+      name: 'dahi balle',
+      description: ' tasti dahi balle',
+      price: 40,
+      category: Dish_Categories[0]?.value,
       veg: true,
-      preparationTime: '',
+      preparationTime: '10',
       images: [],
       bestSeller: false,
     },
     mode: 'onChange',
   })
 
-  const onSubmit: SubmitHandler<any> = async () => {
-    toast({
-      description: 'Dish added successfully',
-      duration: 3000,
-      variant: 'success',
-    })
+  const onSubmit: SubmitHandler<any> = async (values) => {
+    console.log(values, 'add dish value')
+    mutation.mutate(values)
   }
 
   return (
@@ -129,11 +149,9 @@ export default function AddDish() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="main-course">Main Course</SelectItem>
-                      <SelectItem value="starter">Starter</SelectItem>
-                      <SelectItem value="dessert">Dessert</SelectItem>
-                      <SelectItem value="beverage">Beverage</SelectItem>
-                      <SelectItem value="snack">Snack</SelectItem>
+                      {Dish_Categories.map((item: {value: string, title: string}) =>
+                        <SelectItem value={item.value}>{item.title}</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

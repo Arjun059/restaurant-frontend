@@ -3,6 +3,8 @@ import {Badge} from '#/components/ui/badge'
 import {useState} from 'react'
 import {DishDetail} from './dish-detail'
 import RatingStars from '../../components/rating-stars'
+import {useQuery} from '@tanstack/react-query'
+import {fetcher} from '../../utils/fetcher'
 
 const images = [
   'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -93,21 +95,30 @@ const dishes = [
 
 export default function DishesList() {
   const [selectedDish, setSelectedDish] = useState<typeof dishes[0] | null>(null)
+  const queryResp = useQuery<any[]>({
+    queryKey: ['dishes'],
+    queryFn: () => fetcher<any[]>('/dishes'),
+  });
+
+  if (queryResp.isError) {
+    throw new Error()
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-6 font-bold text-2xl text-gray-800">Popular Dishes Near You</h1>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {dishes.map((dish) => (
+        {queryResp.data?.map((dish) => (
           <Card
             key={dish.id}
             className="cursor-pointer transition-shadow hover:shadow-lg"
-            onClick={() => setSelectedDish(dish)}
+            onClick={() => setSelectedDish({...dish, images: getRandomImages()})}
           >
             <div className="relative">
               <img
-                src={dish.images[0]}
+                // src={dish.images[0]}
+                src={getRandomImages(1)[0]}
                 alt={dish.name}
                 className="h-48 w-full rounded-t-lg object-cover"
               />

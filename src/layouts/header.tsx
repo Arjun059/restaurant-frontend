@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import { Button } from '#/components/ui/button'
+import {Link} from 'react-router-dom'
+import {Button} from '#/components/ui/button'
 
 const Header = () => {
   return (
@@ -27,6 +27,10 @@ const Header = () => {
             </Button>
             <Button variant="ghost" asChild>
               <Link to="/dishes-list">Dishes List</Link>
+            </Button>
+            {/* TODO: remove after test */}
+            <Button variant="ghost" asChild>
+              <Link to="/admin/dashboard">Admin</Link>
             </Button>
           </nav>
         </div>

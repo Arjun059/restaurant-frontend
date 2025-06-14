@@ -1,13 +1,13 @@
-import { cn } from '#/lib/utils'
-import { Button } from '#/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#/components/ui/card'
-import { Input } from '#/components/ui/input'
-import { Label } from '#/components/ui/label'
-import { Link } from 'react-router-dom'
+import {cn} from '#/lib/utils'
+import {Button} from '#/components/ui/button'
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '#/components/ui/card'
+import {Input} from '#/components/ui/input'
+import {Label} from '#/components/ui/label'
+import {Link} from 'react-router-dom'
 import useStore from '#/store'
-import { useMutation } from '@tanstack/react-query'
-import { useToast } from '#/hooks/use-toast'
-import { useForm } from 'react-hook-form'
+import {useMutation} from '@tanstack/react-query'
+import {toast} from "sonner"
+import {useForm} from 'react-hook-form'
 import {
   Form,
   FormField,
@@ -17,11 +17,10 @@ import {
   FormItem,
   FormLabel,
 } from '#/components/ui/form'
-import { fetcher } from '#/utils/fetcher'
+import {fetcher} from '#/utils/fetcher'
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
-  const { setAuthValue, setRestaurant }: any = useStore()
-  const { toast } = useToast()
+export function LoginForm({className, ...props}: React.ComponentPropsWithoutRef<'div'>) {
+  const {setAuthValue, setRestaurant}: any = useStore()
   const mutation = useMutation({
     mutationFn: (formData: any) => {
       return fetcher('/restaurant/sign-in', {
@@ -30,15 +29,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       })
     },
     onSuccess: (data) => {
-      setAuthValue({ token: data.token })
+      setAuthValue({token: data.token})
       setRestaurant(data.restaurant)
     },
-    onError: ({ message }: any) => {
-      toast({
-        variant: 'destructive',
-        title: 'User not found',
-        description: message,
-      })
+    onError: ({message}: any) => {
+      toast.error('User not found',)
     },
   })
 
@@ -70,7 +65,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                   <FormField
                     control={form.control}
                     name="email"
-                    render={({ field }) => (
+                    render={({field}) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
@@ -95,7 +90,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                   <FormField
                     control={form.control}
                     name="password"
-                    render={({ field }) => (
+                    render={({field}) => (
                       <FormItem>
                         <FormControl>
                           <Input placeholder="password" {...field} />

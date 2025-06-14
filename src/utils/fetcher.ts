@@ -1,22 +1,83 @@
 // utils/fetcher.ts
 import { BASE_URL } from './constants'
 
-export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
-  const res = await fetch(BASE_URL + url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(options?.headers || {}),
-    },
-  })
+// export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
+//   try {
+//     const res = await fetch(BASE_URL + url, {
+//       ...options,
+//       headers: {
+//         'Content-Type': 'application/json',
+//         ...(options?.headers || {}),
+//       },
+//     })
 
-  const data = await res.json()
+//     if (!res.ok) {
+//       // Optional: throw structured error
+//       const message = 'An error occurred'
+//       throw new Error(message)
+//     }
 
-  if (!res.ok) {
-    // Optional: throw structured error
-    const message = data?.message || 'An error occurred'
-    throw new Error(message)
+//     const data = await res.json()
+//     console.log(data, 'API: add dish resp')
+//     if (data.error) {
+//       throw new Error(data.message)
+//     }
+
+//     return isJson(data.data) ? data.data : {}
+//   } catch (e: any) {
+//     console.log(e, 'this is ee')
+//     throw new Error(e?.message)
+//   }
+// }
+
+function isJson(value: any) {
+  try {
+    JSON.stringify(value)
+    return true
+  } catch {
+    return false
   }
+}
 
-  return data.data
+export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
+  try {
+    const res = await fetch(BASE_URL + url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options?.headers || {}),
+      },
+    })
+
+    if (!res.ok) {
+      // Try to parse error body
+      let errorMessage = 'An error occurred'
+      try {
+        const errorBody = await res.json()
+        errorMessage = errorBody?.message || errorMessage
+      } catch {
+        // response is not JSON
+        const text = await res.text()
+        errorMessage = text || errorMessage
+      }
+      throw new Error(errorMessage)
+    }
+
+    // Check content-type header before parsing as JSON
+    const contentType = res.headers.get('content-type')
+    if (!contentType?.includes('application/json')) {
+      const rawText = await res.text()
+      throw new Error(rawText)
+    }
+
+    const data = await res.json()
+
+    if (data?.error) {
+      throw new Error(data.message)
+    }
+
+    return isJson(data?.data) ? data.data : ({} as T)
+  } catch (e: any) {
+    throw new Error(e?.message || 'Unknown error')
+  }
 }
