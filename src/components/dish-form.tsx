@@ -1,17 +1,16 @@
-import { useState } from 'react'
-import { Button } from '#/components/ui/button'
-import { Input } from '#/components/ui/input'
-import { Label } from '#/components/ui/label'
-import { Textarea } from '#/components/ui/textarea'
+import {useState} from 'react'
+import {Button} from '#/components/ui/button'
+import {Input} from '#/components/ui/input'
+import {Label} from '#/components/ui/label'
+import {Textarea} from '#/components/ui/textarea'
 import ImageUploader from './image-uploader'
 
-import { type UploadItem } from './image-uploader'
 
 interface DishFormData {
   name: string
   description: string
   price: string
-  images: UploadItem[]
+  images: File[]
 }
 
 interface DishFormProps {
@@ -19,7 +18,7 @@ interface DishFormProps {
   initialData?: Partial<DishFormData>
 }
 
-export default function DishForm({ onSubmit, initialData }: DishFormProps) {
+export default function DishForm({onSubmit, initialData}: DishFormProps) {
   const [formData, setFormData] = useState<DishFormData>({
     name: initialData?.name || '',
     description: initialData?.description || '',
@@ -32,7 +31,7 @@ export default function DishForm({ onSubmit, initialData }: DishFormProps) {
     onSubmit(formData)
   }
 
-  const handleImagesChange = (files: UploadItem[]) => {
+  const handleImagesChange = (files: File[]) => {
     setFormData((prev) => ({
       ...prev,
       images: files,
@@ -46,7 +45,7 @@ export default function DishForm({ onSubmit, initialData }: DishFormProps) {
         <Input
           id="name"
           value={formData.name}
-          onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({...prev, name: e.target.value}))}
           placeholder="Enter dish name"
           required
         />
@@ -57,7 +56,7 @@ export default function DishForm({ onSubmit, initialData }: DishFormProps) {
         <Textarea
           id="description"
           value={formData.description}
-          onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({...prev, description: e.target.value}))}
           placeholder="Enter dish description"
           required
         />
@@ -69,7 +68,7 @@ export default function DishForm({ onSubmit, initialData }: DishFormProps) {
           id="price"
           type="number"
           value={formData.price}
-          onChange={(e) => setFormData((prev) => ({ ...prev, price: e.target.value }))}
+          onChange={(e) => setFormData((prev) => ({...prev, price: e.target.value}))}
           placeholder="Enter price"
           required
         />

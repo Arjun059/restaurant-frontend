@@ -32,7 +32,7 @@ export function LoginForm({className, ...props}: React.ComponentPropsWithoutRef<
       setAuthValue({token: data.token})
       setRestaurant(data.restaurant)
     },
-    onError: ({message}: any) => {
+    onError: () => {
       toast.error('User not found',)
     },
   })
