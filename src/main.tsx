@@ -21,8 +21,6 @@ const queryClient = new QueryClient({
   },
 })
 
-
-
 const rootElement = document.getElementById('root')
 
 if (!rootElement) {
@@ -38,6 +36,6 @@ ReactDOM.createRoot(rootElement).render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>
-    <Toaster richColors={true} position='top-center' />
+    <Toaster position='top-center' closeButton />
   </React.StrictMode>
 )

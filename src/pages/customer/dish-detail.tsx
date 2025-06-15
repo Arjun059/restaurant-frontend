@@ -13,7 +13,7 @@ interface DishDetailProps {
     description: string
     price: number
     rating: number
-    deliveryTime?: string
+    preparationTime?: string
     images: string[]
     restaurant: string
     veg: boolean
@@ -129,10 +129,10 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
                 <span className="font-medium">({dish.rating})</span>
               </div>
             </div>
-            {dish.deliveryTime && (
+            {dish.preparationTime && (
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-gray-500" />
-                <span className="font-medium">{dish.deliveryTime}</span>
+                <span className="font-medium">{dish.preparationTime}</span>
               </div>
             )}
             <div className="flex items-center gap-2">

@@ -2,23 +2,23 @@ export const BASE_URL = 'http://localhost:4000'
 
 export const Dish_Categories = [
   {
-    title: 'Main Course',
+    label: 'Main Course',
     value: 'main-course',
   },
   {
-    title: 'Starter',
+    label: 'Starter',
     value: 'starter',
   },
   {
-    title: 'Dessert',
+    label: 'Dessert',
     value: 'dessert',
   },
   {
-    title: 'Beverage',
+    label: 'Beverage',
     value: 'beverage',
   },
   {
-    title: 'Snack',
+    label: 'Snack',
     value: 'snack',
   },
 ]

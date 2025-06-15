@@ -14,13 +14,7 @@ import {
 } from '#/components/ui/form'
 import {Input} from '#/components/ui/input'
 import {Textarea} from '#/components/ui/textarea'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '#/components/ui/select'
+import Select from 'react-select'
 import {Switch} from '#/components/ui/switch'
 import {toast} from 'sonner'
 
@@ -41,11 +35,13 @@ const foodFormSchema = z.object({
   price: z.coerce.number().min(1, {
     message: 'Price must be at least ₹1.',
   }),
-  category: z.string({
-    required_error: 'Please select a category.',
-  }).min(1, {
-    message: 'Please select a category.',
-  }),
+  categories: z.array(z.object({
+    value: z.string(),
+    label: z.string()
+  }))
+    .min(1, {
+      message: 'Please select a category.',
+    }),
   veg: z.boolean().default(true),
   preparationTime: z.string().min(1, {
     message: 'Please enter preparation time.',
@@ -88,9 +84,9 @@ export default function AddDish() {
     resolver: zodResolver(foodFormSchema),
     defaultValues: {
       name: 'dahi balle',
-      description: ' tasti dahi balle',
+      description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took",
       price: 40,
-      category: Dish_Categories[0]?.value,
+      categories: [],
       veg: false,
       preparationTime: '10',
       images: [],
@@ -100,26 +96,30 @@ export default function AddDish() {
     mode: 'onChange',
   })
 
-  const onSubmit: SubmitHandler<any> = async (values) => {
+  console.log(form.watch('categories'), "category")
 
+  const onSubmit: SubmitHandler<any> = async (values) => {
 
     const formData = new FormData();
     formData.append('name', values.name);
     formData.append('description', values.description);
     formData.append('price', String(values.price));
-    formData.append('category', values.category);
     formData.append('veg', String(values.veg));
     formData.append('preparationTime', values.preparationTime);
     formData.append('bestSeller', String(values.bestSeller));
     formData.append('rating', String(values.rating));
+
+    if (values.categories?.length) {
+      values.categories.forEach((item: any) => {
+        formData.append('categories', item.value);
+      })
+    }
 
     // Append multiple images
     values.images.forEach((image: File) => {
       formData.append('images', image); // same key 'images' for all
     });
 
-    console.log(values, 'json value add dish')
-    console.log(formData, "formdata value")
     mutation.mutate(formData)
   }
 
@@ -162,22 +162,22 @@ export default function AddDish() {
             {/* Category */}
             <FormField
               control={form.control as any}
-              name="category"
+              name="categories"
               render={({field}) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {Dish_Categories.map((item: {value: string, title: string}) =>
-                        <SelectItem value={item.value}>{item.title}</SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Select
+                      defaultValue={[Dish_Categories[0]]}
+                      isMulti
+                      name="categories"
+                      options={Dish_Categories}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -298,7 +298,7 @@ export default function AddDish() {
             <Button type="button" variant="outline" onClick={() => form.reset()}>
               Reset
             </Button>
-            <Button type="submit">Add Food Item</Button>
+            <Button loading={mutation.isPending} type="submit">Add Food Item</Button>
           </div>
         </form>
       </Form>
