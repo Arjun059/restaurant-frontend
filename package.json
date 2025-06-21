@@ -51,6 +51,7 @@
         "embla-carousel-react": "^8.6.0",
         "gotrue-js": "^0.9.29",
         "html5-qrcode": "^2.3.8",
+        "lodash.groupby": "^4.6.0",
         "lucide-react": "^0.453.0",
         "next-themes": "^0.4.6",
         "react": "^18.3.1",

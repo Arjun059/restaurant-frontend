@@ -1,6 +1,6 @@
 import {Card, CardContent, CardHeader, CardTitle} from '#/components/ui/card'
 import {Badge} from '#/components/ui/badge'
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {DishDetail} from './dish-detail'
 import RatingStars from '../../components/rating-stars'
 import {useQuery} from '@tanstack/react-query'
@@ -19,83 +19,12 @@ function getRandomImages(count: number = 3): string[] {
   return shuffled.slice(0, count)
 }
 
-const dishes = [
-  {
-    id: 1,
-    name: 'Chicken Biryani',
-    description: 'Hyderabadi style dum biryani with succulent chicken pieces',
-    price: 249,
-    rating: 4.5,
-    deliveryTime: '30-40 mins',
-    images: getRandomImages(),
-    restaurant: 'Biryani House',
-    veg: false,
-    bestSeller: true,
-  },
-  {
-    id: 2,
-    name: 'Paneer Butter Masala',
-    description: 'Cottage cheese in rich creamy tomato gravy',
-    price: 199,
-    rating: 4.2,
-    deliveryTime: '25-35 mins',
-    images: getRandomImages(),
-    restaurant: 'North Indian Delight',
-    veg: true,
-    bestSeller: true,
-  },
-  {
-    id: 3,
-    name: 'Veg Supreme Pizza',
-    description: 'Loaded with capsicum, onion, corn, olives and jalapenos',
-    price: 299,
-    rating: 4.0,
-    images: getRandomImages(),
-    restaurant: 'Pizza Hub',
-    veg: true,
-    bestSeller: false,
-  },
-  {
-    id: 4,
-    name: 'Chicken Burger',
-    description: 'Juicy chicken patty with lettuce and mayo',
-    price: 149,
-    rating: 3.9,
-    deliveryTime: '20-30 mins',
-    images: getRandomImages(),
-    restaurant: 'Burger King',
-    veg: false,
-    bestSeller: false,
-  },
-  {
-    id: 5,
-    name: 'Masala Dosa',
-    description: 'Crispy rice crepe stuffed with spiced potato',
-    price: 99,
-    rating: 4.3,
-    deliveryTime: '15-25 mins',
-    images: getRandomImages(),
-    restaurant: 'South Indian Cafe',
-    veg: true,
-    bestSeller: true,
-  },
-  {
-    id: 6,
-    name: 'Chocolate Lava Cake',
-    description: 'Warm chocolate cake with molten center, served with ice cream',
-    price: 179,
-    rating: 4.6,
-    deliveryTime: '10-15 mins',
-    images: getRandomImages(),
-    restaurant: 'Dessert Palace',
-    veg: true,
-    bestSeller: true,
-  },
-]
 
 export default function DishesList() {
-  const [selectedDish, setSelectedDish] = useState<typeof dishes[0] | null>(null)
-  const queryResp = useQuery<any[]>({
+  const [selectedDish, setSelectedDish] = useState<any | null>(null)
+  const [categories, setCategories] = useState<string[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<any>(undefined)
+  const queryResp = useQuery<any>({
     queryKey: ['dishes'],
     queryFn: () => fetcher<any[]>('/dishes'),
   });
@@ -106,53 +35,89 @@ export default function DishesList() {
 
   console.log(queryResp.data, 'response data')
 
+  const groupedDishesByCategory: any = useMemo(() => {
+    const _groupedDishesByCategory: any = {}
+    queryResp?.data?.forEach((dish: any) => {
+      dish.categories.forEach((category: any) => {
+        if (!_groupedDishesByCategory[category]) {
+          _groupedDishesByCategory[category] = [];
+        }
+        _groupedDishesByCategory[category].push(dish);
+      });
+    });
+
+    const cates = Object.keys(_groupedDishesByCategory)
+    setCategories(cates)
+    if (!selectedCategory) setSelectedCategory(cates[0])
+    return _groupedDishesByCategory
+  }, [])
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-6 font-bold text-2xl text-gray-800">Popular Dishes Near You</h1>
+      <div className='grid grid-cols-12'>
+        <div className='col-span-4 md:col-span-2'>
+          <div className="col-span-2 pr-4 border-r">
+            <ul className="space-y-2">
+              {categories.map((cate, index) => (
+                <li
+                  key={index}
+                  className={`cursor-pointer rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-medium text-green-700' : 'hover:bg-gray-100 text-gray-800'
+                    }`}
+                  onClick={() => setSelectedCategory(cate)} // if you want filtering
+                >
+                  {cate}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {queryResp.data?.map((dish) => (
-          <Card
-            key={dish.id}
-            className="cursor-pointer transition-shadow hover:shadow-lg"
-            onClick={() => setSelectedDish({...dish, images: getRandomImages()})}
-          >
-            <div className="relative">
-              <img
-                // src={dish.images[0]}
-                src={getRandomImages(1)[0]}
-                alt={dish.name}
-                className="h-48 w-full rounded-t-lg object-cover"
-              />
-              {dish.bestSeller && (
-                <Badge className="absolute top-2 left-2 bg-amber-400 text-amber-900">
-                  Bestseller
-                </Badge>
-              )}
-              <div
-                className={`absolute bottom-2 left-2 flex h-5 w-5 items-center justify-center rounded-full ${dish.veg ? 'bg-green-500' : 'bg-red-500'
-                  }`}
-              >
-                <div className="h-2 w-2 rounded-full bg-white" />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 col-span-8 md:col-span-10">
+          {groupedDishesByCategory[selectedCategory ?? categories[0]]?.map((dish: any) => (
+            <Card
+              key={dish.id}
+              className="cursor-pointer transition-shadow hover:shadow-lg"
+              onClick={() => setSelectedDish({...dish, images: getRandomImages(3)})}
+            >
+              <div className="relative">
+                <img
+                  // src={dish.images[0]}
+                  src={getRandomImages(1)[0]}
+                  alt={dish.name}
+                  className="h-48 w-full rounded-t-lg object-cover"
+                />
+                {dish.bestSeller && (
+                  <Badge className="absolute top-2 left-2 bg-amber-400 text-amber-900">
+                    Bestseller
+                  </Badge>
+                )}
+                <div
+                  className={`absolute bottom-2 left-2 flex h-5 w-5 items-center justify-center rounded-full ${dish.veg ? 'bg-green-500' : 'bg-red-500'
+                    }`}
+                >
+                  <div className="h-2 w-2 rounded-full bg-white" />
+                </div>
               </div>
-            </div>
 
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg">{dish.name}</CardTitle>
-            </CardHeader>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">{dish.name}</CardTitle>
+              </CardHeader>
 
-            <CardContent>
-              <p className="mb-3 line-clamp-2 text-gray-600 text-sm">{dish.description}</p>
+              <CardContent>
+                <p className="mb-3 line-clamp-2 text-gray-600 text-sm">{dish.description}</p>
 
-              <div className="mb-3 flex items-center justify-between text-sm">
-                <span className="flex items-center font-medium text-green-600">
-                  <RatingStars rating={dish.rating} readOnly />
-                </span>
-                <span className="font-bold">₹{dish.price}</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                <div className="mb-3 flex items-center justify-between text-sm">
+                  <span className="flex items-center font-medium text-green-600">
+                    <RatingStars rating={dish.rating} readOnly />
+                  </span>
+                  <span className="font-bold">₹{dish.price}</span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
       </div>
 
       {selectedDish && (
