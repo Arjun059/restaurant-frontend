@@ -1,5 +1,6 @@
 import type * as React from 'react'
 import {Link} from 'react-router-dom'
+import {isMobile} from 'react-device-detect'
 import {
   ArrowUpCircleIcon,
   BarChartIcon,
@@ -170,8 +171,9 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
         <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className=''>
         <NavUser user={data.user} />
+        {isMobile && <div style={{height: 200}} />}
       </SidebarFooter>
     </Sidebar>
   )

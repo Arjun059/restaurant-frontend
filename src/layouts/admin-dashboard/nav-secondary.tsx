@@ -3,6 +3,7 @@
 import type * as React from 'react'
 import type {LucideIcon} from 'lucide-react'
 import {Link} from 'react-router-dom'
+import {isMobile} from 'react-device-detect';
 
 import {
   SidebarGroup,
@@ -10,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '#/components/ui/sidebar'
 
 export function NavSecondary({
@@ -22,13 +24,19 @@ export function NavSecondary({
     icon: LucideIcon
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const {toggleSidebar} = useSidebar()
+  const onMenuClickCallback = () => {
+    if (isMobile) {
+      toggleSidebar
+    }
+  }
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild onClick={onMenuClickCallback}>
                 <Link to={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
