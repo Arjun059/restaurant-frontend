@@ -35,6 +35,9 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      {
+        console.log(import.meta.env.VITE_API_URL, 'imported api url VITE_API_URL') ?? 'hell world'
+      }
     </QueryClientProvider>
     <Toaster position='top-center' closeButton />
   </React.StrictMode>

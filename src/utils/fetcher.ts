@@ -1,9 +1,9 @@
 // utils/fetcher.ts
-import { BASE_URL } from './constants'
+const API_URL = import.meta.env.VITE_API_URL
 
 // export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
 //   try {
-//     const res = await fetch(BASE_URL + url, {
+//     const res = await fetch(API_URL + url, {
 //       ...options,
 //       headers: {
 //         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const fetcher = async <T = any>(url: string, options?: RequestInit): Prom
       }
     }
 
-    const res = await fetch(BASE_URL + url, {
+    const res = await fetch(API_URL + url, {
       ...options,
       headers,
     })
