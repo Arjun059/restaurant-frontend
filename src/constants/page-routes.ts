@@ -11,6 +11,7 @@ export const ROUTES = {
   // Dashboard routes
   ADMIN_DASHBOARD: '/admin/dashboard',
   ADMIN_DASHBOARD_ADD_DISH: '/admin/dashboard/add-dish',
+  ADMIN_DASHBOARD_DISHED_LIST: '/admin/dashboard/dishes-list',
 
   // User dashboard routes
   CUSTOMER_DASHBOARD: '/dashboard',

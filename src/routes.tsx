@@ -13,6 +13,7 @@ const UserDashboard = lazy(() => import('./pages/customer/dashboard'))
 const Dashboard = lazy(() => import('./pages/restaurant-dashboard/dashboard'))
 const ScanQr = lazy(() => import('./pages/qr-code-page'))
 const AddDish = lazy(() => import('./pages/restaurant-dashboard/add-dish'))
+const RestaurantDishesList = lazy(() => import('./pages/restaurant-dashboard/dishes-list'))
 const DishesList = lazy(() => import('./pages/customer/dishes-list'))
 const Error404 = lazy(() => import('./pages/404'))
 const ErrorBoundaryPage = lazy(() => import('./pages/error-boundary'))
@@ -68,6 +69,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <AddDish />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <RestaurantDishesList />
               </Suspense>
             ),
           },

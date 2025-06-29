@@ -4,7 +4,7 @@
     "version": "0.3.0",
     "type": "module",
     "scripts": {
-        "dev": "vite --port 3000 --host 192.168.219.71",
+        "dev": "vite --port 3000 --host localhost",
         "build": "tsc -b && vite build",
         "check": "biome check . --write",
         "format": "biome format . --write",

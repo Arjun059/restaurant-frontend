@@ -13,6 +13,7 @@ import {
   FolderIcon,
   HelpCircleIcon,
   LayoutDashboardIcon,
+  List,
   Plus,
   SearchIcon,
   SettingsIcon,
@@ -50,6 +51,11 @@ const data = {
       title: 'Add Dish',
       url: ROUTES.ADMIN_DASHBOARD_ADD_DISH,
       icon: Plus,
+    },
+    {
+      title: 'Dishes',
+      url: ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
+      icon: List,
     },
     {
       title: 'Analytics',

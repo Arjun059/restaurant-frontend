@@ -24,7 +24,7 @@ export function NavMain({
   }[]
 }) {
   const navigate = useNavigate()
-  const {setActiveAdminDashboardMenu} = useStore()
+  const {setActiveAdminDashboardMenu, activeAdminDashboardMenu} = useStore()
   const {toggleSidebar} = useSidebar()
 
   const handleMenuClick = (url: string, title: string) => {
@@ -62,7 +62,7 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title} onClick={() => handleMenuClick(item.url, item.title)}>
+              <SidebarMenuButton tooltip={item.title} isActive={item.title === activeAdminDashboardMenu} onClick={() => handleMenuClick(item.url, item.title)}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </SidebarMenuButton>

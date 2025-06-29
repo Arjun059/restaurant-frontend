@@ -27,7 +27,7 @@ export function NavSecondary({
   const {toggleSidebar} = useSidebar()
   const onMenuClickCallback = () => {
     if (isMobile) {
-      toggleSidebar
+      toggleSidebar()
     }
   }
   return (

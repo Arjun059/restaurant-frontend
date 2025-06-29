@@ -295,7 +295,9 @@ export default function AddDish() {
           </div>
 
           <div className="flex justify-end gap-4">
-            <Button type="button" variant="outline" onClick={() => form.reset()}>
+            <Button type="button" variant="outline"
+              disabled={mutation.isPending}
+              onClick={() => form.reset()}>
               Reset
             </Button>
             <Button loading={mutation.isPending} type="submit">Add Food Item</Button>
