@@ -3,7 +3,7 @@
 import {Button} from '#/components/ui/button'
 import {useNavigate} from 'react-router'
 import {Utensils} from 'lucide-react'
-import {ROUTES} from '../constants/page-routes'
+import {PAGE_ROUTES} from '../constants/page-routes'
 
 export default function NotFound() {
   const navigate = useNavigate()
@@ -29,7 +29,7 @@ export default function NotFound() {
             <Button onClick={() => navigate(-1)} variant="outline" className="w-full sm:w-auto">
               Go Back
             </Button>
-            <Button onClick={() => navigate(ROUTES.DISHES_LIST)} className="w-full sm:w-auto">
+            <Button onClick={() => navigate(PAGE_ROUTES.DISHES_LIST)} className="w-full sm:w-auto">
               Browse Dishes
             </Button>
           </div>

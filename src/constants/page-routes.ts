@@ -1,7 +1,9 @@
-export const ROUTES = {
+export const PAGE_ROUTES = {
   // Auth routes
   LOGIN: '/login',
   SIGNUP: '/signup',
+
+  RESTAURANT_REGISTER: '/auth/restaurant/register',
 
   // Public routes
   HOME: '/',
@@ -22,4 +24,4 @@ export const ROUTES = {
 } as const
 
 // Type for route values
-export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES]
+export type RoutePath = (typeof PAGE_ROUTES)[keyof typeof PAGE_ROUTES]

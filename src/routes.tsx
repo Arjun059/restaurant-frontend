@@ -3,7 +3,7 @@ import {lazy, Suspense} from 'react'
 
 import {CustomerLayout, AdminLayout, RootLayout} from './layouts'
 import {AuthLayout} from './layouts/auth-layout'
-import {ROUTES} from './constants/page-routes'
+import {PAGE_ROUTES} from './constants/page-routes'
 
 // Lazy load all page components
 const Home = lazy(() => import('./pages/home'))
@@ -17,6 +17,9 @@ const RestaurantDishesList = lazy(() => import('./pages/restaurant-dashboard/dis
 const DishesList = lazy(() => import('./pages/customer/dishes-list'))
 const Error404 = lazy(() => import('./pages/404'))
 const ErrorBoundaryPage = lazy(() => import('./pages/error-boundary'))
+
+const RestaurantRegister = lazy(() => import('./pages/auth/restaurant-register'))
+
 
 import SkeletonPage from '#/components/skeletons/page'
 import SkeletonDishesList from './components/skeletons/dishes-list'
@@ -44,7 +47,7 @@ export const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
           {
-            path: ROUTES.LOGIN,
+            path: PAGE_ROUTES.LOGIN,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Login />
@@ -52,10 +55,18 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ROUTES.SIGNUP,
+            path: PAGE_ROUTES.SIGNUP,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Signup />
+              </Suspense>
+            ),
+          },
+          {
+            path: PAGE_ROUTES.RESTAURANT_REGISTER,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <RestaurantRegister />
               </Suspense>
             ),
           },
@@ -65,7 +76,7 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           {
-            path: ROUTES.ADMIN_DASHBOARD_ADD_DISH,
+            path: PAGE_ROUTES.ADMIN_DASHBOARD_ADD_DISH,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <AddDish />
@@ -73,7 +84,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
+            path: PAGE_ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <RestaurantDishesList />
@@ -81,7 +92,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ROUTES.ADMIN_DASHBOARD,
+            path: PAGE_ROUTES.ADMIN_DASHBOARD,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Dashboard />
@@ -94,7 +105,7 @@ export const router = createBrowserRouter([
         element: <CustomerLayout />,
         children: [
           {
-            path: ROUTES.HOME,
+            path: PAGE_ROUTES.HOME,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Home />
@@ -102,7 +113,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ROUTES.CUSTOMER_DASHBOARD,
+            path: PAGE_ROUTES.CUSTOMER_DASHBOARD,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <UserDashboard />
@@ -110,7 +121,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ROUTES.SCAN_QR,
+            path: PAGE_ROUTES.SCAN_QR,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <ScanQr />
@@ -118,7 +129,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: ROUTES.DISHES_LIST,
+            path: PAGE_ROUTES.DISHES_LIST,
             element: (
               <Suspense fallback={<SkeletonDishesList />}>
                 <DishesList />
@@ -128,7 +139,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: ROUTES.NOT_FOUND,
+        path: PAGE_ROUTES.NOT_FOUND,
         element: (
           <Suspense fallback={<SkeletonPage />}>
             <Error404 />

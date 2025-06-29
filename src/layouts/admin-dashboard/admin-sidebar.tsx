@@ -32,7 +32,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '#/components/ui/sidebar'
-import {ROUTES} from '#/constants/page-routes'
+import {PAGE_ROUTES} from '#/constants/page-routes'
 import {NavDocuments} from './nav-documents'
 
 const data = {
@@ -44,17 +44,17 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: ROUTES.ADMIN_DASHBOARD,
+      url: PAGE_ROUTES.ADMIN_DASHBOARD,
       icon: LayoutDashboardIcon,
     },
     {
       title: 'Add Dish',
-      url: ROUTES.ADMIN_DASHBOARD_ADD_DISH,
+      url: PAGE_ROUTES.ADMIN_DASHBOARD_ADD_DISH,
       icon: Plus,
     },
     {
       title: 'Dishes',
-      url: ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
+      url: PAGE_ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
       icon: List,
     },
     {

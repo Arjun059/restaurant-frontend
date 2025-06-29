@@ -10,7 +10,7 @@ import {
   useSidebar,
 } from '#/components/ui/sidebar'
 import {useNavigate} from 'react-router-dom'
-import {ROUTES} from '#/constants/page-routes'
+import {PAGE_ROUTES} from '#/constants/page-routes'
 import useStore from '#/store'
 import {isMobile} from 'react-device-detect';
 
@@ -41,7 +41,7 @@ export function NavMain({
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
-              onClick={() => {handleMenuClick(ROUTES.ADMIN_DASHBOARD_ADD_DISH, 'Add Dish')}}
+              onClick={() => {handleMenuClick(PAGE_ROUTES.ADMIN_DASHBOARD_ADD_DISH, 'Add Dish')}}
               tooltip="Add Dish"
               className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
             >
