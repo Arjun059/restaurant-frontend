@@ -6,13 +6,29 @@ import RatingStars from '../../components/rating-stars'
 import {useQuery} from '@tanstack/react-query'
 import {fetcher} from '../../utils/fetcher'
 
+
 const images = [
   'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   'https://plus.unsplash.com/premium_photo-1712756241096-cedbab03cd52?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fHw%3D',
   'https://images.unsplash.com/photo-1468777675496-5782faaea55b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI1fHx8ZW58MHx8fHx8',
   'https://images.unsplash.com/photo-1578167731266-cabac4159bed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU2fHx8ZW58MHx8fHx8',
   'https://plus.unsplash.com/premium_photo-1663853051660-91bd9b822799?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzNHx8fGVufDB8fHx8fA%3D%3D',
-]
+];
+
+import {
+  Utensils,
+  IceCream,
+  Coffee,
+  Sandwich
+} from "lucide-react";
+
+const categoryIcons = {
+  starter: <Utensils className="w-4 h-4 mr-2 text-[#DAA520]" />,
+  dessert: <IceCream className="w-4 h-4 mr-2 text-[#DAA520]" />,
+  beverage: <Coffee className="w-4 h-4 mr-2 text-[#DAA520]" />,
+  main_course: <Utensils className="w-4 h-4 mr-2 text-[#DAA520]" />,
+  snack: <Sandwich className="w-4 h-4 mr-2 text-[#DAA520]" />,
+};
 
 function getRandomImages(count: number = 3): string[] {
   const shuffled = [...images].sort(() => 0.5 - Math.random())
@@ -53,27 +69,28 @@ export default function DishesList() {
   }, [])
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-6 font-bold text-2xl text-gray-800">Popular Dishes Near You</h1>
-      <div className='grid grid-cols-12'>
+    <div className="container mx-auto px-4 py-4">
+      <h1 className="mb-6 font-semibold text-lg text-gray-800">Popular Dishes Near You</h1>
+      <div className='grid grid-cols-12 gap-4'>
         <div className='col-span-4 md:col-span-2'>
-          <div className="col-span-2 pr-4 border-r">
+          <div className="col-span-2">
             <ul className="space-y-2">
               {categories.map((cate, index) => (
                 <li
                   key={index}
-                  className={`cursor-pointer rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-medium text-green-700' : 'hover:bg-gray-100 text-gray-800'
+                  className={`cursor-pointer  flex items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-medium text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 text-gray-800'
                     }`}
                   onClick={() => setSelectedCategory(cate)} // if you want filtering
                 >
-                  {cate}
+                  {categoryIcons[cate as keyof typeof categoryIcons]}
+                  <span className='text-sm'>{cate}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 col-span-8 md:col-span-10">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 col-span-8 md:col-span-10">
           {groupedDishesByCategory[selectedCategory ?? categories[0]]?.map((dish: any) => (
             <Card
               key={dish.id}
@@ -100,11 +117,11 @@ export default function DishesList() {
                 </div>
               </div>
 
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">{dish.name}</CardTitle>
+              <CardHeader className="p-2 pt-3">
+                <CardTitle className="text-md">{dish.name}</CardTitle>
               </CardHeader>
 
-              <CardContent>
+              <CardContent className='p-2 pt-0'>
                 <p className="mb-3 line-clamp-2 text-gray-600 text-sm">{dish.description}</p>
 
                 <div className="mb-3 flex items-center justify-between text-sm">

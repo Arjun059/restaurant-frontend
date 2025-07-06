@@ -10,7 +10,7 @@ export function CustomerLayout() {
   // }
 
   return (
-    <main className="flex h-full min-h-screen items-center bg-gray-100 dark:bg-slate-900">
+    <main className="h-full">
       {/* <SideNavbar collapsed={false} /> */}
       <Outlet />
     </main>

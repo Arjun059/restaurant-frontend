@@ -17,6 +17,7 @@ const queryClient = new QueryClient({
     queries: {
       // @ts-ignore
       suspense: true,
+      retry: 1,
     },
   },
 })

@@ -284,7 +284,7 @@ export default function AddDish() {
                   <FormControl>
                     <Textarea
                       placeholder="Hyderabadi style dum biryani with succulent chicken pieces"
-                      className="resize-none"
+                      className="resize-none h-36"
                       {...field}
                     />
                   </FormControl>

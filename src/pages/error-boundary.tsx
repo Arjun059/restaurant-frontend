@@ -1,12 +1,12 @@
 'use client'
-import { Button } from '#/components/ui/button'
-import { useNavigate } from 'react-router'
-import { AlertTriangle, Utensils, RotateCw } from 'lucide-react'
-import { useRouteError } from 'react-router-dom'
+import {Button} from '#/components/ui/button'
+import {useNavigate} from 'react-router'
+import {AlertTriangle, Utensils, RotateCw} from 'lucide-react'
+import {useRouteError} from 'react-router-dom'
 
 export default function ErrorBoundaryPage() {
   const error = useRouteError() as any
-  const navigate = useNavigate() 
+  const navigate = useNavigate()
 
   // let errorMessage = "An unexpected error occurred";
   // if (isRouteErrorResponse(error)) {
@@ -40,11 +40,11 @@ export default function ErrorBoundaryPage() {
               variant="outline"
               className="w-full gap-2 sm:w-auto"
             >
-              <RotateCw className="h-4 w-4" />
+              <RotateCw className="h-4 w-4 mx-2" />
               Try Again
             </Button>
             <Button onClick={() => navigate('/')} className="w-full gap-2 sm:w-auto">
-              <Utensils className="h-4 w-4" />
+              <Utensils className="h-4 w-4 mx-2" />
               Return Home
             </Button>
           </div>
