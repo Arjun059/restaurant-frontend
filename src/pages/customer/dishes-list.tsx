@@ -1,10 +1,10 @@
-import {Card, CardContent, CardHeader, CardTitle} from '#/components/ui/card'
 import {Badge} from '#/components/ui/badge'
-import {useMemo, useState} from 'react'
-import {DishDetail} from './dish-detail'
-import RatingStars from '../../components/rating-stars'
+import {Card, CardContent, CardHeader, CardTitle} from '#/components/ui/card'
 import {useQuery} from '@tanstack/react-query'
+import {useMemo, useState} from 'react'
+import RatingStars from '../../components/rating-stars'
 import {fetcher} from '../../utils/fetcher'
+import {DishDetail} from './dish-detail'
 
 
 const images = [
@@ -16,11 +16,11 @@ const images = [
 ];
 
 import {
-  Utensils,
-  IceCream,
   Coffee,
-  Sandwich
-} from "lucide-react";
+  IceCream,
+  Sandwich,
+  Utensils
+} from "lucide-react"
 
 const categoryIcons = {
   starter: <Utensils className="w-4 h-4 mr-2 text-[#DAA520]" />,
@@ -78,7 +78,7 @@ export default function DishesList() {
               {categories.map((cate, index) => (
                 <li
                   key={index}
-                  className={`cursor-pointer  flex items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-medium text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 text-gray-800'
+                  className={`cursor-pointer flex sm:flex-row flex-col items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-medium text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 text-gray-800'
                     }`}
                   onClick={() => setSelectedCategory(cate)} // if you want filtering
                 >
