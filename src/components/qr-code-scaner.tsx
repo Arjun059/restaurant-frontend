@@ -1,4 +1,4 @@
-import  {Scanner as QrScanner}  from '@yudiel/react-qr-scanner'
+import {Scanner as QrScanner} from '@yudiel/react-qr-scanner'
 
 interface ScannerProps {
   qrCodeSuccessCallback: (decodedText: string) => void
@@ -8,9 +8,12 @@ interface ScannerProps {
 const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
   return (
     <div className="mx-auto flex h-full min-h-[calc(100vh-150px)] w-full max-w-sm items-center justify-center align-middle">
-      <div className="min-h-[300px] min-w-[300px] rounded-lg align-middle text-card-foreground shadow-sm">
+      <div className="min-h-[300px] bg-gray-200  min-w-[300px] rounded-lg align-middle text-card-foreground shadow-sm">
+        <h2 className='text-lg text-center mt-2 font-semibold'>
+          Scan Qr
+        </h2>
         <QrScanner
-          onScan	={(result:any) => {props.qrCodeSuccessCallback(result[0]?.rawValue)}}
+          onScan={(result: any) => {props.qrCodeSuccessCallback(result[0]?.rawValue)}}
           onError={(error: any) => props.qrCodeErrorCallback?.(error?.message || 'Unknown error')}
           constraints={{
             facingMode: 'environment'
