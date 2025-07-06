@@ -1,7 +1,33 @@
-import {Link} from 'react-router-dom'
 import {Button} from '#/components/ui/button'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger
+} from "#/components/ui/navigation-menu"
+import {Link} from 'react-router-dom'
+import {useIsMobile} from '../hooks/use-mobile'
+
+const menuItems = [
+  {
+    "label": "Scan QR",
+    "to": "/scan-qr"
+  },
+  {
+    "label": "Dishes List",
+    "to": "/dishes-list"
+  },
+  {
+    "label": "Admin",
+    "to": "/admin/dashboard"
+  }
+]
+
 
 const Header = () => {
+  const isMobile = useIsMobile()
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -12,30 +38,39 @@ const Header = () => {
             </Link>
           </div>
 
-          <nav className="flex items-center space-x-4">
-            {/* <Button variant="ghost" asChild>
-              <Link to="/">Home</Link>
-            </Button> */}
-            {/* <Button variant="ghost" asChild>
-              <Link to="/dashboard">Dashboard</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link to="/login">Login</Link>
-            </Button> */}
-            <Button variant="ghost" asChild>
-              <Link to="/scan-qr">Scan QR</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link to="/dishes-list">Dishes List</Link>
-            </Button>
-            {/* TODO: remove after test */}
-            <Button variant="ghost" asChild>
-              <Link to="/admin/dashboard">Admin</Link>
-            </Button>
-          </nav>
+          <NavigationMenu className='ms-auto'>
+            <NavigationMenuList className='w-full flex-wrap'>
+
+              {!isMobile && (
+                menuItems.map((item) => (
+                  <NavigationMenuItem asChild>
+                    <Button variant="ghost" asChild>
+                      <Link to={item.to}>{item.label}</Link>
+                    </Button>
+                  </NavigationMenuItem>
+                ))
+              )}
+
+              {isMobile && (
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    {menuItems.map((item) => (
+                      <NavigationMenuItem asChild className='w-full' key={item.label}>
+                        <Button variant="ghost" asChild>
+                          <Link to={item.to}>{item.label}</Link>
+                        </Button>
+                      </NavigationMenuItem>
+                    ))}
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              )}
+
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
-      </div>
-    </header>
+      </div >
+    </header >
   )
 }
 
