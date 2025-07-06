@@ -39,7 +39,7 @@ import {
 
 
 const RestaurantRegister = () => {
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState<number>(0)
   const totalSteps = 2
 
   const form = useForm()
@@ -147,12 +147,12 @@ const RestaurantRegister = () => {
                     className="font-medium"
                     size="sm"
                     onClick={handleBack}
-                    disabled={step === 0}
+                    disabled={step === 0 as number}
                   >
                     Back
                   </Button>
                   <Button type="submit" size="sm" className="font-medium">
-                    {step === 1 ? 'Submit' : 'Next'}
+                    {step === 1 as number ? 'Submit' : 'Next'}
                   </Button>
                 </div>
               </form>
@@ -190,7 +190,7 @@ const RestaurantRegister = () => {
                     className="font-medium"
                     size="sm"
                     onClick={handleBack}
-                    disabled={step === 0}
+                    disabled={step === 0 as number}
                   >
                     Back
                   </Button>
