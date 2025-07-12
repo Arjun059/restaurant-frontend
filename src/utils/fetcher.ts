@@ -91,6 +91,6 @@ export const fetcher = async <T = any>(url: string, options?: RequestInit): Prom
 
     return isJson(data?.data) ? data.data : ({} as T)
   } catch (e: any) {
-    throw new Error(e?.message || 'Unknown error')
+    throw e
   }
 }

@@ -56,11 +56,13 @@ const Header = () => {
                   <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     {menuItems.map((item) => (
+
                       <NavigationMenuItem asChild className='w-full' key={item.label}>
                         <Button variant="ghost" asChild>
                           <Link to={item.to}>{item.label}</Link>
                         </Button>
                       </NavigationMenuItem>
+
                     ))}
                   </NavigationMenuContent>
                 </NavigationMenuItem>

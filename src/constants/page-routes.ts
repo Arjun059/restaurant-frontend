@@ -1,7 +1,7 @@
 export const PAGE_ROUTES = {
   // Auth routes
-  LOGIN: '/login',
-  SIGNUP: '/signup',
+  LOGIN: '/auth/login',
+  SIGNUP: '/auth/signup',
 
   RESTAURANT_REGISTER: '/auth/restaurant/register',
 

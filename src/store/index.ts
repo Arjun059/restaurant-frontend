@@ -2,30 +2,14 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 interface StoreState {
-  auth: {
-    token: string | null
-    loggedIn: boolean
-  }
-  restaurant: {
-    name: string
-    createdAt: string
-    updatedAt: string
-  }
+  token: string | null
+  user: any
+  restaurant: any
+  loggedIn: boolean
   activeAdminDashboardMenu: string
   setAuthValue: (value: any) => void
   resetAuthValue: () => void
-  setRestaurant: (value: any) => void
   setActiveAdminDashboardMenu: (value: string) => void
-}
-
-const initAuthValue = {
-  token: null,
-  loggedIn: false,
-}
-const initRestaurant = {
-  name: '',
-  createdAt: '',
-  updatedAt: '',
 }
 
 const initActiveAdminDashboardMenu = 'Dashboard'
@@ -33,14 +17,20 @@ const initActiveAdminDashboardMenu = 'Dashboard'
 const useStore = create<StoreState>()(
   persist(
     (set) => ({
-      auth: initAuthValue,
-      restaurant: initRestaurant,
+      token: null,
+      user: null,
+      restaurant: null,
+      loggedIn: false,
       activeAdminDashboardMenu: initActiveAdminDashboardMenu,
 
-      setAuthValue: (value: any) => set(() => ({ auth: value })),
-      resetAuthValue: () => set({ auth: initAuthValue }),
-
-      setRestaurant: (value: any) => set({ restaurant: value }),
+      setAuthValue: (value: any) =>
+        set(() => ({
+          token: value.token,
+          user: value.user,
+          restaurant: value.restaurant,
+          loggedIn: true,
+        })),
+      resetAuthValue: () => set({ token: null, user: null, restaurant: null, loggedIn: false }),
 
       setActiveAdminDashboardMenu: (value: string) =>
         set(() => ({ activeAdminDashboardMenu: value })),

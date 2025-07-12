@@ -1,11 +1,149 @@
-import { LoginForm } from '#/components/login-form'
+import {cn} from '#/lib/utils'
+import {Button} from '#/components/ui/button'
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '#/components/ui/card'
+import {Input} from '#/components/ui/input'
+import {Label} from '#/components/ui/label'
+import {Link, useNavigate} from 'react-router-dom'
+import useStore from '#/store'
+import {useMutation} from '@tanstack/react-query'
+import {toast} from "sonner"
+import {useForm} from 'react-hook-form'
+import {
+  Form,
+  FormField,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormItem,
+  FormLabel,
+} from '#/components/ui/form'
+import {fetcher} from '#/utils/fetcher'
+import {EyeOffIcon, EyeIcon} from 'lucide-react'
+import {useState} from 'react'
 
-export default function Page() {
+export default function LoginPage({className, ...props}: React.ComponentPropsWithoutRef<'div'>) {
+  const {setAuthValue}: any = useStore()
+  const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
+  const mutation = useMutation({
+    mutationFn: (formData: any) => {
+      return fetcher('/user/sign-in', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+      })
+    },
+    onSuccess: (data) => {
+      console.log(data, "hit on success login")
+      toast.success('Login successful', {
+        description: "You are now logged in to your account",
+      })
+      console.log(data, "hit on success login")
+
+      const {token, user} = data
+      const {restaurant, ...userData} = user
+
+      setAuthValue({token, user: userData, restaurant})
+      navigate('/')
+    },
+    onError: (error) => {
+      console.log(error, "hit on error login")
+      toast.error('Invalid credentials', {
+        duration: 3000,
+        description: "Please try again with different email and password",
+      })
+    },
+  })
+
+  const form = useForm<any>({
+    defaultValues: {
+      email: 'arjun@gmail.com',
+      password: 'arjun@123',
+    },
+  })
+
+  // 2. Define a submit handler.
+  function onSubmit(values: any) {
+    // console.log(values)
+    mutation.mutate(values)
+  }
+
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div className="flex min-h-vh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
-        <LoginForm />
-      </div>
-    </div>
+        <div className={cn('flex flex-col gap-6', className)} {...props}>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl">Login</CardTitle>
+              <CardDescription>Enter your email below to login to your account</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <div className="flex flex-col gap-6">
+                    <div className="grid gap-2">
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({field}) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input placeholder="email" {...field} />
+                            </FormControl>
+                            <FormDescription>Enter your email address</FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <div className="flex items-center">
+                        <Label htmlFor="password">Password</Label>
+                        <Link
+                          to="#"
+                          className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                        >
+                          Forgot your password?
+                        </Link>
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({field}) => (
+                          <FormItem className="relative">
+                            <FormControl>
+                              <>
+                                <Input placeholder="password" type={showPassword ? 'text' : 'password'} {...field} />
+                                <Button variant="ghost" type='button' size="icon" className="absolute right-0 top-2 -translate-y-4" onClick={() => setShowPassword(!showPassword)}>
+                                  {showPassword ? <EyeOffIcon className="w-4 h-4" /> : <EyeIcon className="w-4 h-4" />}
+                                </Button>
+                              </>
+                            </FormControl>
+                            <FormDescription>Enter your email address</FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <Button type="submit" className="w-full" loading={mutation.isPending}>
+                      Login
+                    </Button>
+                    {/* <Button variant="outline" className="w-full">
+                      Login with Google
+                    </Button> */}
+                  </div>
+                  <div className="mt-4 text-center text-sm">
+                    Don&apos;t have an account?{' '}
+                    <Link to="/auth/restaurant/register" className="underline underline-offset-4">
+                      register your restaurant.
+                    </Link>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </div>
+      </div >
+    </div >
   )
 }

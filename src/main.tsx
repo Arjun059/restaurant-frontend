@@ -37,7 +37,7 @@ ReactDOM.createRoot(rootElement).render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
 
+      <Toaster position='top-center' closeButton />
     </QueryClientProvider>
-    <Toaster position='top-center' closeButton />
   </React.StrictMode>
 )

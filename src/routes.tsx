@@ -54,14 +54,14 @@ export const router = createBrowserRouter([
               </Suspense>
             ),
           },
-          {
-            path: PAGE_ROUTES.SIGNUP,
-            element: (
-              <Suspense fallback={<SkeletonPage />}>
-                <Signup />
-              </Suspense>
-            ),
-          },
+          // {
+          //   path: PAGE_ROUTES.SIGNUP,
+          //   element: (
+          //     <Suspense fallback={<SkeletonPage />}>
+          //       <Signup />
+          //     </Suspense>
+          //   ),
+          // },
           {
             path: PAGE_ROUTES.RESTAURANT_REGISTER,
             element: (

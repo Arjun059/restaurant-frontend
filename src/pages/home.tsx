@@ -1,15 +1,18 @@
-import { Link } from 'react-router-dom'
-import { ThemeSwitcher } from '#/components/theme'
-import { Button } from '#/components/ui/button'
-import { Alert, AlertDescription } from '#/components/ui/alert'
-import { useAuthentication } from '#/context/auth/AuthProvider'
+import {Link} from 'react-router-dom'
+import {ThemeSwitcher} from '#/components/theme'
+import {Button} from '#/components/ui/button'
+import {Alert, AlertDescription} from '#/components/ui/alert'
+import {useAuthentication} from '#/context/auth/AuthProvider'
 
 // Assets in public directory cannot be imported from JavaScript.
 // Instead, we use `src/assets` directory.
 import ViteLogo from '../assets/images/vite.svg'
+import useStore from '../store'
 
 export default function Home() {
-  const { user, loggedIn } = useAuthentication()
+  const {user, loggedIn, restaurant} = useStore()
+
+  console.log({user, loggedIn, restaurant}, "hit on home")
 
   return (
     <div className="mx-auto flex h-full min-h-screen w-full flex-col">

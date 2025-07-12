@@ -1,8 +1,8 @@
-import GoTrue, { type User, type UserData } from 'gotrue-js'
-import { createContext, useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import GoTrue, {type User, type UserData} from 'gotrue-js'
+import {createContext, useContext, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 
-export type { User, UserData }
+export type {User, UserData}
 
 // Instantiate the GoTrue auth client.
 export const auth = new GoTrue({
@@ -29,7 +29,7 @@ export const DefaultUserContext: AuthContext = {
 
 export const UserContext = createContext(DefaultUserContext)
 
-export function AuthProvider({ children }: React.PropsWithChildren) {
+export function AuthProvider({children}: React.PropsWithChildren) {
   const navigate = useNavigate()
   const user = auth.currentUser()
   const [loggedIn, setLoggedIn] = useState(user !== null)
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   }
 
   return (
-    <UserContext.Provider value={{ user, loggedIn, loggedOut, login, logout }}>
+    <UserContext.Provider value={{user, loggedIn, loggedOut, login, logout}}>
       {children}
     </UserContext.Provider>
   )
