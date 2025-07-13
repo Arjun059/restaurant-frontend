@@ -47,7 +47,7 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl" >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">{dish.name}</DialogTitle>
         </DialogHeader>
@@ -116,10 +116,11 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
           </div>
 
           {/* Restaurant Info */}
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <Utensils className="h-5 w-5 text-gray-500" />
             <span className="text-lg font-medium">{dish.restaurant}</span>
-          </div>
+          </div> */}
+
 
           {/* Details Grid */}
           <div className="flex justify-between gap-4">
@@ -132,10 +133,10 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
             {dish.preparationTime && (
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-gray-500" />
-                <span className="font-medium">{dish.preparationTime}</span>
+                <span className="font-medium">{dish.preparationTime} minutes</span>
               </div>
             )}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <span className="text-lg font-medium">₹{dish.price}</span>
             </div>
           </div>

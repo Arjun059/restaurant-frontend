@@ -49,7 +49,7 @@ export default function DishesList() {
     throw new Error()
   }
 
-  console.log(queryResp.data, 'response data')
+  // console.log(queryResp.data, 'response data')
 
   const groupedDishesByCategory: any = useMemo(() => {
     const _groupedDishesByCategory: any = {}
@@ -78,7 +78,7 @@ export default function DishesList() {
               {categories.map((cate, index) => (
                 <li
                   key={index}
-                  className={`cursor-pointer flex sm:flex-row flex-col items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-medium text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 text-gray-800'
+                  className={`cursor-pointer flex sm:flex-row flex-col items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-bold text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 font-bold text-gray-800'
                     }`}
                   onClick={() => setSelectedCategory(cate)} // if you want filtering
                 >
