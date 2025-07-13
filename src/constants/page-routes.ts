@@ -3,7 +3,7 @@ export const PAGE_ROUTES = {
   LOGIN: '/auth/login',
   SIGNUP: '/auth/signup',
 
-  RESTAURANT_REGISTER: '/auth/restaurant/register',
+  RESTAURANT_REGISTER: '/auth/restaurant-register',
 
   // Public routes
   HOME: '/',
@@ -14,10 +14,6 @@ export const PAGE_ROUTES = {
   ADMIN_DASHBOARD: '/admin/dashboard',
   ADMIN_DASHBOARD_ADD_DISH: '/admin/dashboard/add-dish',
   ADMIN_DASHBOARD_DISHED_LIST: '/admin/dashboard/dishes-list',
-
-  // User dashboard routes
-  CUSTOMER_DASHBOARD: '/dashboard',
-  CUSTOMER_DASHBOARD_OVERVIEW: '/dashboard/overview',
 
   // Error routes
   NOT_FOUND: '*',

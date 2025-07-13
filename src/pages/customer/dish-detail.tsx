@@ -1,8 +1,8 @@
-import {Dialog, DialogContent, DialogHeader, DialogTitle} from '#/components/ui/dialog'
 import {Badge} from '#/components/ui/badge'
 import {Button} from '#/components/ui/button'
-import {ChevronLeft, ChevronRight, Clock, Utensils} from 'lucide-react'
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from '#/components/ui/dialog'
 import useEmblaCarousel from 'embla-carousel-react'
+import {ChevronLeft, ChevronRight, Clock} from 'lucide-react'
 import {useCallback, useEffect, useState} from 'react'
 import RatingStars from '../../components/rating-stars'
 

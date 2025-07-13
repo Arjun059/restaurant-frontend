@@ -8,8 +8,7 @@ import {PAGE_ROUTES} from './constants/page-routes'
 // Lazy load all page components
 const Home = lazy(() => import('./pages/home'))
 const Login = lazy(() => import('./pages/auth/login'))
-const Signup = lazy(() => import('./pages/auth/signup'))
-const UserDashboard = lazy(() => import('./pages/customer/dashboard'))
+// const Signup = lazy(() => import('./pages/auth/signup'))
 const Dashboard = lazy(() => import('./pages/restaurant-dashboard/dashboard'))
 const ScanQr = lazy(() => import('./pages/customer/qr-code-scanner'))
 const AddDish = lazy(() => import('./pages/restaurant-dashboard/add-dish'))
@@ -109,14 +108,6 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Home />
-              </Suspense>
-            ),
-          },
-          {
-            path: PAGE_ROUTES.CUSTOMER_DASHBOARD,
-            element: (
-              <Suspense fallback={<SkeletonPage />}>
-                <UserDashboard />
               </Suspense>
             ),
           },

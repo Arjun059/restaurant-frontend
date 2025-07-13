@@ -1,11 +1,11 @@
 import {Navigate, Outlet} from 'react-router-dom'
-import {useAuthentication} from '#/context/auth/AuthProvider'
+import useStore from '#/store'
 
 export function AuthLayout() {
-  const {loggedIn} = useAuthentication()
+  const loggedIn = useStore(state => state.loggedIn)
 
   if (loggedIn) {
-    return <Navigate to="/dashboard" replace />
+    return <Navigate to="/" replace />
   }
 
   return (
