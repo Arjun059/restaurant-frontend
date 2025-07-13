@@ -31,13 +31,13 @@ export default defineConfig({
   },
   base: '/',
   server: {
-    port: 3000,
-    strictPort: true,
+    // port: 4000,
+    // strictPort: true,
     // proxy: {
     //   '/api': {
-    //     target: 'http://127.0.0.1:3080',
+    //     target: 'http://192.168.110.71:4000',
     //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\//, ''),
+    //     rewrite: (path) => path.replace(/^\/api/, ''),
     //   },
     // },
   },

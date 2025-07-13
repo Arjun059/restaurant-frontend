@@ -56,8 +56,8 @@ export default function LoginPage({className, ...props}: React.ComponentPropsWit
 
   const form = useForm<any>({
     defaultValues: {
-      email: 'arjun@gmail.com',
-      password: 'arjun@123',
+      email: '',
+      password: '',
     },
   })
 
