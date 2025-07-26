@@ -16,11 +16,12 @@ const menuItems = [
   {
     "label": "Scan QR",
     "to": PAGE_ROUTES.SCAN_QR,
-    "access": "customer" as const
+    "access": 'customer' as const
   },
   {
     "label": "Dishes",
-    "to": PAGE_ROUTES.DISHES_LIST,
+    "to": PAGE_ROUTES.RESTAURANT_DISHES_LIST(useStore.getState().restaurant?.urlPath),
+    "access": "customer" as const
   },
   {
     "label": "Admin",
@@ -33,6 +34,8 @@ const menuItems = [
 const Header = () => {
   const isMobile = useIsMobile()
   const restaurant = useStore(state => state.restaurant)
+
+  console.log(restaurant, 'restaurant --------------')
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -103,11 +106,15 @@ interface AccessGuardProps {
 }
 
 export function AccessGuard({children, access = 'public'}: AccessGuardProps) {
-  const {loggedIn} = useStore(state => state)
+  const {loggedIn, restaurant} = useStore(state => state)
+
 
   // If no access is provided, show to all (public)
   if (!access || access === 'public') {
-    return <>{children}</>
+    if (!loggedIn && !restaurant?.id) {
+      return <>{children}</>
+    }
+    return null
   }
 
   // If access is admin, only show if user is logged in
@@ -120,9 +127,9 @@ export function AccessGuard({children, access = 'public'}: AccessGuardProps) {
 
   // If access is customer, only show if user is NOT logged in
   if (access === 'customer') {
-    // if (!loggedIn) {
-    //   return <>{children}</>
-    // }
+    if (!loggedIn && restaurant?.id) {
+      return <>{children}</>
+    }
     return null
   }
 

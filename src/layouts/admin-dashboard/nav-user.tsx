@@ -22,20 +22,17 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '#/components/ui/sidebar'
+import useStore from '../../store'
+import {useNavigate} from 'react-router-dom'
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+export function NavUser() {
   const {isMobile} = useSidebar()
+  const {resetAuthValue, user = {}} = useStore()
+  const navigate = useNavigate()
+
 
   return (
-    <SidebarMenu className=''>
+    <SidebarMenu className='mt-auto bg-gray-50 rounded-sm'>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -45,7 +42,7 @@ export function NavUser({
             >
               <Avatar className="h-6 w-6 rounded-lg grayscale">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{user.name?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
@@ -88,7 +85,10 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => {
+              resetAuthValue()
+              navigate("/")
+            }}>
               <LogOutIcon />
               Log out
             </DropdownMenuItem>

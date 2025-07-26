@@ -158,8 +158,9 @@ const data = {
 }
 
 export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="offcanvas" {...props} >
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -172,14 +173,14 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className='flex-1 flex-grow-1'>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavDocuments items={data.documents} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
-      <SidebarFooter className='py-0 my-0'>
-        <NavUser user={data.user} />
-        {isMobile && <div style={{height: 180}} />}
+      <SidebarFooter className=''>
+        <NavUser />
+        {/* {isMobile && <div style={{height: 180}} />} */}
       </SidebarFooter>
     </Sidebar>
   )

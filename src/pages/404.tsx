@@ -4,6 +4,7 @@ import {Button} from '#/components/ui/button'
 import {useNavigate} from 'react-router'
 import {Utensils} from 'lucide-react'
 import {PAGE_ROUTES} from '../constants/page-routes'
+import useStore from '../store'
 
 export default function NotFound() {
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ export default function NotFound() {
             <Button onClick={() => navigate(-1)} variant="outline" className="w-full sm:w-auto">
               Go Back
             </Button>
-            <Button onClick={() => navigate(PAGE_ROUTES.DISHES_LIST)} className="w-full sm:w-auto">
+            <Button onClick={() => navigate(PAGE_ROUTES.RESTAURANT_DISHES_LIST(useStore.getState().restaurant?.urlPath))} className="w-full sm:w-auto">
               Browse Dishes
             </Button>
           </div>

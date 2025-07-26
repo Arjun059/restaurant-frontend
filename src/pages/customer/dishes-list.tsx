@@ -41,6 +41,7 @@ const categoryIcons = {
 };
 
 function formatCategoryLabel(category: string) {
+  ``
   // after every  _ should start world with capital case
   return category.replace(/_/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 }
@@ -90,7 +91,7 @@ export default function DishesList() {
     <div className="container mx-auto px-4 py-4">
       <h1 className="mb-6 font-semibold text-lg text-gray-800">Popular Dishes Near You</h1>
       <div className='grid grid-cols-12 gap-4'>
-        <div className='col-span-4 md:col-span-2 bg-white p-1 rounded-lg'>
+        <div className='col-span-4 md:col-span-2 bg-white p-2 rounded-lg'>
           <div className="col-span-2">
             <ul className="space-y-2">
               {categories.map((cate, index) => (

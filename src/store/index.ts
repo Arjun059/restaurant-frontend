@@ -12,7 +12,6 @@ interface StoreState {
   setActiveAdminDashboardMenu: (value: string) => void
   setRestaurant: (value: any) => void
 }
-
 const initActiveAdminDashboardMenu = 'Dashboard'
 
 const useStore = create<StoreState>()(

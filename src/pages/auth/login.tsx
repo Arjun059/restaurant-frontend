@@ -134,7 +134,7 @@ export default function LoginPage({className, ...props}: React.ComponentPropsWit
                   </div>
                   <div className="mt-4 text-center text-sm">
                     Don&apos;t have an account?{' '}
-                    <Link to="/auth/restaurant/register" className="underline underline-offset-4">
+                    <Link to="/auth/restaurant-register" className="underline underline-offset-4">
                       register your restaurant.
                     </Link>
                   </div>

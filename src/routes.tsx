@@ -96,12 +96,6 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: PAGE_ROUTES.DISHES_LIST,
-            element: (
-              <DishesList />
-            ),
-          },
-          {
             path: PAGE_ROUTES.RESTAURANT_HOME(':restaurantUrl'),
             element: (
               <Suspense fallback={<SkeletonPage />}>

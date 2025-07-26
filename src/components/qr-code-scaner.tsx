@@ -2,6 +2,7 @@ import {Scanner as QrScanner} from '@yudiel/react-qr-scanner'
 import {RefreshCcwIcon} from 'lucide-react'
 import {useState} from 'react'
 import {isMobile} from 'react-device-detect'
+import {Link} from 'react-router-dom'
 
 interface ScannerProps {
   qrCodeSuccessCallback: (decodedText: string) => void
@@ -41,7 +42,7 @@ const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
   }
 
   return (
-    <div className="mx-auto flex h-full min-h-[calc(100vh-150px)] w-full max-w-sm items-center justify-center align-middle">
+    <div className="mx-auto flex h-full flex-col min-h-[calc(100vh-150px)] w-full max-w-sm items-center justify-center align-middle">
       <div className="min-h-[300px] bg-gray-200 min-w-[300px] rounded-lg align-middle text-card-foreground shadow-sm">
         <h2 className='text-lg text-center mt-2 font-semibold'>
           Scan QR Code
@@ -82,7 +83,15 @@ const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
             sound={false}
           />
         )}
+
       </div>
+      <p
+        className=' text-sm text-center'
+      >Have an account.{" "}
+        <Link to={"/auth/login"} className=' text-black text-sm border-b-2 border-black px-1'>
+          Login Here
+        </Link>
+      </p>
     </div>
   )
 }
