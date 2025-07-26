@@ -1,4 +1,4 @@
-import {createBrowserRouter, defer} from 'react-router-dom'
+import {createBrowserRouter, Navigate} from 'react-router-dom'
 import {lazy, Suspense} from 'react'
 
 import {CustomerLayout, AdminLayout, RootLayout} from './layouts'
@@ -8,38 +8,22 @@ import {PAGE_ROUTES} from './constants/page-routes'
 // Lazy load all page components
 const Home = lazy(() => import('./pages/home'))
 const Login = lazy(() => import('./pages/auth/login'))
-// const Signup = lazy(() => import('./pages/auth/signup'))
 const Dashboard = lazy(() => import('./pages/restaurant-dashboard/dashboard'))
 const ScanQr = lazy(() => import('./pages/customer/qr-code-scanner'))
 const AddDish = lazy(() => import('./pages/restaurant-dashboard/add-dish'))
 const RestaurantDishesList = lazy(() => import('./pages/restaurant-dashboard/dishes-list'))
-const DishesList = lazy(() => import('./pages/customer/dishes-list'))
 const Error404 = lazy(() => import('./pages/404'))
 const ErrorBoundaryPage = lazy(() => import('./pages/error-boundary'))
 
 const RestaurantRegister = lazy(() => import('./pages/auth/restaurant-register'))
-
+const RestaurantHome = lazy(() => import('./pages/customer/restaurant-home'))
 
 import SkeletonPage from '#/components/skeletons/page'
-import SkeletonDishesList from './components/skeletons/dishes-list'
-
-
-
-// Ideally this would be an API call to server to get logged in user data
-const getUserData = () => {
-  return new Promise((resolve, _reject) =>
-    setTimeout(() => {
-      const user = window.localStorage.getItem('user')
-      resolve(user)
-      // reject('Error')
-    }, 3000)
-  )
-}
+import DishesList from './pages/customer/dishes-list'
 
 export const router = createBrowserRouter([
   {
     element: <RootLayout />,
-    loader: () => defer({userPromise: getUserData()}),
     errorElement: <ErrorBoundaryPage />,
     children: [
       {
@@ -53,14 +37,6 @@ export const router = createBrowserRouter([
               </Suspense>
             ),
           },
-          // {
-          //   path: PAGE_ROUTES.SIGNUP,
-          //   element: (
-          //     <Suspense fallback={<SkeletonPage />}>
-          //       <Signup />
-          //     </Suspense>
-          //   ),
-          // },
           {
             path: PAGE_ROUTES.RESTAURANT_REGISTER,
             element: (
@@ -75,7 +51,7 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           {
-            path: PAGE_ROUTES.ADMIN_DASHBOARD_ADD_DISH,
+            path: PAGE_ROUTES.RESTAURANT_DASHBOARD_ADD_DISH,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <AddDish />
@@ -83,7 +59,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: PAGE_ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
+            path: PAGE_ROUTES.RESTAURANT_DASHBOARD_DISHED_LIST,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <RestaurantDishesList />
@@ -91,7 +67,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: PAGE_ROUTES.ADMIN_DASHBOARD,
+            path: PAGE_ROUTES.RESTAURANT_DASHBOARD,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Dashboard />
@@ -122,12 +98,30 @@ export const router = createBrowserRouter([
           {
             path: PAGE_ROUTES.DISHES_LIST,
             element: (
-              <Suspense fallback={<SkeletonDishesList />}>
-                <DishesList />
+              <DishesList />
+            ),
+          },
+          {
+            path: PAGE_ROUTES.RESTAURANT_HOME(':restaurantUrl'),
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <RestaurantHome />
               </Suspense>
             ),
           },
+          {
+            path: PAGE_ROUTES.RESTAURANT_DISHES_LIST(':restaurantUrl'),
+            element: (
+              <DishesList />
+            ),
+          },
         ],
+      },
+      {
+        path: "/",
+        element: (
+          <Navigate to={PAGE_ROUTES.HOME} replace />
+        ),
       },
       {
         path: PAGE_ROUTES.NOT_FOUND,
@@ -139,4 +133,9 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+],
+  {
+    future: {
+      // v7_relativeSplatPath: true,
+    },
+  })

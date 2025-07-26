@@ -9,27 +9,29 @@ import {
 import {Link} from 'react-router-dom'
 import {useIsMobile} from '../hooks/use-mobile'
 import useStore from '#/store'
+import {PAGE_ROUTES} from '../constants/page-routes'
+import type {ReactNode} from 'react'
 
 const menuItems = [
   {
     "label": "Scan QR",
-    "to": "/scan-qr"
+    "to": PAGE_ROUTES.SCAN_QR,
+    "access": "customer" as const
   },
   {
-    "label": "Dishes List",
-    "to": "/dishes-list"
+    "label": "Dishes",
+    "to": PAGE_ROUTES.DISHES_LIST,
   },
   {
     "label": "Admin",
-    "to": "/admin/dashboard",
-    "access": "admin"
+    "to": PAGE_ROUTES.RESTAURANT_DASHBOARD,
+    "access": "admin" as const
   }
 ]
 
 
 const Header = () => {
   const isMobile = useIsMobile()
-  const loggedIn = useStore(state => state.loggedIn)
   const restaurant = useStore(state => state.restaurant)
 
   return (
@@ -38,13 +40,13 @@ const Header = () => {
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center">
             {restaurant?.name ?
-              (<Link to="/" className="mr-6 flex items-center space-x-2">
+              (<Link to={PAGE_ROUTES.RESTAURANT_HOME(restaurant?.urlPath)} className="mr-6 flex items-center space-x-2">
                 <span className="font-bold">{restaurant?.name}</span>
               </Link>
               ) : (
                 <NavigationMenuItem asChild>
                   <Button variant="ghost" asChild>
-                    <Link to={"/scan-qr"}>Scan QR</Link>
+                    <Link to={PAGE_ROUTES.SCAN_QR}>Scan QR</Link>
                   </Button>
                 </NavigationMenuItem>
               )
@@ -56,58 +58,30 @@ const Header = () => {
             <NavigationMenuList className='w-full flex-wrap'>
 
               {!isMobile && (
-                menuItems.map((item) => {
-                  if (item.access === "admin") {
-                    if (loggedIn) {
-                      return (
-                        <NavigationMenuItem asChild>
-                          <Button variant="ghost" asChild>
-                            <Link to={item.to}>{item.label}</Link>
-                          </Button>
-                        </NavigationMenuItem>
-                      )
-                    } else {
-                      return null
-                    }
-                  } else {
-                    return <NavigationMenuItem asChild>
+                menuItems.map((item) => (
+                  <AccessGuard key={item.label} access={item.access}>
+                    <NavigationMenuItem asChild>
                       <Button variant="ghost" asChild>
                         <Link to={item.to}>{item.label}</Link>
                       </Button>
                     </NavigationMenuItem>
-                  }
-                })
+                  </AccessGuard>
+                ))
               )}
 
               {isMobile && (
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    {
-                      menuItems.map((item) => {
-                        if (item.access === "admin") {
-                          if (loggedIn) {
-                            return (
-                              <NavigationMenuItem asChild key={item.label}>
-                                <Button variant="ghost" className='w-full' asChild>
-                                  <Link to={item.to}>{item.label}</Link>
-                                </Button>
-                              </NavigationMenuItem>
-                            )
-                          } else {
-                            return null
-                          }
-                        } else {
-                          return (
-                            <NavigationMenuItem asChild key={item.label}>
-                              <Button variant="ghost" className='w-full' asChild>
-                                <Link to={item.to}>{item.label}</Link>
-                              </Button>
-                            </NavigationMenuItem>
-                          )
-                        }
-                      })
-                    }
+                    {menuItems.map((item) => (
+                      <AccessGuard key={item.label} access={item.access}>
+                        <NavigationMenuItem asChild>
+                          <Button variant="ghost" className='w-full' asChild>
+                            <Link to={item.to}>{item.label}</Link>
+                          </Button>
+                        </NavigationMenuItem>
+                      </AccessGuard>
+                    ))}
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               )}
@@ -121,3 +95,37 @@ const Header = () => {
 }
 
 export default Header
+
+
+interface AccessGuardProps {
+  children: ReactNode
+  access?: 'admin' | 'customer' | 'public'
+}
+
+export function AccessGuard({children, access = 'public'}: AccessGuardProps) {
+  const {loggedIn} = useStore(state => state)
+
+  // If no access is provided, show to all (public)
+  if (!access || access === 'public') {
+    return <>{children}</>
+  }
+
+  // If access is admin, only show if user is logged in
+  if (access === 'admin') {
+    if (loggedIn) {
+      return <>{children}</>
+    }
+    return null
+  }
+
+  // If access is customer, only show if user is NOT logged in
+  if (access === 'customer') {
+    // if (!loggedIn) {
+    //   return <>{children}</>
+    // }
+    return null
+  }
+
+  return null
+}
+

@@ -44,17 +44,17 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: PAGE_ROUTES.ADMIN_DASHBOARD,
+      url: PAGE_ROUTES.RESTAURANT_DASHBOARD,
       icon: LayoutDashboardIcon,
     },
     {
       title: 'Add Dish',
-      url: PAGE_ROUTES.ADMIN_DASHBOARD_ADD_DISH,
+      url: PAGE_ROUTES.RESTAURANT_DASHBOARD_ADD_DISH,
       icon: Plus,
     },
     {
       title: 'Dishes',
-      url: PAGE_ROUTES.ADMIN_DASHBOARD_DISHED_LIST,
+      url: PAGE_ROUTES.RESTAURANT_DASHBOARD_DISHED_LIST,
       icon: List,
     },
     {
@@ -177,9 +177,9 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
         <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter className=''>
+      <SidebarFooter className='py-0 my-0'>
         <NavUser user={data.user} />
-        {isMobile && <div style={{height: 200}} />}
+        {isMobile && <div style={{height: 180}} />}
       </SidebarFooter>
     </Sidebar>
   )

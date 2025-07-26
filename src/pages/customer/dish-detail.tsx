@@ -14,7 +14,7 @@ interface DishDetailProps {
     price: number
     rating: number
     preparationTime?: string
-    images: string[]
+    images: {url: string}[]
     restaurant: string
     veg: boolean
     bestSeller: boolean
@@ -49,7 +49,7 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl" >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{dish.name}</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">{dish.name}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -57,10 +57,10 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
           <div className="relative">
             <div className="overflow-hidden rounded-lg" ref={emblaRef}>
               <div className="flex">
-                {dish.images.map((image, index) => (
+                {dish.images?.map((image: {url: string}, index) => (
                   <div key={index} className="relative flex-[0_0_100%]">
                     <img
-                      src={image}
+                      src={image.url}
                       alt={`${dish.name} - Image ${index + 1}`}
                       className="h-64 w-full object-cover"
                     />

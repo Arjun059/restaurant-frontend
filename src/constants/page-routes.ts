@@ -2,18 +2,20 @@ export const PAGE_ROUTES = {
   // Auth routes
   LOGIN: '/auth/login',
   SIGNUP: '/auth/signup',
-
   RESTAURANT_REGISTER: '/auth/restaurant-register',
 
-  // Public routes
-  HOME: '/',
-  DISHES_LIST: '/dishes-list',
-  SCAN_QR: '/scan-qr',
+  // Customer routes
+  HOME: '/c/',
+  DISHES_LIST: '/c/dishes-list',
+  SCAN_QR: '/c/scan-qr',
 
-  // Dashboard routes
-  ADMIN_DASHBOARD: '/admin/dashboard',
-  ADMIN_DASHBOARD_ADD_DISH: '/admin/dashboard/add-dish',
-  ADMIN_DASHBOARD_DISHED_LIST: '/admin/dashboard/dishes-list',
+  // Restaurant routes
+  RESTAURANT_DASHBOARD: '/r/dashboard',
+  RESTAURANT_DASHBOARD_ADD_DISH: '/r/dashboard/add-dish',
+  RESTAURANT_DASHBOARD_DISHED_LIST: '/r/dashboard/dishes-list',
+
+  RESTAURANT_HOME: (restaurantUrl: string) => `/r/${restaurantUrl}/home`, // key = ':restaurantUrl
+  RESTAURANT_DISHES_LIST: (restaurantUrl: string) => `/r/${restaurantUrl}/dishes`, // key = ':restaurantUrl
 
   // Error routes
   NOT_FOUND: '*',

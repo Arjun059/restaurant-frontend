@@ -4,13 +4,16 @@ import {SidebarInset, SidebarProvider} from '#/components/ui/sidebar'
 import useStore from '#/store'
 
 import {Navigate, Outlet} from 'react-router-dom'
+import {PAGE_ROUTES} from '../constants/page-routes'
 
 export function AdminLayout() {
-  const loggedIn = useStore(state => state.loggedIn)
+  // const {token, restaurant} = useStore(state => state)
 
-  if (!loggedIn) {
-    return <Navigate to="/" replace />
-  }
+  // if (!token && !restaurant?.id) {
+  //   return <Navigate to={PAGE_ROUTES.HOME} replace />
+  // }
+
+  console.log('admin layout')
 
   return (
     <SidebarProvider>

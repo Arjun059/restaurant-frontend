@@ -1,4 +1,5 @@
 import {Scanner as QrScanner} from '@yudiel/react-qr-scanner'
+import {RefreshCcwIcon} from 'lucide-react'
 import {useState} from 'react'
 import {isMobile} from 'react-device-detect'
 
@@ -54,10 +55,12 @@ const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
                 Make sure you're using HTTPS and have granted camera permissions
               </p>
             )}
+
             <button
               onClick={handleRetry}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="px-4 py-2 bg-primary text-white rounded flex items-center gap-2 align-self-center mx-auto mt-4"
             >
+              <RefreshCcwIcon className="w-4 h-4" />
               Try Again
             </button>
           </div>

@@ -10,6 +10,7 @@ interface StoreState {
   setAuthValue: (value: any) => void
   resetAuthValue: () => void
   setActiveAdminDashboardMenu: (value: string) => void
+  setRestaurant: (value: any) => void
 }
 
 const initActiveAdminDashboardMenu = 'Dashboard'
@@ -22,6 +23,8 @@ const useStore = create<StoreState>()(
       restaurant: null,
       loggedIn: false,
       activeAdminDashboardMenu: initActiveAdminDashboardMenu,
+
+      setRestaurant: (value: any) => set({ restaurant: value }),
 
       setAuthValue: (value: any) =>
         set(() => ({
