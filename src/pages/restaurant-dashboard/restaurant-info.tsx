@@ -65,7 +65,7 @@ type RestaurantFormData = {
   id?: number;
   name: string;
   address: string;
-  qrCodePath?: string;
+  qrCodeURL?: string;
   urlPath?: string;
 };
 
@@ -125,7 +125,7 @@ type RestaurantInfoProps = {
     id?: number;
     name: string;
     address: string;
-    qrCodePath?: string;
+    qrCodeURL?: string;
     urlPath?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -151,11 +151,11 @@ const RestaurantInfo: React.FC<RestaurantInfoProps> = ({restaurant}) => {
       </div>
 
       {
-        restaurant.qrCodePath && (
+        restaurant.qrCodeURL && (
           <div>
             <h4 className="text-sm font-medium text-muted-foreground mb-2">QR Code</h4>
             <img
-              src={restaurant.qrCodePath}
+              src={restaurant.qrCodeURL}
               alt="QR Code"
               className="w-32 h-32 object-contain border rounded"
             />

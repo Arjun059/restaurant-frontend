@@ -41,8 +41,8 @@ export default function RestaurantRegisterForm({onSubmit: onSubmitProp, initData
   });
 
   return (
-    <div className={cn("w-full max-w-[600px] px-4 pb-4")}>
-      <Card className={cn("w-full shadow-sm rounded-md")}>
+    <div className={cn("w-full max-w-[600px] px-4 pt-4 pb-4")}>
+      <Card className={cn("w-full rounded-lg")}>
         <CardHeader>
           <div className="flex items-center gap-2">
             <CardTitle className="text-2xl">Restaurant Registration</CardTitle>

@@ -13,7 +13,7 @@ const ScanQrPage = () => {
 
   const onScanError = useCallback((error: string) => {
     console.log(error)
-    toast.success("Something went wrong while reading the qr code!")
+    toast.success("!Ops went wrong while reading the qr code!")
   }, [])
 
   return (
