@@ -1,6 +1,5 @@
 import type * as React from 'react'
 import {Link} from 'react-router-dom'
-import {isMobile} from 'react-device-detect'
 import {
   ArrowUpCircleIcon,
   BarChartIcon,
@@ -21,7 +20,6 @@ import {
 } from 'lucide-react'
 
 import {NavMain} from './nav-main'
-import {NavSecondary} from './nav-secondary'
 import {NavUser} from './nav-user'
 import {
   Sidebar,
@@ -33,7 +31,9 @@ import {
   SidebarMenuItem,
 } from '#/components/ui/sidebar'
 import {PAGE_ROUTES} from '#/constants/page-routes'
-import {NavDocuments} from './nav-documents'
+// import {NavDocuments} from './nav-documents'
+// import {NavSecondary} from './nav-secondary'
+
 
 const data = {
   user: {
@@ -44,17 +44,17 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: PAGE_ROUTES.RESTAURANT_DASHBOARD,
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
       icon: LayoutDashboardIcon,
     },
     {
       title: 'Add Dish',
-      url: PAGE_ROUTES.RESTAURANT_DASHBOARD_ADD_DISH,
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_ADD_DISH,
       icon: Plus,
     },
     {
       title: 'Dishes',
-      url: PAGE_ROUTES.RESTAURANT_DASHBOARD_DISHED_LIST,
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_DISHED_LIST,
       icon: List,
     },
     {

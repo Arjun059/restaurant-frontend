@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           {
-            path: PAGE_ROUTES.RESTAURANT_DASHBOARD_ADD_DISH,
+            path: PAGE_ROUTES.RESTAURANT_ADMIN_ADD_DISH,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <AddDish />
@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: PAGE_ROUTES.RESTAURANT_DASHBOARD_DISHED_LIST,
+            path: PAGE_ROUTES.RESTAURANT_ADMIN_DISHED_LIST,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <RestaurantDishesList />
@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: PAGE_ROUTES.RESTAURANT_DASHBOARD,
+            path: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Dashboard />

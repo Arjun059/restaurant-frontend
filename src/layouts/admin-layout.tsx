@@ -1,19 +1,17 @@
 import {AppSidebar} from './admin-dashboard/admin-sidebar'
 import {SiteHeader} from './admin-dashboard/admin-header'
 import {SidebarInset, SidebarProvider} from '#/components/ui/sidebar'
-import useStore from '#/store'
 
 import {Navigate, Outlet} from 'react-router-dom'
 import {PAGE_ROUTES} from '../constants/page-routes'
+import useStore from '#/store'
 
 export function AdminLayout() {
-  // const {token, restaurant} = useStore(state => state)
+  const {token, restaurant} = useStore(state => state)
 
-  // if (!token && !restaurant?.id) {
-  //   return <Navigate to={PAGE_ROUTES.HOME} replace />
-  // }
-
-  console.log('admin layout')
+  if (!token && !restaurant?.id) {
+    return <Navigate to={PAGE_ROUTES.SCAN_QR} replace />
+  }
 
   return (
     <SidebarProvider>

@@ -14,9 +14,9 @@ export const PAGE_ROUTES = {
   // "c/f36ab96e-0037-4f2f-b6d3-49cf6e7abf3c/home"
 
   // Restaurant routes
-  RESTAURANT_DASHBOARD: '/r/dashboard',
-  RESTAURANT_DASHBOARD_ADD_DISH: '/r/dashboard/add-dish',
-  RESTAURANT_DASHBOARD_DISHED_LIST: '/r/dashboard/dishes-list',
+  RESTAURANT_ADMIN_DASHBOARD: '/r/admin/',
+  RESTAURANT_ADMIN_ADD_DISH: '/r/admin/add-dish',
+  RESTAURANT_ADMIN_DISHED_LIST: '/r/admin/dishes-list',
 
   // Error routes
   NOT_FOUND: '*',

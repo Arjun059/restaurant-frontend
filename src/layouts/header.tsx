@@ -25,7 +25,7 @@ const menuItems = [
   },
   {
     "label": "Admin",
-    "to": PAGE_ROUTES.RESTAURANT_DASHBOARD,
+    "to": PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
     "access": "admin" as const
   }
 ]
