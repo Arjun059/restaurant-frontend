@@ -11,7 +11,7 @@ export const PAGE_ROUTES = {
   RESTAURANT_HOME: (restaurantUrl: string) => `/c/${restaurantUrl}/home`, // key = ':restaurantUrl
   RESTAURANT_DISHES_LIST: (restaurantUrl: string) => `/c/${restaurantUrl}/dishes`, // key = ':restaurantUrl
 
-  // "c/f36ab96e-0037-4f2f-b6d3-49cf6e7abf3c/home"
+  // "c/036f72b0-7ed6-4c53-8ceb-31360cc19a90/home"
 
   // Restaurant routes
   RESTAURANT_ADMIN_DASHBOARD: '/r/admin/',

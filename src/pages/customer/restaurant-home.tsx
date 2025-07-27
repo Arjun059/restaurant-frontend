@@ -14,49 +14,78 @@ export default function RestaurantHome() {
 
   useEffect(() => {
     let ignore = false;
+
     async function fetchRestaurant() {
-      if (!restaurantUrl) return;
+      if (!restaurantUrl) {
+        setError(true);
+        return;
+      }
+
+      // If we already have the restaurant data for this URL, redirect immediately
       if (restaurant?.id && restaurant?.urlPath === restaurantUrl) {
         setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl));
         return;
       }
+
       setLoading(true);
       setError(false);
+      setRedirect(null); // Reset redirect state
+
       try {
         const data = await fetcher(`/restaurant/get/url/${restaurantUrl}`);
-        if (!ignore) {
+        console.log(data, 'data =======')
+        if (!ignore && data) {
           setRestaurant(data);
           setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl));
+        } else if (!ignore && !data) {
+          setError(true);
         }
       } catch (e) {
+        console.error('Error fetching restaurant:', e);
         if (!ignore) setError(true);
       } finally {
         if (!ignore) setLoading(false);
       }
     }
+
     fetchRestaurant();
-    return () => {ignore = true;};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurantUrl]);
+
+    return () => {
+      ignore = true;
+    };
+  }, [restaurantUrl, setRestaurant]); // Added setRestaurant to dependencies
 
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-4">
-        <Loader2 className="w-4 h-4 animate-spin mx-auto" />
+        <div className="flex justify-center items-center min-h-[200px]">
+          <Loader2 className="w-8 h-8 animate-spin" />
+        </div>
       </div>
     );
   }
 
   if (error) {
-    // Optionally navigate to not found or show error UI
-    // return <Navigate to={PAGE_ROUTES.NOT_FOUND} replace />
-    return <div className="text-center text-red-500">Error loading restaurant.</div>;
+    return (
+      <div className="container mx-auto px-4 py-4">
+        <div className="text-center text-red-500">
+          <h2 className="text-xl font-semibold mb-2">Restaurant Not Found</h2>
+          <p>The restaurant you're looking for could not be found.</p>
+        </div>
+      </div>
+    );
   }
 
   if (redirect) {
     return <Navigate to={redirect} replace />;
   }
 
-  return null;
+  // Show loading state while redirect is being set
+  return (
+    <div className="container mx-auto px-4 py-4">
+      <div className="flex justify-center items-center min-h-[200px]">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    </div>
+  );
 }
-
