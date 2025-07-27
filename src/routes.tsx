@@ -20,6 +20,7 @@ const RestaurantHome = lazy(() => import('./pages/customer/restaurant-home'))
 
 import SkeletonPage from '#/components/skeletons/page'
 import DishesList from './pages/customer/dishes-list'
+import RestaurantInfo from './pages/restaurant-dashboard/restaurant-info'
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <Dashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <RestaurantInfo />
               </Suspense>
             ),
           },

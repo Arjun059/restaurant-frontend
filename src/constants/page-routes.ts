@@ -17,6 +17,7 @@ export const PAGE_ROUTES = {
   RESTAURANT_ADMIN_DASHBOARD: '/r/admin/',
   RESTAURANT_ADMIN_ADD_DISH: '/r/admin/add-dish',
   RESTAURANT_ADMIN_DISHED_LIST: '/r/admin/dishes-list',
+  RESTAURANT_ADMIN_RESTAURANT_INFO: '/r/admin/restaurant-info',
 
   // Error routes
   NOT_FOUND: '*',

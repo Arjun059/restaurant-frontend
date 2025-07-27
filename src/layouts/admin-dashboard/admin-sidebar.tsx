@@ -2,7 +2,6 @@ import type * as React from 'react'
 import {Link} from 'react-router-dom'
 import {
   ArrowUpCircleIcon,
-  BarChartIcon,
   CameraIcon,
   ClipboardListIcon,
   DatabaseIcon,
@@ -16,6 +15,7 @@ import {
   Plus,
   SearchIcon,
   SettingsIcon,
+  Store,
   UsersIcon,
 } from 'lucide-react'
 
@@ -58,9 +58,9 @@ const data = {
       icon: List,
     },
     {
-      title: 'Analytics',
-      url: '#',
-      icon: BarChartIcon,
+      title: 'Restaurant Info',
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
+      icon: Store,
     },
     {
       title: 'Projects',
