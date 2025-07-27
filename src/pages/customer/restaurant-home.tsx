@@ -16,14 +16,15 @@ export default function RestaurantHome() {
     let ignore = false;
 
     async function fetchRestaurant() {
-      if (!restaurantUrl) {
-        setError(true);
-        return;
-      }
+
+      // Clear restaurant state if we're navigating to a different restaurant
+      // if (restaurant?.urlPath && restaurant.urlPath !== restaurantUrl) {
+      //   setRestaurant(null);
+      // }
 
       // If we already have the restaurant data for this URL, redirect immediately
       if (restaurant?.id && restaurant?.urlPath === restaurantUrl) {
-        setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl));
+        setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl as string));
         return;
       }
 
@@ -36,7 +37,7 @@ export default function RestaurantHome() {
         console.log(data, 'data =======')
         if (!ignore && data) {
           setRestaurant(data);
-          setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl));
+          setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl as string));
         } else if (!ignore && !data) {
           setError(true);
         }
@@ -48,12 +49,16 @@ export default function RestaurantHome() {
       }
     }
 
-    fetchRestaurant();
+    if (restaurantUrl) {
+      fetchRestaurant();
+    } else {
+      console.log("restaurant url path is not valid")
+    }
 
     return () => {
       ignore = true;
     };
-  }, [restaurantUrl, setRestaurant]); // Added setRestaurant to dependencies
+  }, [restaurantUrl]);
 
   if (loading) {
     return (
