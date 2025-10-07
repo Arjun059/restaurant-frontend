@@ -79,7 +79,7 @@ export default function DishesList() {
 
   useEffect(() => {
     if (restaurantUrl && !restaurant?.id) {
-      navigate(PAGE_ROUTES.RESTAURANT_HOME(restaurantUrl), {replace: true})
+      navigate(PAGE_ROUTES.RESTAURANT_VIEW(restaurantUrl), {replace: true})
     }
   }, [restaurantUrl, restaurant?.id])
 

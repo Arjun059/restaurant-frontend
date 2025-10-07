@@ -58,18 +58,13 @@ const data = {
       icon: List,
     },
     {
-      title: 'Restaurant Info',
+      title: 'Restaurant',
       url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
       icon: Store,
     },
     {
-      title: 'Projects',
-      url: '#',
-      icon: FolderIcon,
-    },
-    {
       title: 'Team',
-      url: '#',
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_TEAM,
       icon: UsersIcon,
     },
   ],
