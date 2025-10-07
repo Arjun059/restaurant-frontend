@@ -20,6 +20,7 @@ import {
 import {fetcher} from '#/utils/fetcher'
 import {EyeOffIcon, EyeIcon} from 'lucide-react'
 import {useState} from 'react'
+import {PAGE_ROUTES} from '../../constants/page-routes'
 
 export default function LoginPage({className, ...props}: React.ComponentPropsWithoutRef<'div'>) {
   const {setAuthValue}: any = useStore()
@@ -42,8 +43,8 @@ export default function LoginPage({className, ...props}: React.ComponentPropsWit
       const {token, user} = data
       const {restaurant, ...userData} = user
 
+      navigate(PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD)
       setAuthValue({token, user: userData, restaurant})
-      navigate('/')
     },
     onError: (error) => {
       console.log(error, "hit on error login")

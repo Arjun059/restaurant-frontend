@@ -13,6 +13,7 @@ import {useNavigate} from 'react-router-dom'
 import {PAGE_ROUTES} from '#/constants/page-routes'
 import useStore from '#/store'
 import {isMobile} from 'react-device-detect';
+import {useEffect} from 'react'
 
 export function NavMain({
   items,
@@ -34,6 +35,10 @@ export function NavMain({
       toggleSidebar()
     }
   }
+
+  useEffect(() => {
+    setActiveAdminDashboardMenu("Dashboard")
+  }, [])
 
   return (
     <SidebarGroup>

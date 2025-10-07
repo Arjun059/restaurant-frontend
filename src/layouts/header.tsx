@@ -43,7 +43,7 @@ const Header = () => {
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center">
             {restaurant?.name ?
-              (<Link to={PAGE_ROUTES.RESTAURANT_HOME(restaurant?.urlPath)} className="mr-6 flex items-center space-x-2">
+              (<Link to={PAGE_ROUTES.RESTAURANT_VIEW(restaurant?.urlPath)} className="mr-6 flex items-center space-x-2">
                 <span className="font-bold">{restaurant?.name}</span>
               </Link>
               ) : (
@@ -98,7 +98,6 @@ const Header = () => {
 }
 
 export default Header
-
 
 interface AccessGuardProps {
   children: ReactNode

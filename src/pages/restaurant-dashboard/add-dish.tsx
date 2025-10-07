@@ -138,7 +138,7 @@ export default function AddDish() {
               name="name"
               render={({field}) => (
                 <FormItem>
-                  <FormLabel>Food Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Chicken Biryani" {...field} />
                   </FormControl>

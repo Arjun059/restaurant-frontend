@@ -6,6 +6,7 @@ import RestaurantDishesList from './dishes-list'
 
 
 export default function Dashboard() {
+
   return (
     <div>
       <SectionCards />

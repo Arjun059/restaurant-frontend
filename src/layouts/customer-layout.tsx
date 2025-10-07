@@ -11,7 +11,7 @@ export function CustomerLayout() {
 
   useEffect(() => {
     if (restaurantUrl && !restaurant?.id) {
-      navigate(PAGE_ROUTES.RESTAURANT_HOME(restaurantUrl), {replace: true})
+      navigate(PAGE_ROUTES.RESTAURANT_VIEW(restaurantUrl), {replace: true})
       return
     }
     if (!restaurantUrl && !restaurant?.id) {

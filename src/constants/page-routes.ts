@@ -8,7 +8,7 @@ export const PAGE_ROUTES = {
   SCAN_QR: '/c/scan-qr',
 
   // Customer routes [after he scan the code and restaurant has fetched]
-  RESTAURANT_HOME: (restaurantUrl: string) => `/c/${restaurantUrl}/home`, // key = ':restaurantUrl
+  RESTAURANT_VIEW: (restaurantUrl: string) => `/c/${restaurantUrl}/home`, // key = ':restaurantUrl
   RESTAURANT_DISHES_LIST: (restaurantUrl: string) => `/c/${restaurantUrl}/dishes`, // key = ':restaurantUrl
 
   // "c/036f72b0-7ed6-4c53-8ceb-31360cc19a90/home"
@@ -18,6 +18,7 @@ export const PAGE_ROUTES = {
   RESTAURANT_ADMIN_ADD_DISH: '/r/admin/add-dish',
   RESTAURANT_ADMIN_DISHED_LIST: '/r/admin/dishes-list',
   RESTAURANT_ADMIN_RESTAURANT_INFO: '/r/admin/restaurant-info',
+  RESTAURANT_ADMIN_TEAM: '/r/admin/team',
 
   // Error routes
   NOT_FOUND: '*',
