@@ -1,38 +1,89 @@
 import {ThemeSwitcher} from '#/components/theme'
-import {Alert, AlertDescription} from '#/components/ui/alert'
-
-import ViteLogo from '#/assets/images/vite.svg'
+import {Button} from '#/components/ui/button'
+import {Link} from 'react-router-dom'
 import useStore from '#/store'
+import {PAGE_ROUTES} from '../../constants/page-routes'
 
 export default function Home() {
-  const {user, loggedIn, restaurant} = useStore()
-
-  // console.log({user, loggedIn, restaurant}, "hit on home")
+  const {user, loggedIn} = useStore()
 
   return (
-    <div className="mx-auto flex h-full min-h-screen w-full flex-col">
-      <header className="mb-auto w-full p-4" aria-hidden>
-        <ThemeSwitcher className="float-right size-9" />
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-white to-gray-50 text-gray-800">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4 shadow-sm">
+        <h1 className="text-2xl font-bold tracking-tight text-primary">
+          Free<span className="text-destructive">Menu</span>
+        </h1>
+        <ThemeSwitcher className="size-9" />
       </header>
-      <div className="mx-auto flex flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mx-auto flex w-full border-collapse items-center justify-center">
-          <img src={ViteLogo} alt="Vite logo" className="h-28" />
-        </div>
-        <div className="text-center text-lg text-muted-foreground sm:mt-8">
-          <p className="leading-8">This is an example starter template React with Vite.</p>
-          <p className="leading-8">
-            Vite + React + Typescript + Tailwind CSS + React Hook Form + Vitest
-          </p>
-        </div>
 
-        <div>
-          <Alert variant={loggedIn ? 'default' : 'destructive'} className="w-full text-center">
-            <AlertDescription>
-              {loggedIn ? `Welcome back ${user?.email} 👋` : 'You are not logged in!'}
-            </AlertDescription>
-          </Alert>
+      {/* Hero Section */}
+      <section className="relative flex flex-col items-center justify-center px-6 py-16 text-center sm:py-24">
+        <div className="relative z-10 max-w-3xl space-y-6">
+          <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+            Digital Menus for Modern Restaurants 🍽️
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            Empower your restaurant with an elegant, interactive, and customizable digital menu platform.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link to={PAGE_ROUTES.RESTAURANT_REGISTER}>
+              <Button size="lg">Try For Free</Button>
+            </Link>
+            <Link to={PAGE_ROUTES.SCAN_QR}>
+              <Button variant="outline" size="lg">
+                Scan QR
+              </Button>
+            </Link>
+          </div>
+          {/* Alert */}
+          {loggedIn && (<div className='flex justify-center gap-4'>
+            <div className="max-w-xl px-6 bg-white border pt-1.5 rounded-lg hover:bg-slate-100">
+              {`Welcome back, ${user?.email} ! 👋`}
+            </div>
+            <Link to={PAGE_ROUTES.SCAN_QR}>
+              <Button variant="outline" size="lg">
+                Scan QR
+              </Button>
+            </Link>
+          </div>
+
+          )}
+
         </div>
-      </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+        <h3 className="mb-12 text-center text-3xl font-semibold text-primary">Why Choose MenuHub?</h3>
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              title: 'Smart Menu Management',
+              desc: 'Easily update dishes, prices, and categories with real-time synchronization.',
+            },
+            {
+              title: 'QR Code Ready',
+              desc: 'Generate unique QR codes for every table or section, instantly accessible by customers.',
+            },
+            {
+              title: 'Multi-Restaurant Support',
+              desc: 'Manage multiple branches and staff under one unified dashboard.',
+            },
+          ].map((feature, i) => (
+            <div
+              key={i}
+              className="rounded-2xl border bg-white p-6 text-center shadow-sm transition hover:shadow-md"
+            >
+              <h4 className="mb-2 text-xl font-semibold">{feature.title}</h4>
+              <p className="text-muted-foreground">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+
     </div>
   )
 }
