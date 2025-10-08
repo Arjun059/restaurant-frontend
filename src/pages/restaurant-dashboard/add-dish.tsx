@@ -86,12 +86,12 @@ export default function AddDish() {
     // @ts-ignore
     resolver: zodResolver(foodFormSchema),
     defaultValues: {
-      name: 'dahi balle',
-      description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took",
-      price: 40,
+      name: '',
+      description: "",
+      price: undefined,
       categories: [],
       veg: false,
-      preparationTime: '10',
+      preparationTime: '',
       images: [],
       bestSeller: false,
       rating: 0,
