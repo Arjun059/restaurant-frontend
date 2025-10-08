@@ -15,7 +15,7 @@ export function CustomerLayout() {
       return
     }
     if (!restaurantUrl && !restaurant?.id) {
-      navigate(PAGE_ROUTES.SCAN_QR, {replace: true})
+      navigate(PAGE_ROUTES.HOME, {replace: true})
       return
     }
   }, [restaurantUrl, restaurant?.id, navigate])

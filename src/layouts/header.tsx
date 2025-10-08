@@ -35,8 +35,6 @@ const Header = () => {
   const isMobile = useIsMobile()
   const restaurant = useStore(state => state.restaurant)
 
-  console.log(restaurant, 'restaurant --------------')
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -47,11 +45,19 @@ const Header = () => {
                 <span className="font-bold">{restaurant?.name}</span>
               </Link>
               ) : (
-                <NavigationMenuItem asChild>
-                  <Button variant="ghost" asChild>
-                    <Link to={PAGE_ROUTES.SCAN_QR}>Scan QR</Link>
-                  </Button>
-                </NavigationMenuItem>
+                <>
+                  <Link to={PAGE_ROUTES.HOME}>
+                    <h4 className="text-xl font-bold tracking-tight text-primary me-2">
+                      Free<span className="text-destructive">Menu</span>
+                    </h4>
+                  </Link>
+                  {/* <NavigationMenuItem asChild>
+                    <Button variant="ghost" asChild>
+                      <Link to={PAGE_ROUTES.SCAN_QR}>Scan QR</Link>
+                    </Button>
+                  </NavigationMenuItem> */}
+                </>
+
               )
             }
 

@@ -1,21 +1,22 @@
-import {ThemeSwitcher} from '#/components/theme'
 import {Button} from '#/components/ui/button'
 import {Link} from 'react-router-dom'
 import useStore from '#/store'
 import {PAGE_ROUTES} from '../../constants/page-routes'
+
 
 export default function Home() {
   const {user, loggedIn} = useStore()
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-white to-gray-50 text-gray-800">
-      {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 shadow-sm">
-        <h1 className="text-2xl font-bold tracking-tight text-primary">
-          Free<span className="text-destructive">Menu</span>
-        </h1>
-        <ThemeSwitcher className="size-9" />
-      </header>
+
+      {loggedIn && (
+        <header className="flex items-center justify-between px-6 py-4">
+          <h1 className="text-2xl font-bold tracking-tight text-primary">
+            Free<span className="text-destructive">Menu</span>
+          </h1>
+        </header>
+      )}
 
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center px-6 py-16 text-center sm:py-24">
@@ -26,18 +27,9 @@ export default function Home() {
           <p className="text-lg text-muted-foreground">
             Empower your restaurant with an elegant, interactive, and customizable digital menu platform.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link to={PAGE_ROUTES.RESTAURANT_REGISTER}>
-              <Button size="lg">Try For Free</Button>
-            </Link>
-            <Link to={PAGE_ROUTES.SCAN_QR}>
-              <Button variant="outline" size="lg">
-                Scan QR
-              </Button>
-            </Link>
-          </div>
+
           {/* Alert */}
-          {loggedIn && (<div className='flex justify-center gap-4'>
+          {loggedIn ? (<div className='flex justify-center gap-4'>
             <div className="max-w-xl px-6 bg-white border pt-1.5 rounded-lg hover:bg-slate-100">
               {`Welcome back, ${user?.email} ! 👋`}
             </div>
@@ -48,6 +40,17 @@ export default function Home() {
             </Link>
           </div>
 
+          ) : (
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link to={PAGE_ROUTES.RESTAURANT_REGISTER}>
+                <Button size="lg">Try For Free</Button>
+              </Link>
+              <Link to={PAGE_ROUTES.SCAN_QR}>
+                <Button variant="outline" size="lg">
+                  Scan QR
+                </Button>
+              </Link>
+            </div>
           )}
 
         </div>
@@ -84,6 +87,6 @@ export default function Home() {
 
 
 
-    </div>
+    </div >
   )
 }
