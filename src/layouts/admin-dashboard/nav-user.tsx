@@ -1,6 +1,4 @@
 import {
-  BellIcon,
-  CreditCardIcon,
   LogOutIcon,
   MoreVerticalIcon,
   UserCircleIcon,
@@ -24,6 +22,7 @@ import {
 } from '#/components/ui/sidebar'
 import useStore from '../../store'
 import {useNavigate} from 'react-router-dom'
+import {PAGE_ROUTES} from '../../constants/page-routes'
 
 export function NavUser() {
   const {isMobile} = useSidebar()
@@ -71,17 +70,9 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate(PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO)}>
                 <UserCircleIcon />
                 Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon />
-                Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
