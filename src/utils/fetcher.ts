@@ -14,6 +14,8 @@ export const fetcher = async <T = any>(url: string, options?: RequestInit): Prom
   try {
     const rawHeaders = options?.headers || {}
 
+    console.log(API_URL, 'api url')
+
     // Build final headers
     let headers: Record<string, any> = {
       'Content-Type': 'application/json',
