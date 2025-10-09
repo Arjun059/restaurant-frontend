@@ -1,5 +1,5 @@
 // utils/fetcher.ts
-const API_URL = import.meta.env.VITE_API_UR ?? 'https://restaurant-backend-srp6.onrender.com/'
+const API_URL = import.meta.env.VITE_API_URL ?? 'https://restaurant-backend-srp6.onrender.com'
 
 function isJson(value: any) {
   try {
