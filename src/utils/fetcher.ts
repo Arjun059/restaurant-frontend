@@ -1,5 +1,5 @@
 // utils/fetcher.ts
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_UR ?? 'https://restaurant-backend-srp6.onrender.com/'
 
 function isJson(value: any) {
   try {
@@ -13,8 +13,6 @@ function isJson(value: any) {
 export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
   try {
     const rawHeaders = options?.headers || {}
-
-    console.log(API_URL, 'api url')
 
     // Build final headers
     let headers: Record<string, any> = {
