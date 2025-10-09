@@ -1,35 +1,6 @@
 // utils/fetcher.ts
 const API_URL = import.meta.env.VITE_API_URL
 
-// export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
-//   try {
-//     const res = await fetch(API_URL + url, {
-//       ...options,
-//       headers: {
-//         'Content-Type': 'application/json',
-//         ...(options?.headers || {}),
-//       },
-//     })
-
-//     if (!res.ok) {
-//       // Optional: throw structured error
-//       const message = 'An error occurred'
-//       throw new Error(message)
-//     }
-
-//     const data = await res.json()
-//     console.log(data, 'API: add dish resp')
-//     if (data.error) {
-//       throw new Error(data.message)
-//     }
-
-//     return isJson(data.data) ? data.data : {}
-//   } catch (e: any) {
-//     console.log(e, 'this is ee')
-//     throw new Error(e?.message)
-//   }
-// }
-
 function isJson(value: any) {
   try {
     JSON.stringify(value)
