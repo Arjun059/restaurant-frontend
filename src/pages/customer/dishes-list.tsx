@@ -91,23 +91,25 @@ export default function DishesList() {
     <div className="container mx-auto px-4 py-4">
       <h1 className="mb-6 font-semibold text-lg text-gray-800">Popular Dishes Near You</h1>
       <div className='grid grid-cols-12 gap-4'>
-        <div className='col-span-4 md:col-span-2 bg-white p-2 rounded-lg'>
-          <div className="col-span-2">
-            <ul className="space-y-2">
-              {categories.map((cate, index) => (
-                <li
-                  key={index}
-                  className={`cursor-pointer flex sm:flex-row flex-col items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-bold text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 font-bold text-gray-800'
-                    }`}
-                  onClick={() => setSelectedCategory(cate)} // if you want filtering
-                >
-                  {categoryIcons[cate as keyof typeof categoryIcons]}
-                  <span className='text-sm'>{formatCategoryLabel(cate)}</span>
-                </li>
-              ))}
-            </ul>
+        {categories?.length > 0 && (
+          <div className='col-span-4 md:col-span-2 bg-white p-2 rounded-lg'>
+            <div className="col-span-2">
+              <ul className="space-y-2">
+                {categories.map((cate, index) => (
+                  <li
+                    key={index}
+                    className={`cursor-pointer flex sm:flex-row flex-col items-center rounded-md px-3 py-2 transition-colors ${selectedCategory === cate ? 'bg-green-100 font-bold text-green-700 border-s border-[#DAA520]' : 'hover:bg-gray-100 font-bold text-gray-800'
+                      }`}
+                    onClick={() => setSelectedCategory(cate)} // if you want filtering
+                  >
+                    {categoryIcons[cate as keyof typeof categoryIcons]}
+                    <span className='text-sm'>{formatCategoryLabel(cate)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 col-span-8 md:col-span-10">
           {groupedDishesByCategory[selectedCategory ?? categories[0]]?.map((dish: any) => (
@@ -159,8 +161,19 @@ export default function DishesList() {
             </Card>
           ))}
         </div>
-
       </div>
+
+      {categories?.length === 0 && (
+        <div className="w-full max-w-md space-y-6 bg-gray-50 rounded-lg p-4">
+          <div className="flex gap-4 items-center">
+            <Utensils className="h-10 w-10 text-rose-500" />
+            <p className="mt-2 text-gray-600 text-lg">
+              We couldn't find food items for this restaurant.
+            </p>
+          </div>
+        </div>
+      )}
+
 
       {selectedDish && (
         <DishDetail
