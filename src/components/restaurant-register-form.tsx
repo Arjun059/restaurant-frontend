@@ -17,6 +17,7 @@ import {z} from "zod"
 import {Textarea} from './ui/textarea'
 
 import {Badge} from "#/components/ui/badge"
+import {Link} from 'react-router-dom'
 
 export const restaurantSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -81,8 +82,19 @@ export default function RestaurantRegisterForm({onSubmit: onSubmitProp, initData
                 )}
               />
 
-              <Button type="submit">Submit</Button>
+              <div className='flex gap-4'>
+                <Button type="submit">Submit</Button>
+                <p
+                  className=' text-sm text-center'
+                >Do you have an account?.{" "}
+                  <Link to={"/auth/login"} className=' text-black text-sm border-b-2 border-black px-1'>
+                    Login Here
+                  </Link>
+                </p>
+              </div>
+
             </form>
+
           </Form>
         </CardContent>
       </Card>

@@ -185,6 +185,10 @@ export function DataTable<T>({
     }
   }
 
+  React.useEffect(() => {
+    setData(initialData)
+  }, [initialData])
+
   return (
     <div className="relative flex flex-col gap-4 overflow-auto" >
       <TableHeaderToolbar table={table}></TableHeaderToolbar>

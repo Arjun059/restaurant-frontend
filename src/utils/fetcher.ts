@@ -54,13 +54,13 @@ export const fetcher = async <T = any>(url: string, options?: RequestInit): Prom
       throw new Error(rawText)
     }
 
-    const data = await res.json()
+    const responseJson = await res.json()
 
-    if (data?.error) {
-      throw new Error(data.message)
+    if (responseJson?.error) {
+      throw new Error(responseJson.message)
     }
 
-    return isJson(data?.data) ? data.data : ({} as T)
+    return isJson(responseJson?.data) ? responseJson.data : ({} as T)
   } catch (e: any) {
     throw e
   }

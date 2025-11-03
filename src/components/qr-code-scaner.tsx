@@ -87,7 +87,7 @@ const Html5QrcodePlugin: React.FC<ScannerProps> = (props) => {
       </div>
       <p
         className=' text-sm text-center'
-      >Have an account.{" "}
+      >Do you have an account?.{" "}
         <Link to={"/auth/login"} className=' text-black text-sm border-b-2 border-black px-1'>
           Login Here
         </Link>

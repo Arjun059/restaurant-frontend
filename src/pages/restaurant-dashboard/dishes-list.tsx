@@ -11,10 +11,9 @@ export default function RestaurantDishesList() {
     queryFn: () => fetcher<any[]>(`/dishes/${restaurant?.id}`),
   });
 
-
   return (
     <>
-      <DishesDataTable data={queryResp.data || []}></DishesDataTable>
+      <DishesDataTable data={queryResp?.data ?? []}></DishesDataTable>
     </>
   )
 }
