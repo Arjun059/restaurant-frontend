@@ -12,8 +12,6 @@ export default function RestaurantDishesList() {
   });
 
   return (
-    <>
-      <DishesDataTable data={queryResp?.data ?? []}></DishesDataTable>
-    </>
+    <DishesDataTable data={queryResp?.data ?? []}></DishesDataTable>
   )
 }

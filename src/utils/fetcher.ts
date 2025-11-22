@@ -1,67 +1,58 @@
 // utils/fetcher.ts
 const API_URL = import.meta.env.VITE_API_URL ?? 'https://restaurant-backend-srp6.onrender.com'
+import useStore from "../store"
 
-function isJson(value: any) {
-  try {
-    JSON.stringify(value)
-    return true
-  } catch {
-    return false
+export const fetcher = async <T = any>(
+  url: string,
+  options?: RequestInit
+): Promise<T> => {
+  const rawHeaders: Record<string, any> = options?.headers || {};
+
+  const headers: Record<string, any> = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${useStore.getState().token}`,
+    ...rawHeaders,
+  };
+
+  // Remove content-type if explicitly unset
+  for (const key of Object.keys(rawHeaders)) {
+    if (key.toLowerCase() === "content-type" && rawHeaders[key] === "unset") {
+      delete headers[key];
+    }
   }
-}
 
-export const fetcher = async <T = any>(url: string, options?: RequestInit): Promise<T> => {
-  try {
-    const rawHeaders = options?.headers || {}
+  const res = await fetch(API_URL + url, {
+    ...options,
+    headers,
+  });
 
-    // Build final headers
-    let headers: Record<string, any> = {
-      'Content-Type': 'application/json',
-      ...rawHeaders,
+  const contentType = res.headers.get("content-type") || "";
+
+  // --- Handle non-200 first ---
+  if (!res.ok) {
+    if (contentType.includes("application/json")) {
+      const errorBody = await res.json().catch(() => null);
+      throw new Error(errorBody?.message || "Error");
+    } else {
+      const errorText = await res.text().catch(() => "");
+      throw new Error(errorText || `Request failed (${res.status})`);
     }
-
-    // Detect and remove content-type regardless of casing if set to null or undefined
-    for (const key of Object.keys(rawHeaders)) {
-      // @ts-ignore
-      if (key.toLowerCase() === 'content-type' && rawHeaders[key] === 'unset') {
-        delete headers[key]
-      }
-    }
-
-    const res = await fetch(API_URL + url, {
-      ...options,
-      headers,
-    })
-
-    if (!res.ok) {
-      // Try to parse error body
-      let errorMessage = 'An error occurred'
-      try {
-        const errorBody = await res.json()
-        errorMessage = errorBody?.message || errorMessage
-      } catch {
-        // response is not JSON
-        const text = await res.text()
-        errorMessage = text || errorMessage
-      }
-      throw new Error(errorMessage)
-    }
-
-    // Check content-type header before parsing as JSON
-    const contentType = res.headers.get('content-type')
-    if (!contentType?.includes('application/json')) {
-      const rawText = await res.text()
-      throw new Error(rawText)
-    }
-
-    const responseJson = await res.json()
-
-    if (responseJson?.error) {
-      throw new Error(responseJson.message)
-    }
-
-    return isJson(responseJson?.data) ? responseJson.data : ({} as T)
-  } catch (e: any) {
-    throw e
   }
-}
+
+  // --- Handle 204 No Content ---
+  if (res.status === 204) {
+    return {} as T;
+  }
+
+  // --- Parse JSON Response ---
+  if (contentType.includes("application/json")) {
+    const body = await res.json();
+
+    // If backend uses "data", return it, else return entire JSON
+    if ("data" in body) return body.data as T;
+    return body as T;
+  }
+
+  // --- Non-JSON success response ---
+  return (await res.text()) as T;
+};

@@ -23,7 +23,7 @@ import {fetcher} from '#/utils/fetcher'
 import {useMutation} from '@tanstack/react-query'
 import {Dish_Categories} from '../../utils/constants'
 import RatingStars from '../../components/rating-stars'
-import useStore from '../../store'
+import {queryClient} from '../../utils/query-client'
 
 // Form validation schema
 const foodFormSchema = z.object({
@@ -60,28 +60,6 @@ const foodFormSchema = z.object({
 type FoodFormValues = z.infer<typeof foodFormSchema>
 
 export default function AddDish() {
-  const {token} = useStore()
-  const mutation = useMutation({
-    mutationFn: (formData: any) => {
-      return fetcher('/admin/dashboard/dish/add', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': "unset",
-          "Authorization": `Bearer ${token}`
-        }
-      })
-    },
-    onSuccess: (data) => {
-      console.log(data, 'response data')
-      toast.success('Dish added successfully')
-    },
-    onError: (err: any) => {
-      console.log(err, 'this is error add dish')
-
-      toast.error('Error occur on dish add')
-    },
-  })
   const form = useForm<FoodFormValues>({
     // @ts-ignore
     resolver: zodResolver(foodFormSchema),
@@ -98,6 +76,30 @@ export default function AddDish() {
     },
     mode: 'onChange',
   })
+  const mutation = useMutation({
+    mutationFn: (formData: any) => {
+      return fetcher('/admin/dashboard/dish/add', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': "unset",
+          // "Authorization": `Bearer ${token}`
+        }
+      })
+    },
+    onSuccess: (data) => {
+      console.log(data, 'response data')
+      toast.success('Dish added successfully')
+      queryClient.invalidateQueries({queryKey: ["dishes"]})
+      form.reset();
+    },
+    onError: (err: any) => {
+      console.log(err, 'this is error add dish')
+
+      toast.error('Error occur on dish add')
+    },
+  })
+
 
   console.log(form.watch('categories'), "category")
 

@@ -3,16 +3,24 @@ import {z} from 'zod';
 import {DataTable, DragHandle} from './data-table';
 
 import {
-  CheckCircle2Icon
+  CheckCircle2Icon,
+  MoreVerticalIcon,
+  PlusIcon
 } from 'lucide-react';
 
 import {Badge} from '#/components/ui/badge';
 import {Checkbox} from '#/components/ui/checkbox';
 import {Dish_Categories} from '../utils/constants';
-
+import {Link} from 'react-router-dom';
+import {PAGE_ROUTES} from '../constants/page-routes';
+import {Button} from './ui/button';
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger} from './ui/dropdown-menu';
+import {fetcher} from '../utils/fetcher';
+import {toast} from 'sonner';
+import {queryClient} from '../utils/query-client';
 
 export const schema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string(),
   description: z.string(),
   categories: z.array(z.string()),
@@ -36,7 +44,7 @@ const columns: ColumnDef<SchemaType>[] = [
   {
     id: 'drag',
     header: () => null,
-    cell: ({row}) => <DragHandle id={row.original.id} />,
+    cell: ({row}) => <DragHandle id={row.index} />,
   },
   {
     id: 'select',
@@ -125,7 +133,7 @@ const columns: ColumnDef<SchemaType>[] = [
     header: () => <div className="text-nowrap">Display Price</div>,
     cell: ({row}) => (
       <p>
-        ₹{row.original.displayPrice}
+        {row.original.displayPrice === 0 ? "-" : `₹${row.original.displayPrice}`}
       </p>
     ),
   },
@@ -145,31 +153,42 @@ const columns: ColumnDef<SchemaType>[] = [
       })
     }
   },
-  // {
-  //   id: 'actions',
-  //   cell: () => (
-  //     <DropdownMenu>
-  //       <DropdownMenuTrigger asChild>
-  //         <Button
-  //           variant="ghost"
-  //           className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
-  //           size="icon"
-  //         >
-  //           <MoreVerticalIcon />
-  //           <span className="sr-only">Open menu</span>
-  //         </Button>
-  //       </DropdownMenuTrigger>
-  //       <DropdownMenuContent align="end" className="w-32">
-  //         <DropdownMenuItem>Edit</DropdownMenuItem>
-  //         <DropdownMenuItem>Make a copy</DropdownMenuItem>
-  //         <DropdownMenuItem>Favorite</DropdownMenuItem>
-  //         <DropdownMenuSeparator />
-  //         <DropdownMenuItem>Delete</DropdownMenuItem>
-  //       </DropdownMenuContent>
-  //     </DropdownMenu>
-  //   ),
-  // },
+  {
+    id: 'actions',
+    cell: ({row}) => (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
+            size="icon"
+          >
+            <MoreVerticalIcon />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-32">
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem>Make a copy</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={async () => await onDeleteDish(row.original.id as string)}>Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+  },
 ];
+
+async function onDeleteDish(id: string) {
+  try {
+    await fetcher(`/admin/dashboard/dish/delete/${id}`, {
+      method: "DELETE",
+    });
+    await queryClient.refetchQueries({queryKey: ["dishes"]})
+    toast.success("Dish deleted successfully")
+  } catch {
+    toast.error("!Error occur on delete dish")
+  }
+}
 
 export function DishesDataTable({
   data: initialData,
@@ -177,8 +196,19 @@ export function DishesDataTable({
   data: SchemaType[]
 }) {
 
-  return (
-    <DataTable<SchemaType> data={initialData} columns={columns} />
 
+  return (
+    <DataTable<SchemaType>
+      headerToolbar={
+        <Link to={PAGE_ROUTES.RESTAURANT_ADMIN_ADD_DISH}>
+          <Button variant="outline" size="sm">
+            <PlusIcon />
+            <span className="hidden lg:inline">Add New Dish</span>
+          </Button>
+        </Link>
+      }
+      data={initialData}
+      columns={columns}
+    />
   )
 }

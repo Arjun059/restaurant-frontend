@@ -126,10 +126,12 @@ function DraggableRow({row}: {row: Row<z.infer<typeof schema>>}) {
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
+  headerToolbar?: React.ReactNode | null | undefined
 }
 export function DataTable<T>({
   data: initialData,
-  columns: columns
+  columns: columns,
+  headerToolbar,
 }: DataTableProps<T>) {
   const [data, setData] = React.useState(() => initialData)
   const [rowSelection, setRowSelection] = React.useState({})
@@ -191,7 +193,7 @@ export function DataTable<T>({
 
   return (
     <div className="relative flex flex-col gap-4 overflow-auto" >
-      <TableHeaderToolbar table={table}></TableHeaderToolbar>
+      <TableHeaderToolbar table={table} headerToolbar={headerToolbar}></TableHeaderToolbar>
 
       <div className="overflow-hidden rounded-lg border">
         <DndContext
@@ -313,7 +315,7 @@ export function DataTable<T>({
   )
 }
 
-function TableHeaderToolbar({table}: any) {
+function TableHeaderToolbar({table, headerToolbar}: any) {
   return (
     <div className="flex items-center gap-2 justify-end">
       <DropdownMenu>
@@ -343,10 +345,7 @@ function TableHeaderToolbar({table}: any) {
             })}
         </DropdownMenuContent>
       </DropdownMenu>
-      {/* <Button variant="outline" size="sm">
-          <PlusIcon />
-          <span className="hidden lg:inline">Add Section</span>
-        </Button> */}
+      {headerToolbar && headerToolbar}
     </div>
   )
 }
