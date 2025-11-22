@@ -1,12 +1,21 @@
 "use client";
 
-import QRScanner from '#/components/qr-code-scaner'
-import {useCallback} from 'react'
+import QRScanner from '#/components/qr-code-scanner'
+import {useCallback, useState} from 'react'
 import {toast} from 'sonner';
 import {useNavigate} from 'react-router-dom';
+import {
+  Alert,
+  AlertTitle,
+} from "#/components/ui/alert"
+import {CameraOff} from "lucide-react"
+
+
+const cameraNotFound = 'Requested device not found'
 
 const ScanQrPage = () => {
   const navigate = useNavigate();
+  const [isCamEnable, setIsCamEnable] = useState(true)
 
   const onScanSuccess = useCallback((decodedText: string) => {
     console.log(decodedText, "decodedText")
@@ -30,15 +39,35 @@ const ScanQrPage = () => {
   }, [navigate])
 
   const onScanError = useCallback((error: string) => {
-    console.log(error)
+    if (error === cameraNotFound) {
+      setIsCamEnable(false)
+      return
+    }
+    setIsCamEnable(true)
     toast.error("Oops! Something went wrong while reading the QR code!")
   }, [])
 
   return (
     <div className='w-full p-4'>
       <QRScanner qrCodeSuccessCallback={onScanSuccess} qrCodeErrorCallback={onScanError} />
+      {!isCamEnable && <CameraNotFound />}
     </div >
   )
 }
 
 export default ScanQrPage
+
+function CameraNotFound() {
+
+  return (
+    <div className='flex justify-center -mt-4'>
+      <Alert variant={"destructive"} className='max-w-[300px] text-center'>
+        <CameraOff />
+        <AlertTitle>
+          !Enable your device camera to scan qr code.
+        </AlertTitle>
+      </Alert>
+    </div>
+
+  )
+}
