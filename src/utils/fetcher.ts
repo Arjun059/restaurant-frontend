@@ -1,6 +1,7 @@
 // utils/fetcher.ts
 const API_URL = import.meta.env.VITE_API_URL ?? 'https://restaurant-backend-srp6.onrender.com'
 import useStore from "../store"
+import { PAGE_ROUTES } from "../constants/page-routes"
 
 export const fetcher = async <T = any>(
   url: string,
@@ -29,6 +30,16 @@ export const fetcher = async <T = any>(
   const contentType = res.headers.get("content-type") || "";
 
   // --- Handle non-200 first ---
+  // If unauthorized, clear auth state and redirect to login
+  if (res.status === 401) {
+    useStore.getState().resetAuthValue()
+
+    // redirect to login page
+    window.location.href = PAGE_ROUTES.LOGIN
+
+    throw new Error("Unauthorized")
+  }
+
   if (!res.ok) {
     if (contentType.includes("application/json")) {
       const errorBody = await res.json().catch(() => null);

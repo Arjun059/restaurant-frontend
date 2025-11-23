@@ -47,6 +47,11 @@ const data = {
       icon: LayoutDashboardIcon,
     },
     {
+      title: 'Restaurant Profile',
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
+      icon: Store,
+    },
+    {
       title: 'Add Dish',
       url: PAGE_ROUTES.RESTAURANT_ADMIN_ADD_DISH,
       icon: Plus,
@@ -55,11 +60,6 @@ const data = {
       title: 'Dishes',
       url: PAGE_ROUTES.RESTAURANT_ADMIN_DISHED_LIST,
       icon: List,
-    },
-    {
-      title: 'Restaurant',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
-      icon: Store,
     },
     {
       title: 'Team',

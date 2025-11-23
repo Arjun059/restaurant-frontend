@@ -114,33 +114,13 @@ const ImageHandler = ({
                 {errors.maxFileSize && <p>Maximum file size is 8MB</p>}
               </div>
             )}
-
-            {imageList.map((image, index) => (
-              <div key={index} className="flex items-center gap-3 rounded-lg border bg-card p-2">
-                <div className="h-12 w-12 flex-shrink-0">
-                  <img
-                    src={image.data_url}
-                    alt={`Preview ${index + 1}`}
-                    className="h-full w-full rounded-md object-cover"
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm">
-                    {image.file?.name || `Image ${index + 1}`}
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="flex-shrink-0 border-red-100"
-                  onClick={() => removeImage(index)}
-                  disabled={disable}
-                  type='button'
-                >
-                  <X className="h-4 w-4 text-red-500" />
-                </Button>
-              </div>
-            ))}
+            <div className='space-y-0'>
+              <ImagesList
+                images={imageList.map((item) => ({name: item.file?.name, url: item.data_url})) as any}
+                onRemove={removeImage}
+                isDisabled={disable}
+              />
+            </div>
           </div>
         )}
       </ImageUploading>
@@ -149,3 +129,43 @@ const ImageHandler = ({
 }
 
 export default ImageHandler
+
+type ImageListPropType = {
+  images: {url: string, name: string}[];
+  onRemove: (index: number) => void;
+  isDisabled?: boolean
+}
+export function ImagesList({images, onRemove, isDisabled}: ImageListPropType) {
+  return (
+    <div className='space-y-4'>
+      {
+        images.map((image, index) => (
+          <div key={index} className="flex items-center gap-3 rounded-lg border bg-card p-2">
+            <div className="h-12 w-12 flex-shrink-0">
+              <img
+                src={image.url}
+                alt={`Preview ${index + 1}`}
+                className="h-full w-full rounded-md object-cover"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm">
+                {image?.name || `Image ${index + 1}`}
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="flex-shrink-0 border-red-100"
+              onClick={() => onRemove(index)}
+              disabled={isDisabled}
+              type='button'
+            >
+              <X className="h-4 w-4 text-red-500" />
+            </Button>
+          </div>
+        ))
+      }
+    </div>
+  )
+}

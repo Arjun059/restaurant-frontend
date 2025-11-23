@@ -16,6 +16,7 @@ export const PAGE_ROUTES = {
   // Restaurant routes
   RESTAURANT_ADMIN_DASHBOARD: '/r/admin/',
   RESTAURANT_ADMIN_ADD_DISH: '/r/admin/add-dish',
+  RESTAURANT_ADMIN_EDIT_DISH: (id: string) => `/r/admin/edit-dish/${id}`,
   RESTAURANT_ADMIN_DISHED_LIST: '/r/admin/dishes-list',
   RESTAURANT_ADMIN_RESTAURANT_INFO: '/r/admin/restaurant-info',
   RESTAURANT_ADMIN_TEAM: '/r/admin/team',

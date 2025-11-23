@@ -15,6 +15,7 @@ const RestaurantView = lazy(() => import('./pages/customer/restaurant-view'))
 // Restaurant Pages
 const Dashboard = lazy(() => import('./pages/restaurant-dashboard/dashboard'))
 const AddDish = lazy(() => import('./pages/restaurant-dashboard/add-dish'))
+const EditDish = lazy(() => import('./pages/restaurant-dashboard/edit-dish'))
 const RestaurantDishesList = lazy(() => import('./pages/restaurant-dashboard/dishes-list'))
 const RestaurantRegister = lazy(() => import('./pages/auth/restaurant-register'))
 import RestaurantInfo from './pages/restaurant-dashboard/restaurant-info'
@@ -72,6 +73,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <AddDish />
+              </Suspense>
+            ),
+          },
+          {
+            path: PAGE_ROUTES.RESTAURANT_ADMIN_EDIT_DISH(':id'),
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <EditDish />
               </Suspense>
             ),
           },
