@@ -131,7 +131,7 @@ const ImageHandler = ({
 export default ImageHandler
 
 type ImageListPropType = {
-  images: {url: string, name: string}[];
+  images: {url: string, name: string, folder?: string}[];
   onRemove: (index: number) => void;
   isDisabled?: boolean
 }

@@ -117,12 +117,11 @@ export default function EditDish() {
 
     // Append images: if File instances, append as upload; otherwise append existing image urls under 'existingImages'
     values.images.forEach((image: any) => {
-      if (image instanceof File) {
-        formData.append('images', image);
-      } else if (image && image.url) {
-        formData.append('existingImages', image.url);
-      }
+      formData.append('images', image);
     });
+    values.uploadedImages.forEach((existingImg: any) => {
+      formData.append('existingImages', JSON.stringify(existingImg));
+    })
 
     mutation.mutate(formData)
   }
@@ -144,7 +143,9 @@ export default function EditDish() {
                 <div className='my-3' />
                 <ImagesList
                   images={uploadedImages}
-                  onRemove={() => {}}
+                  onRemove={(index) => {
+                    form.setValue('uploadedImages', uploadedImages.filter((__: any, i: number) => i !== index))
+                  }}
                 />
               </div>
             </>
