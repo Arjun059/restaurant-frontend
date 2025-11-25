@@ -1,5 +1,5 @@
 "use client"
-import {useEffect} from 'react'
+import {useEffect, useMemo} from 'react'
 import {useForm, type SubmitHandler} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {z} from 'zod'
@@ -7,12 +7,12 @@ import {toast} from 'sonner'
 
 import {fetcher} from '#/utils/fetcher'
 import {useMutation, useQuery} from '@tanstack/react-query'
-import {Dish_Categories} from '../../utils/constants'
-import {queryClient} from '../../utils/query-client'
+import {Dish_Categories} from '#/utils/constants'
+import {queryClient} from '#/utils/query-client'
 import {useParams, useNavigate} from 'react-router-dom'
-import {AddDishForm, AddDishFormSchema} from '../../components/forms/add-dish'
-import {ImagesList} from '../../components/image-uploader'
-import {Label} from '../../components/ui/label'
+import {AddDishForm, AddDishFormSchema} from '#/components/forms/add-dish'
+import {ImagesList} from '#/components/image-uploader'
+import {Label} from '#/components/ui/label'
 
 const EditDishFormSchema = AddDishFormSchema.extend({
   images:
@@ -70,7 +70,7 @@ export default function EditDish() {
         images: [], // user can upload new images
         bestSeller: dishData.bestSeller || false,
         rating: dishData.rating || 0,
-        uploadedImages: dishData.images // user can delete already uploaded
+        uploadedImages: dishData.images || [] // user can delete already uploaded
       }
       form.reset(mapped)
     }
@@ -126,6 +126,17 @@ export default function EditDish() {
     mutation.mutate(formData)
   }
 
+
+  const {uploadedImages} = form.watch()
+
+  const fieldsConfig = useMemo(() => {
+    const maxImagesAllowed = 5 - uploadedImages?.length
+    return ({
+      images: {maxFiles: maxImagesAllowed}
+    })
+  }, [uploadedImages])
+
+
   return (
     <AddDishForm
       isLoading={mutation.isPending || isLoading}
@@ -145,6 +156,7 @@ export default function EditDish() {
                   images={uploadedImages}
                   onRemove={(index) => {
                     form.setValue('uploadedImages', uploadedImages.filter((__: any, i: number) => i !== index))
+                    form.trigger(["images"])
                   }}
                 />
               </div>
@@ -152,6 +164,7 @@ export default function EditDish() {
           )
         }
       }}
+      fieldsConfig={fieldsConfig}
     />
   )
 }

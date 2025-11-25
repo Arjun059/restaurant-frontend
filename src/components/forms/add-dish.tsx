@@ -17,10 +17,12 @@ import Select from 'react-select'
 import {Switch} from '#/components/ui/switch'
 
 import ImageHandler from '#/components/image-uploader'
-import {Dish_Categories} from '../../utils/constants'
-import RatingStars from '../../components/rating-stars'
+import {Dish_Categories} from '#/utils/constants'
+import RatingStars from '#/components/rating-stars'
 import {z} from 'zod'
 import type {ReactNode} from 'react'
+
+const defaultMaxImageAllowed = 5
 
 type AddDishFormType = {
   form: any,
@@ -30,9 +32,17 @@ type AddDishFormType = {
   submitText?: string
   fieldsInjection?: {
     preImages?: (form: any) => ReactNode
+    postImages?: (form: any) => ReactNode
+  }
+  fieldsConfig?: {
+    images?: {
+      maxFiles?: number
+    }
+
   }
 }
-export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText = "Add Food Item", fieldsInjection}: AddDishFormType) {
+export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText = "Add Food Item", fieldsInjection, fieldsConfig = {}}: AddDishFormType) {
+  const {images} = fieldsConfig;
 
   return (
     <div className="rounded-lg bg-white">
@@ -162,6 +172,7 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
               )}
             />
 
+            {/* pre image field hook */}
             {fieldsInjection && fieldsInjection.preImages && fieldsInjection.preImages(form)}
             {/* Image Upload */}
             <FormField
@@ -177,13 +188,15 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
                         field.onChange(newFiles)
                       }}
                       files={field.value || []}
-                      maxFiles={5}
+                      maxFiles={images?.maxFiles ?? defaultMaxImageAllowed}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            {/* post image field hook */}
+            {fieldsInjection && fieldsInjection.postImages && fieldsInjection.postImages(form)}
 
             {/* Description */}
             <FormField
