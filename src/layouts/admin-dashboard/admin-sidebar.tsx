@@ -42,14 +42,14 @@ const data = {
   },
   navMain: [
     {
-      title: 'Dashboard',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
-      icon: LayoutDashboardIcon,
-    },
-    {
       title: 'Restaurant Profile',
       url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
       icon: Store,
+    },
+    {
+      title: 'Dashboard',
+      url: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
+      icon: LayoutDashboardIcon,
     },
     {
       title: 'Add Dish',

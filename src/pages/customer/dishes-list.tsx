@@ -19,19 +19,6 @@ import useStore from '../../store'
 import {PAGE_ROUTES} from '../../constants/page-routes'
 import SkeletonDishesList from '../../components/skeletons/dishes-list'
 
-// const images = [
-//   'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-//   'https://plus.unsplash.com/premium_photo-1712756241096-cedbab03cd52?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fHw%3D',
-//   'https://images.unsplash.com/photo-1468777675496-5782faaea55b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI1fHx8ZW58MHx8fHx8',
-//   'https://images.unsplash.com/photo-1578167731266-cabac4159bed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU2fHx8ZW58MHx8fHx8',
-//   'https://plus.unsplash.com/premium_photo-1663853051660-91bd9b822799?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzNHx8fGVufDB8fHx8fA%3D%3D',
-// ];
-
-// function getRandomImages(count: number = 3): string[] {
-//   const shuffled = [...images].sort(() => 0.5 - Math.random())
-//   return shuffled.slice(0, count)
-// }
-
 const categoryIcons = {
   starter: <Utensils className="w-4 h-4 mr-2 text-[#DAA520]" />,
   dessert: <IceCream className="w-4 h-4 mr-2 text-[#DAA520]" />,
@@ -89,7 +76,6 @@ export default function DishesList() {
 
   return (
     <div className="container mx-auto px-4 py-4">
-      <h1 className="mb-6 font-semibold text-lg text-gray-800">Popular Dishes Near You</h1>
       <div className='grid grid-cols-12 gap-4'>
         {categories?.length > 0 && (
           <div className='col-span-4 md:col-span-2 bg-white p-2 rounded-lg'>
@@ -127,7 +113,9 @@ export default function DishesList() {
                     className="h-48 w-full rounded-t-lg object-cover"
                   />
                   :
-                  <ImagePlaceHolder dishCategory={dish.categories[0]} ></ImagePlaceHolder>
+                  <div className='p-8'>
+                    <ImagePlaceHolder dishCategory={dish.categories[0]} ></ImagePlaceHolder>
+                  </div>
                 }
 
                 {dish.bestSeller && (

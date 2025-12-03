@@ -146,6 +146,9 @@ export default function EditDish() {
       fieldsInjection={{
         preImages: (form) => {
           const uploadedImages = form.watch('uploadedImages')
+
+          if (uploadedImages.length === 0) return null;
+
           return (
             <>
               <div />

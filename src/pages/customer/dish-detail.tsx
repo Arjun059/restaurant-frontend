@@ -44,10 +44,9 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
   }, [emblaApi, onSelect])
 
 
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl" >
+      <DialogContent className="max-w-xl" >
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">{dish.name}</DialogTitle>
         </DialogHeader>

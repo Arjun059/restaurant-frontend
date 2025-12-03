@@ -171,7 +171,6 @@ const columns: ColumnDef<SchemaType>[] = [
           <DropdownMenuItem asChild>
             <Link to={PAGE_ROUTES.RESTAURANT_ADMIN_EDIT_DISH(row.original.id as string)}>Edit</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>Make a copy</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={async () => await onDeleteDish(row.original.id as string)}>Delete</DropdownMenuItem>
         </DropdownMenuContent>
