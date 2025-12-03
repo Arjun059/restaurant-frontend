@@ -21,6 +21,10 @@ export const PAGE_ROUTES = {
   RESTAURANT_ADMIN_RESTAURANT_INFO: '/r/admin/restaurant-info',
   RESTAURANT_ADMIN_TEAM: '/r/admin/team',
 
+  // super admin
+  SUPER_ADMIN_LOGIN: '/super-admin/login',
+  SUPER_ADMIN_RESTAURANTS_LIST: '/super-admin/restaurants-list',
+
   // Error routes
   NOT_FOUND: '*',
 } as const

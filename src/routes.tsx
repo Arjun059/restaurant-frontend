@@ -3,7 +3,7 @@ import {lazy, Suspense} from 'react'
 import {PAGE_ROUTES} from './constants/page-routes'
 
 // All Layout
-import {CustomerLayout, AdminLayout, RootLayout} from './layouts'
+import {CustomerLayout, AdminLayout, RootLayout, SuperAdminLayout} from './layouts'
 import {AuthLayout} from './layouts/auth-layout'
 
 // Customer Pages
@@ -20,6 +20,9 @@ const RestaurantDishesList = lazy(() => import('./pages/restaurant-dashboard/dis
 const RestaurantRegister = lazy(() => import('./pages/auth/restaurant-register'))
 import RestaurantInfo from './pages/restaurant-dashboard/restaurant-info'
 const TeamPage = lazy(() => import('./pages/restaurant-dashboard/team'))
+
+// Super Admin Pages
+const SuperAdminLogin = lazy(() => import('./pages/super-admin/login'))
 
 // Auth Pages
 const Login = lazy(() => import('./pages/auth/login'))
@@ -52,6 +55,14 @@ export const router = createBrowserRouter([
             element: (
               <Suspense fallback={<SkeletonPage />}>
                 <RestaurantRegister />
+              </Suspense>
+            ),
+          },
+          {
+            path: PAGE_ROUTES.SUPER_ADMIN_LOGIN,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <SuperAdminLogin />
               </Suspense>
             ),
           },
@@ -149,6 +160,19 @@ export const router = createBrowserRouter([
             path: PAGE_ROUTES.RESTAURANT_DISHES_LIST(':restaurantUrl'),
             element: (
               <DishesList />
+            ),
+          },
+        ],
+      },
+      {
+        element: <SuperAdminLayout />,
+        children: [
+          {
+            path: PAGE_ROUTES.SUPER_ADMIN_RESTAURANTS_LIST,
+            element: (
+              <Suspense fallback={<SkeletonPage />}>
+                <RestaurantDishesList />
+              </Suspense>
             ),
           },
         ],

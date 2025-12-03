@@ -3,9 +3,10 @@ import useStore from '#/store'
 import {useMutation} from '@tanstack/react-query'
 import {toast} from "sonner"
 import {useForm} from 'react-hook-form'
+
 import {fetcher} from '#/utils/fetcher'
-import {PAGE_ROUTES} from '../../constants/page-routes'
-import {LoginForm} from '../../components/forms/login'
+import {PAGE_ROUTES} from '#/constants/page-routes'
+import {type LoginFormSchema, LoginForm} from '#/components/forms/login'
 
 export default function LoginPage() {
   const {setAuthValue}: any = useStore()
@@ -39,7 +40,7 @@ export default function LoginPage() {
     },
   })
 
-  const form = useForm<{email: string; password: string}>({
+  const form = useForm<LoginFormSchema>({
     defaultValues: {
       email: '',
       password: '',
@@ -47,12 +48,12 @@ export default function LoginPage() {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: any) {
+  function onSubmit(values: LoginFormSchema) {
     // console.log(values)
     mutation.mutate(values)
   }
 
   return (
-    <LoginForm onSubmit={onSubmit} form={form} isLoading={mutation.isPending} />
+    <LoginForm form={form} onSubmit={onSubmit} isLoading={mutation.isPending} />
   )
 }

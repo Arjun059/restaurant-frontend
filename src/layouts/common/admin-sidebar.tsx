@@ -24,10 +24,10 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  // SidebarHeader,
+  // SidebarMenu,
+  // SidebarMenuButton,
+  // SidebarMenuItem,
 } from '#/components/ui/sidebar'
 import {PAGE_ROUTES} from '#/constants/page-routes'
 // import {NavDocuments} from './nav-documents'
@@ -155,18 +155,19 @@ export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar collapsible="offcanvas" {...props} >
-      <SidebarHeader>
+      {/* <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <Link to="/dashboard">
                 <ArrowUpCircleIcon className="h-5 w-5" />
-                <span className="font-semibold text-base">Acme Inc.</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarHeader>
+      </SidebarHeader> */}
+
+      <div className='h-[10px] md:h-[50px]' />
       <SidebarContent className='flex-1 flex-grow-1'>
         <NavMain items={data.navMain} />
         {/* <NavDocuments items={data.documents} />

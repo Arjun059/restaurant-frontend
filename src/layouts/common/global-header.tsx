@@ -7,9 +7,9 @@ import {
   NavigationMenuTrigger
 } from "#/components/ui/navigation-menu"
 import {Link} from 'react-router-dom'
-import {useIsMobile} from '../hooks/use-mobile'
+import {useIsMobile} from '#/hooks/use-mobile'
 import useStore from '#/store'
-import {PAGE_ROUTES} from '../constants/page-routes'
+import {PAGE_ROUTES} from '#/constants/page-routes'
 import type {ReactNode} from 'react'
 
 const menuItems = [
@@ -31,7 +31,7 @@ const menuItems = [
 ]
 
 
-const Header = () => {
+const GlobalHeader = () => {
   const isMobile = useIsMobile()
   const restaurant = useStore(state => state.restaurant)
 
@@ -103,7 +103,7 @@ const Header = () => {
   )
 }
 
-export default Header
+export default GlobalHeader
 
 interface AccessGuardProps {
   children: ReactNode

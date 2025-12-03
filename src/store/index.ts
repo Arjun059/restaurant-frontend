@@ -1,9 +1,17 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  restaurantId: string
+}
+
 interface StoreState {
   token: string | null
-  user: any
+  user: User | null
   restaurant: any
   loggedIn: boolean
   activeAdminDashboardMenu: string
