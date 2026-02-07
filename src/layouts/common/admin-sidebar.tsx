@@ -1,22 +1,4 @@
 import type * as React from 'react'
-import {Link} from 'react-router-dom'
-import {
-  ArrowUpCircleIcon,
-  CameraIcon,
-  ClipboardListIcon,
-  DatabaseIcon,
-  FileCodeIcon,
-  FileIcon,
-  FileTextIcon,
-  HelpCircleIcon,
-  LayoutDashboardIcon,
-  List,
-  Plus,
-  SearchIcon,
-  SettingsIcon,
-  Store,
-  UsersIcon,
-} from 'lucide-react'
 
 import {NavMain} from './nav-main'
 import {NavUser} from './nav-user'
@@ -29,129 +11,27 @@ import {
   // SidebarMenuButton,
   // SidebarMenuItem,
 } from '#/components/ui/sidebar'
-import {PAGE_ROUTES} from '#/constants/page-routes'
+
+import type {LucideIcon} from 'lucide-react'
 // import {NavDocuments} from './nav-documents'
 // import {NavSecondary} from './nav-secondary'
 
+type MenuItem = {
+  title: string,
+  url: string,
+  icon?: LucideIcon,
 
-const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
-  navMain: [
-    {
-      title: 'Restaurant Profile',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
-      icon: Store,
-    },
-    {
-      title: 'Dashboard',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
-      icon: LayoutDashboardIcon,
-    },
-    {
-      title: 'Add Dish',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_ADD_DISH,
-      icon: Plus,
-    },
-    {
-      title: 'Dishes',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_DISHED_LIST,
-      icon: List,
-    },
-    {
-      title: 'Team',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_TEAM,
-      icon: UsersIcon,
-    },
-  ],
-  navClouds: [
-    {
-      title: 'Capture',
-      icon: CameraIcon,
-      isActive: true,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Proposal',
-      icon: FileTextIcon,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Prompts',
-      icon: FileCodeIcon,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Settings',
-      url: '#',
-      icon: SettingsIcon,
-    },
-    {
-      title: 'Get Help',
-      url: '#',
-      icon: HelpCircleIcon,
-    },
-    {
-      title: 'Search',
-      url: '#',
-      icon: SearchIcon,
-    },
-  ],
-  documents: [
-    {
-      name: 'Data Library',
-      url: '#',
-      icon: DatabaseIcon,
-    },
-    {
-      name: 'Reports',
-      url: '#',
-      icon: ClipboardListIcon,
-    },
-    {
-      name: 'Word Assistant',
-      url: '#',
-      icon: FileIcon,
-    },
-  ],
 }
 
-export function AppSidebar({...props}: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  data: {
+    navMain: MenuItem[]
+    navSecondary: MenuItem[]
+    documents: MenuItem[]
+  }
+}
+
+export function AppSidebar({data, ...props}: AppSidebarProps) {
 
   return (
     <Sidebar collapsible="offcanvas" {...props} >

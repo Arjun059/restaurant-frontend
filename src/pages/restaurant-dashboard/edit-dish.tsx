@@ -25,7 +25,6 @@ type FoodFormValues = z.infer<typeof EditDishFormSchema>
 
 export default function EditDish() {
   const params = useParams()
-  const navigate = useNavigate()
   const id = params.id as string
 
   const form = useForm<FoodFormValues>({

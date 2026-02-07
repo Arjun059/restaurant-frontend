@@ -18,13 +18,25 @@ import equal from "fast-deep-equal";
 
 import {Separator} from "#/components/ui/separator";
 import useStore from "../../store";
+import {fetcher} from "../../utils/fetcher";
 
 const RestaurantPage = () => {
-  const {restaurant} = useStore();
+  const {restaurant, setRestaurant} = useStore();
   const [open, setOpen] = useState<boolean>(false);
+
 
   const handleSubmit = (data: any) => {
     console.log("Restaurant form submitted:", data);
+    fetcher('/admin/dashboard/restaurant/update', {method: "PUT", body: JSON.stringify(data)})
+      .then(
+        () => {
+          setRestaurant({
+            ...restaurant,
+            ...data
+          })
+        },
+        () => {}
+      )
     // Send to API or handle logic
     setOpen(false); // Close modal after submission
   };

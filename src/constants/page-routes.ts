@@ -4,7 +4,7 @@ export const PAGE_ROUTES = {
   RESTAURANT_REGISTER: '/auth/restaurant-register',
 
   // Public routes
-  HOME: '/c/',
+  HOME: '/c',
   SCAN_QR: '/c/scan-qr',
 
   // Customer routes [after he scan the code and restaurant has fetched]

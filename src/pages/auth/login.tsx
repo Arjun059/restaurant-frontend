@@ -23,12 +23,16 @@ export default function LoginPage() {
         description: "You are now logged in to your account",
       })
       console.log(data, "hit on success login")
-
+      
       const {token, user} = data
       const {restaurant, ...userData} = user
 
-      navigate(PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD)
       setAuthValue({token, user: userData, restaurant})
+      let timer_id = setTimeout(() => {
+        // wait for setting auth value;
+        navigate(PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD)
+        clearTimeout(timer_id)
+      }, 400)
     },
     onError: (error) => {
       console.log(error, "hit on error login")

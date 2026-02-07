@@ -34,7 +34,7 @@ export default function RestaurantHome() {
 
       try {
         const data = await fetcher(`/restaurant/get/url/${restaurantUrl}`);
-        console.log(data, 'data =======')
+
         if (!ignore && data) {
           setRestaurant(data);
           setRedirect(PAGE_ROUTES.RESTAURANT_DISHES_LIST(restaurantUrl as string));
