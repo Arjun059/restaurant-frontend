@@ -6,6 +6,12 @@ import {Navigate, Outlet} from 'react-router-dom'
 import {PAGE_ROUTES} from '../constants/page-routes'
 import useStore from '#/store'
 
+const menus = {
+  navMain: [],
+  navSecondary: [],
+  documents: [],
+}
+
 export function SuperAdminLayout() {
   const {token, restaurant} = useStore(state => state)
 
@@ -15,7 +21,7 @@ export function SuperAdminLayout() {
 
   return (
     <SidebarProvider>
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset" data={menus} />
       <SidebarInset>
         <SiteHeader />
 

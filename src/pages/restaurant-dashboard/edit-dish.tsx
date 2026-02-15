@@ -9,7 +9,7 @@ import {fetcher} from '#/utils/fetcher'
 import {useMutation, useQuery} from '@tanstack/react-query'
 import {Dish_Categories} from '#/utils/constants'
 import {queryClient} from '#/utils/query-client'
-import {useParams, useNavigate} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {AddDishForm, AddDishFormSchema} from '#/components/forms/add-dish'
 import {ImagesList} from '#/components/image-uploader'
 import {Label} from '#/components/ui/label'
@@ -86,7 +86,7 @@ export default function EditDish() {
         }
       })
     },
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       toast.success('Dish updated successfully')
       queryClient.invalidateQueries({queryKey: ["dishes"]})
       queryClient.invalidateQueries({queryKey: ['dish', id]})
