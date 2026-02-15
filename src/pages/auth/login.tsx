@@ -22,8 +22,7 @@ export default function LoginPage() {
       toast.success('Login successful', {
         description: "You are now logged in to your account",
       })
-      console.log(data, "hit on success login")
-      
+
       const {token, user} = data
       const {restaurant, ...userData} = user
 
@@ -35,8 +34,7 @@ export default function LoginPage() {
       }, 400)
     },
     onError: (error) => {
-      console.log(error, "hit on error login")
-      toast.error('Invalid credentials', {
+      toast.error(error.message || 'Invalid credentials', {
         duration: 3000,
         description: "Please try again with different email and password",
       })

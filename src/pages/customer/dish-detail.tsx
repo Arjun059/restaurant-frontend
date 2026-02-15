@@ -5,6 +5,9 @@ import useEmblaCarousel from 'embla-carousel-react'
 import {ChevronLeft, ChevronRight, Clock} from 'lucide-react'
 import {useCallback, useEffect, useState} from 'react'
 import RatingStars from '../../components/rating-stars'
+import {type ImageType} from "#/types/dishes"
+
+
 
 interface DishDetailProps {
   dish: {
@@ -14,7 +17,7 @@ interface DishDetailProps {
     price: number
     rating: number
     preparationTime?: string
-    images: {url: string}[]
+    images: ImageType[]
     restaurant: string
     veg: boolean
     bestSeller: boolean
@@ -43,7 +46,6 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
     emblaApi.on('select', onSelect)
   }, [emblaApi, onSelect])
 
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-xl" >
@@ -56,10 +58,10 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
           <div className="relative">
             <div className="overflow-hidden rounded-lg" ref={emblaRef}>
               <div className="flex">
-                {dish.images?.map((image: {url: string}, index) => (
+                {dish.images?.map((image: ImageType, index: number) => (
                   <div key={index} className="relative flex-[0_0_100%]">
                     <img
-                      src={image.url}
+                      src={image.originalUrl}
                       alt={`${dish.name} - Image ${index + 1}`}
                       className="h-64 w-full object-cover"
                     />

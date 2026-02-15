@@ -106,9 +106,9 @@ export default function DishesList() {
             >
               <div className="relative">
 
-                {dish.images?.[0]?.url ?
+                {dish.images?.[0]?.smallUrl ?
                   <img
-                    src={dish.images?.[0]?.url}
+                    src={dish.images?.[0]?.smallUrl}
                     alt={dish.name}
                     className="h-48 w-full rounded-t-lg object-cover"
                   />

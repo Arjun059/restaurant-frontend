@@ -11,7 +11,7 @@ import {
   DatabaseIcon,
   FileIcon,
   HelpCircleIcon,
-  LayoutDashboardIcon,
+  // LayoutDashboardIcon,
   List,
   Plus,
   SearchIcon,
@@ -27,11 +27,11 @@ const data = {
       url: PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO,
       icon: Store,
     },
-    {
-      title: 'Dashboard',
-      url: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
-      icon: LayoutDashboardIcon,
-    },
+    // {
+    //   title: 'Dashboard',
+    //   url: PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD,
+    //   icon: LayoutDashboardIcon,
+    // },
     {
       title: 'Add Dish',
       url: PAGE_ROUTES.RESTAURANT_ADMIN_ADD_DISH,
