@@ -15,15 +15,14 @@ import {
 } from "#/components/ui/dialog";
 import equal from "fast-deep-equal";
 
-
 import {Separator} from "#/components/ui/separator";
 import useStore from "../../store";
 import {fetcher} from "../../utils/fetcher";
+import {Download} from "lucide-react";
 
 const RestaurantPage = () => {
   const {restaurant, setRestaurant} = useStore();
   const [open, setOpen] = useState<boolean>(false);
-
 
   const handleSubmit = (data: any) => {
     console.log("Restaurant form submitted:", data);
@@ -47,7 +46,6 @@ const RestaurantPage = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
 
-
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>Edit Restaurant</DialogTitle>
@@ -59,9 +57,10 @@ const RestaurantPage = () => {
               {/* You can put extra action buttons here if needed */}
             </DialogFooter>
           </DialogContent>
+
         </div>
         {/*
-      <DialogTrigger asChild>
+          <DialogTrigger asChild>
             <Button variant={"outline"} className="ms-auto">Edit Restaurant</Button>
           </DialogTrigger> */}
         <RestaurantInfo restaurant={restaurant} />
@@ -145,6 +144,27 @@ type RestaurantInfoProps = {
 };
 
 const RestaurantInfo: React.FC<RestaurantInfoProps> = ({restaurant}) => {
+
+  const handleDownloadImage = () => {
+    let imageUrl = restaurant.qrCodeURL as string;
+
+    if (!imageUrl) return;
+
+    // Add fl_attachment dynamically
+    const downloadUrl = imageUrl.replace(
+      "/upload/",
+      "/upload/fl_attachment/"
+    );
+
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = "qr-code.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  console.log(restaurant.qrCodeURL, 'url --------')
+
   return (
     <>
 
@@ -164,12 +184,24 @@ const RestaurantInfo: React.FC<RestaurantInfoProps> = ({restaurant}) => {
 
       {
         restaurant.qrCodeURL && (
-          <div>
+          <div className="relative" >
+            <Button
+              title="download qr code image"
+              variant="outline"
+              size="icon"
+              onClick={handleDownloadImage}
+              className="absolute top-10 left-4"
+            >
+              <Download className="h-4 w-4" />
+            </Button>
+
             <h4 className="text-sm font-medium text-muted-foreground mb-2">QR Code</h4>
             <img
+              title="download qr code"
+              onClick={handleDownloadImage}
               src={restaurant.qrCodeURL}
               alt="QR Code"
-              className="w-32 h-32 object-contain border rounded"
+              className=" object-contain border rounded max-h-[400px] cursor-pointer"
             />
           </div>
         )
