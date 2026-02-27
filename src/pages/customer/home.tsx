@@ -13,7 +13,7 @@ export default function Home() {
       {loggedIn && (
         <header className="flex items-center justify-between px-6 py-4">
           <h1 className="text-2xl font-bold tracking-tight text-primary">
-            Free<span className="text-destructive">Menu</span>
+            <span className="text-destructive">Meal</span>  Wala
           </h1>
         </header>
       )}
@@ -58,7 +58,7 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <h3 className="mb-12 text-center text-3xl font-semibold text-primary">Why Choose MenuHub?</h3>
+        <h3 className="mb-12 text-center text-3xl font-semibold text-primary">Why Choose Menu Wala?</h3>
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {[
             {

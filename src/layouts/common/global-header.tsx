@@ -48,7 +48,7 @@ const GlobalHeader = () => {
                 <>
                   <Link to={PAGE_ROUTES.HOME}>
                     <h4 className="text-xl font-bold tracking-tight text-primary me-2">
-                      Free<span className="text-destructive">Menu</span>
+                      <span className="text-destructive">Meal</span> Wala
                     </h4>
                   </Link>
                   {/* <NavigationMenuItem asChild>
