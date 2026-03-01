@@ -10,16 +10,18 @@ import {useMutation, useQuery} from '@tanstack/react-query'
 import {Dish_Categories} from '#/utils/constants'
 import {queryClient} from '#/utils/query-client'
 import {useParams} from 'react-router-dom'
-import {AddDishForm, AddDishFormSchema} from '#/components/forms/add-dish'
+import {AddDishForm, createAddDishFormSchema} from '#/components/forms/add-dish'
 import {ImagesList} from '#/components/image-uploader'
 import {Label} from '#/components/ui/label'
 
-const EditDishFormSchema = AddDishFormSchema.extend({
-  images:
-    z.array(z.any())
-      .default([]), // making images non required field
-  uploadedImages: z.array(z.object({url: z.string(), folder: z.string(), name: z.string()}).optional()).default([])
-})
+const EditDishFormSchema = createAddDishFormSchema()
+  .extend({
+    images:
+      z.array(z.any())
+        .default([]), // making images non required field
+    uploadedImages: z.array(z.object({url: z.string(), folder: z.string(), name: z.string()}).optional()).default([])
+  })
+  .build()
 
 type FoodFormValues = z.infer<typeof EditDishFormSchema>
 
@@ -129,17 +131,24 @@ export default function EditDish() {
       formData.append('existingImages', JSON.stringify(existingImg));
     })
 
-    // Append variants
-    if (values.variants && values.variants.length > 0) {
-      values.variants.forEach((variant: any) => {
-        formData.append('variants', JSON.stringify({
-          id: variant.id,
-          name: variant.name,
-          price: variant.price
-        }));
+    // Append variants even if the all variant are get removed
+    if (values.variants) {
+      // remove variant id if it's start from 'temp-'
+      // because it's a newly created variant
+      // if variant that does not have a id backend assume it as a new variant;
+      const variants = values.variants?.map((variant: any) => {
+        if (variant.id.includes("temp-")) {
+          delete variant.id;
+          return variant
+        } else {
+          // existing variant update
+          return variant;
+        }
       })
+      formData.append('variants', JSON.stringify(variants));
     }
 
+    console.log(values)
     mutation.mutate(formData)
   }
 
@@ -163,9 +172,7 @@ export default function EditDish() {
       fieldsInjection={{
         preImages: (form) => {
           const uploadedImages = form.watch('uploadedImages')
-
           if (uploadedImages.length === 0) return null;
-
           return (
             <>
               <div />

@@ -7,8 +7,9 @@ import {toast} from 'sonner'
 import {fetcher} from '#/utils/fetcher'
 import {useMutation} from '@tanstack/react-query'
 import {queryClient} from '../../utils/query-client'
-import {AddDishForm, AddDishFormSchema} from '../../components/forms/add-dish'
+import {AddDishForm, createAddDishFormSchema} from '../../components/forms/add-dish'
 
+const AddDishFormSchema = createAddDishFormSchema().build()
 type FoodFormValues = z.infer<typeof AddDishFormSchema>
 
 export default function AddDish() {
@@ -79,14 +80,15 @@ export default function AddDish() {
       formData.append('images', image); // same key 'images' for all
     });
 
+    // remove tem id
+    values.variants = values.variants?.map((item: any) => {
+      delete item.id
+      return item;
+    })
+
     // Append variants
     if (values.variants && values.variants.length > 0) {
-      values.variants.forEach((variant: any) => {
-        formData.append('variants', JSON.stringify({
-          name: variant.name,
-          price: variant.price
-        }));
-      })
+      formData.append('variants', JSON.stringify(values.variants));
     }
 
     mutation.mutate(formData)

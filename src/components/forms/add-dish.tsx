@@ -266,7 +266,7 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
                 const variants = form.watch('variants') || []
                 return variants.length > 0 ? (
                   <div className="space-y-3">
-                    {variants.map((variant, index) => (
+                    {variants.map((variant: any, index: number) => (
                       <div key={variant.id || index} className="flex gap-3 items-end bg-white p-3 rounded-lg">
                         <div className="flex-1">
                           <label className="text-sm font-medium">Variant Name</label>
@@ -301,7 +301,7 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
                           size="sm"
                           className="text-red-500 hover:text-red-700 hover:bg-red-50"
                           onClick={() => {
-                            form.setValue('variants', variants.filter((_, i) => i !== index))
+                            form.setValue('variants', variants.filter((_: any, i: number) => i !== index))
                           }}
                         >
                           Remove
@@ -331,54 +331,68 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
 }
 
 // Form validation schema
-export const AddDishFormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
-  }),
-  description: z.string().min(10, {
-    message: 'Description must be at least 10 characters.',
-  }),
-  price: z.coerce.number().optional(),
-  categories: z.array(z.object({
-    value: z.string(),
-    label: z.string()
-  }))
-    .min(1, {
-      message: 'Please select a category.',
+export const createAddDishFormSchema = () => {
+  let schema: z.ZodObject<any> = z.object({
+    name: z.string().min(2, {
+      message: 'Name must be at least 2 characters.',
     }),
-  veg: z.boolean().default(true),
-  preparationTime: z.string().min(1, {
-    message: 'Please enter preparation time.',
-  }),
-  bestSeller: z.boolean().default(false),
-  rating: z.number().default(0),
-  images: z
-    .array(z.any())
-    .min(1, {
-      message: 'Please upload at least one image.',
-    })
-    .default([]),
-  variants: z.array(z.object({
-    id: z.string().optional(),
-    name: z.string().min(1, {
-      message: 'Variant name is required.',
+    description: z.string().min(10, {
+      message: 'Description must be at least 10 characters.',
     }),
-    price: z.coerce.number().min(0, {
-      message: 'Price must be at least ₹0.',
+    price: z.coerce.number().optional(),
+    categories: z.array(z.object({
+      value: z.string(),
+      label: z.string()
+    }))
+      .min(1, {
+        message: 'Please select a category.',
+      }),
+    veg: z.boolean().default(true),
+    preparationTime: z.string().min(1, {
+      message: 'Please enter preparation time.',
     }),
-  })).default([]),
-}).refine(
-  (data) => {
-    // If no variants, price is required
-    if (!data.variants || data.variants.length === 0) {
-      return data.price !== undefined && data.price > 0;
-    }
-    // If variants exist, price is optional
-    return true;
-  },
-  {
-    message: 'Price must be at least ₹1 when no variants are added.',
-    path: ['price'],
-  }
-)
+    bestSeller: z.boolean().default(false),
+    rating: z.number().default(0),
+    images: z
+      .array(z.any())
+      .min(1, {
+        message: 'Please upload at least one image.',
+      })
+      .default([]),
+    variants: z.array(z.object({
+      id: z.string().optional(),
+      name: z.string().min(1, {
+        message: 'Variant name is required.',
+      }),
+      price: z.coerce.number().min(0, {
+        message: 'Price must be at least ₹0.',
+      }),
+    })).default([]),
+  });
 
+  const api = {
+    extend<T extends z.ZodRawShape>(shape: T) {
+      schema = schema.extend(shape)
+      return api
+    },
+
+    build() {
+      return schema.refine(
+        (data) => {
+          // If no variants, price is required
+          if (!data.variants || data.variants.length === 0) {
+            return data.price !== undefined && data.price > 0;
+          }
+          // If variants exist, price is optional
+          return true;
+        },
+        {
+          message: 'Price must be at least ₹1 when no variants are added.',
+          path: ['price'],
+        }
+      )
+    },
+  }
+
+  return api
+}
