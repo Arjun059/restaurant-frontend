@@ -6,6 +6,7 @@ import {ChevronLeft, ChevronRight, Clock} from 'lucide-react'
 import {useCallback, useEffect, useState} from 'react'
 import RatingStars from '../../components/rating-stars'
 import {type ImageType} from "#/types/dishes"
+import {type DishVariant} from "#/types/api-response"
 
 
 
@@ -21,6 +22,7 @@ interface DishDetailProps {
     restaurant: string
     veg: boolean
     bestSeller: boolean
+    variants?: DishVariant[]
   }
   isOpen: boolean
   onClose: () => void
@@ -30,6 +32,7 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
+  const [selectedVariant, setSelectedVariant] = useState<DishVariant | null>(null)
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
@@ -38,6 +41,18 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
     if (!emblaApi) return
     setSelectedIndex(emblaApi.selectedScrollSnap())
   }, [emblaApi])
+
+  // Auto-select the variant with minimum price when dish opens
+  useEffect(() => {
+    if (isOpen && dish.variants && dish.variants.length > 0) {
+      const minVariant = dish.variants.reduce((min, variant) =>
+        variant.price < min.price ? variant : min
+      );
+      setSelectedVariant(minVariant);
+    } else {
+      setSelectedVariant(null);
+    }
+  }, [isOpen, dish.variants])
 
   useEffect(() => {
     if (!emblaApi) return
@@ -137,10 +152,31 @@ export function DishDetail({dish, isOpen, onClose}: DishDetailProps) {
                 <span className="font-medium">{dish.preparationTime} minutes</span>
               </div>
             )}
-            <div className="flex items-center gap-2 ">
-              <span className="text-lg font-medium">₹{dish.price}</span>
-            </div>
+            {(!dish.variants || dish.variants.length === 0) && (
+              <div className="flex items-center gap-2 ">
+                <span className="text-lg font-medium">₹{dish.price}</span>
+              </div>
+            )}
           </div>
+
+          {/* Variants Section */}
+          {dish.variants && dish.variants.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex flex-wrap gap-2">
+                {dish.variants.map((variant) => (
+                  <Button
+                    key={variant.id}
+                    variant={selectedVariant?.id === variant.id ? "default" : "outline"}
+                    onClick={() => setSelectedVariant(variant)}
+                    className="transition-all"
+                  >
+                    {variant.name}
+                    <span className="ml-2 text-sm">₹{variant.price}</span>
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Description */}
           <div>

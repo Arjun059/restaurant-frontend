@@ -143,7 +143,12 @@ export default function DishesList() {
                   <span className="flex items-center font-medium text-green-600">
                     <RatingStars rating={dish.rating} readOnly />
                   </span>
-                  <span className="font-bold">₹{dish.price}</span>
+                  <span className="font-bold">
+                    {dish.variants && dish.variants.length > 0
+                      ? `₹${Math.min(...dish.variants.map(v => v.price))}`
+                      : `₹${dish.price}`
+                    }
+                  </span>
                 </div>
               </CardContent>
             </Card>
