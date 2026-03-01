@@ -41,6 +41,7 @@ export default function EditDish() {
       bestSeller: false,
       rating: 0,
       uploadedImages: [],
+      variants: [],
     },
     mode: 'onChange',
   })
@@ -69,7 +70,8 @@ export default function EditDish() {
         images: [], // user can upload new images
         bestSeller: dishData.bestSeller || false,
         rating: dishData.rating || 0,
-        uploadedImages: dishData.images || [] // user can delete already uploaded
+        uploadedImages: dishData.images || [], // user can delete already uploaded
+        variants: dishData.variants || [] // Load existing variants
       }
       form.reset(mapped)
     }
@@ -102,7 +104,12 @@ export default function EditDish() {
     const formData = new FormData();
     formData.append('name', values.name);
     formData.append('description', values.description);
-    formData.append('price', String(values.price));
+    // Only append price if it's provided and variants are not present
+    if (values.price !== undefined && values.price !== null && values.price !== '') {
+      formData.append('price', String(values.price));
+    } else {
+      formData.append('price', '0');
+    }
     formData.append('veg', String(values.veg));
     formData.append('preparationTime', values.preparationTime);
     formData.append('bestSeller', String(values.bestSeller));
@@ -121,6 +128,17 @@ export default function EditDish() {
     values.uploadedImages.forEach((existingImg: any) => {
       formData.append('existingImages', JSON.stringify(existingImg));
     })
+
+    // Append variants
+    if (values.variants && values.variants.length > 0) {
+      values.variants.forEach((variant: any) => {
+        formData.append('variants', JSON.stringify({
+          id: variant.id,
+          name: variant.name,
+          price: variant.price
+        }));
+      })
+    }
 
     mutation.mutate(formData)
   }

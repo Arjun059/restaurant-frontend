@@ -1,3 +1,10 @@
+export type DishVariant = {
+  id: string;
+  dish_id: string;
+  name: string;
+  price: number;
+};
+
 export type Dish = {
   id: number;
   name: string;
@@ -14,6 +21,7 @@ export type Dish = {
     folder: string;
     url: string;
   }[] | null;
+  variants?: DishVariant[];
   restaurantId: number;
   user: {
     id: number;

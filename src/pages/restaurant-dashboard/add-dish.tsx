@@ -25,6 +25,7 @@ export default function AddDish() {
       images: [],
       bestSeller: false,
       rating: 0,
+      variants: [],
     },
     mode: 'onChange',
   })
@@ -56,7 +57,12 @@ export default function AddDish() {
     const formData = new FormData();
     formData.append('name', values.name);
     formData.append('description', values.description);
-    formData.append('price', String(values.price));
+    // Only append price if it's provided and variants are not present
+    if (values.price !== undefined && values.price !== null && values.price !== '') {
+      formData.append('price', String(values.price));
+    } else {
+      formData.append('price', '0');
+    }
     formData.append('veg', String(values.veg));
     formData.append('preparationTime', values.preparationTime);
     formData.append('bestSeller', String(values.bestSeller));
@@ -72,6 +78,16 @@ export default function AddDish() {
     values.images.forEach((image: File) => {
       formData.append('images', image); // same key 'images' for all
     });
+
+    // Append variants
+    if (values.variants && values.variants.length > 0) {
+      values.variants.forEach((variant: any) => {
+        formData.append('variants', JSON.stringify({
+          name: variant.name,
+          price: variant.price
+        }));
+      })
+    }
 
     mutation.mutate(formData)
   }

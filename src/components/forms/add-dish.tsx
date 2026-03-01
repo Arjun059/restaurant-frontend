@@ -21,6 +21,7 @@ import {Dish_Categories} from '#/utils/constants'
 import RatingStars from '#/components/rating-stars'
 import {z} from 'zod'
 import type {ReactNode} from 'react'
+import {useEffect} from 'react'
 
 const defaultMaxImageAllowed = 5
 
@@ -43,6 +44,17 @@ type AddDishFormType = {
 }
 export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText = "Add Food Item", fieldsInjection, fieldsConfig = {}}: AddDishFormType) {
   const {images} = fieldsConfig;
+
+  // Clear price when variants are added
+  useEffect(() => {
+    const subscription = form.watch((data: any) => {
+      const variants = data.variants || [];
+      if (variants.length > 0 && data.price) {
+        form.setValue('price', undefined);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <div className="rounded-lg bg-white">
@@ -68,15 +80,28 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
             <FormField
               control={form.control as any}
               name="price"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>Price (₹)</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="249" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({field}) => {
+                const variants = form.watch('variants') || [];
+                const isVariantsPresent = variants.length > 0;
+
+                return (
+                  <FormItem>
+                    <FormLabel>
+                      Price (₹)
+                      {isVariantsPresent && <span className="text-muted-foreground text-sm"> (Optional)</span>}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder={isVariantsPresent ? "Leave empty if using variants" : "249"}
+                        disabled={isVariantsPresent}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
 
             {/* Category */}
@@ -216,6 +241,79 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
                 </FormItem>
               )}
             />
+
+            {/* Variants Section */}
+            <div className="md:col-span-2 space-y-4 border rounded-lg p-4 bg-gray-50">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Variants (Optional)</h3>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const variants = form.getValues('variants') || []
+                    form.setValue('variants', [
+                      ...variants,
+                      {id: `temp-${Date.now()}`, name: '', price: 0}
+                    ])
+                  }}
+                >
+                  + Add Variant
+                </Button>
+              </div>
+
+              {(() => {
+                const variants = form.watch('variants') || []
+                return variants.length > 0 ? (
+                  <div className="space-y-3">
+                    {variants.map((variant, index) => (
+                      <div key={variant.id || index} className="flex gap-3 items-end bg-white p-3 rounded-lg">
+                        <div className="flex-1">
+                          <label className="text-sm font-medium">Variant Name</label>
+                          <Input
+                            placeholder="e.g., Half Plate"
+                            value={variant.name}
+                            onChange={(e) => {
+                              const newVariants = [...variants]
+                              newVariants[index].name = e.target.value
+                              form.setValue('variants', newVariants)
+                            }}
+                            className="mt-1"
+                          />
+                        </div>
+                        <div className="w-32">
+                          <label className="text-sm font-medium">Price (₹)</label>
+                          <Input
+                            type="number"
+                            placeholder="0"
+                            value={variant.price}
+                            onChange={(e) => {
+                              const newVariants = [...variants]
+                              newVariants[index].price = parseFloat(e.target.value) || 0
+                              form.setValue('variants', newVariants)
+                            }}
+                            className="mt-1"
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          onClick={() => {
+                            form.setValue('variants', variants.filter((_, i) => i !== index))
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500 text-center py-3">No variants added yet. Click "Add Variant" to add one.</p>
+                )
+              })()}
+            </div>
           </div>
 
           <div className="flex justify-end gap-4">
@@ -240,9 +338,7 @@ export const AddDishFormSchema = z.object({
   description: z.string().min(10, {
     message: 'Description must be at least 10 characters.',
   }),
-  price: z.coerce.number().min(1, {
-    message: 'Price must be at least ₹1.',
-  }),
+  price: z.coerce.number().optional(),
   categories: z.array(z.object({
     value: z.string(),
     label: z.string()
@@ -262,5 +358,27 @@ export const AddDishFormSchema = z.object({
       message: 'Please upload at least one image.',
     })
     .default([]),
-})
+  variants: z.array(z.object({
+    id: z.string().optional(),
+    name: z.string().min(1, {
+      message: 'Variant name is required.',
+    }),
+    price: z.coerce.number().min(0, {
+      message: 'Price must be at least ₹0.',
+    }),
+  })).default([]),
+}).refine(
+  (data) => {
+    // If no variants, price is required
+    if (!data.variants || data.variants.length === 0) {
+      return data.price !== undefined && data.price > 0;
+    }
+    // If variants exist, price is optional
+    return true;
+  },
+  {
+    message: 'Price must be at least ₹1 when no variants are added.',
+    path: ['price'],
+  }
+)
 
