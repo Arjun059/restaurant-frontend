@@ -36,7 +36,7 @@ export function NavMain({
   }
 
   useEffect(() => {
-    setActiveAdminDashboardMenu("Dashboard")
+    setActiveAdminDashboardMenu("Restaurant Profile")
   }, [])
 
   return (

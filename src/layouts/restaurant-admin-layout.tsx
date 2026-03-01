@@ -85,7 +85,11 @@ const data = {
 }
 
 export function AdminLayout() {
-  const {token, restaurant} = useStore(state => state)
+  const {token, restaurant, loggedIn} = useStore(state => state)
+
+  if (!loggedIn || token === null) {
+    return <Navigate to={PAGE_ROUTES.LOGIN} replace />
+  }
 
   if (!token && !restaurant?.id) {
     return <Navigate to={PAGE_ROUTES.SCAN_QR} replace />

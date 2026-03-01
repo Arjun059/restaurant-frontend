@@ -29,7 +29,7 @@ export default function LoginPage() {
       setAuthValue({token, user: userData, restaurant})
       let timer_id = setTimeout(() => {
         // wait for setting auth value;
-        navigate(PAGE_ROUTES.RESTAURANT_ADMIN_DASHBOARD)
+        navigate(PAGE_ROUTES.RESTAURANT_ADMIN_RESTAURANT_INFO)
         clearTimeout(timer_id)
       }, 400)
     },
