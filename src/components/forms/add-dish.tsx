@@ -267,8 +267,8 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
                 return variants.length > 0 ? (
                   <div className="space-y-3">
                     {variants.map((variant: any, index: number) => (
-                      <div key={variant.id || index} className="flex gap-3 items-end bg-white p-3 rounded-lg">
-                        <div className="flex-1">
+                      <div key={variant.id || index} className="flex flex-col md:flex-row gap-3 items-end bg-white p-3 rounded-lg">
+                        <div className="w-full md:flex-1">
                           <label className="text-sm font-medium">Variant Name</label>
                           <Input
                             placeholder="e.g., Half Plate"
@@ -281,7 +281,7 @@ export function AddDishForm({form, onSubmit, isLoading, isDisabled, submitText =
                             className="mt-1"
                           />
                         </div>
-                        <div className="w-32">
+                        <div className="w-full md:w-32">
                           <label className="text-sm font-medium">Price (₹)</label>
                           <Input
                             type="number"

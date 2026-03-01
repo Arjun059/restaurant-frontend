@@ -145,7 +145,7 @@ export default function DishesList() {
                   </span>
                   <span className="font-bold">
                     {dish.variants && dish.variants.length > 0
-                      ? `₹${Math.min(...dish.variants.map(v => v.price))}`
+                      ? `₹${Math.min(...dish.variants.map((v: any) => v.price))}`
                       : `₹${dish.price}`
                     }
                   </span>
