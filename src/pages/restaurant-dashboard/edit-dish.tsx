@@ -97,7 +97,6 @@ export default function EditDish() {
       // navigate('/r/admin/dishes-list')
     },
     onError: (err: any) => {
-      console.log(err, 'this is error update dish')
       toast.error('Error occurred while updating dish')
     },
   })
@@ -148,7 +147,6 @@ export default function EditDish() {
       formData.append('variants', JSON.stringify(variants));
     }
 
-    console.log(values)
     mutation.mutate(formData)
   }
 

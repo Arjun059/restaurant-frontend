@@ -25,16 +25,9 @@ const ImageHandler = ({
   const onChange =
     (imageList: ImageListType) => {
 
-      console.log(imageList.filter((item) => {
-        console.log(item.file?.type, "type of file")
-        return true
-      }))
-
       const validFiles = imageList.filter(file => {
         if (!file.file) return false
 
-
-        console.log(file.file.type, 'type of file')
 
         // // Check file type
         if (!ALLOWED_TYPES.includes(file.file.type)) {
@@ -56,7 +49,6 @@ const ImageHandler = ({
     }
 
   const removeImage = (index: number) => {
-    console.log("index", index, 'remvoe indes')
     const newFiles = [...files]
     newFiles.splice(index, 1)
     setFiles(newFiles)

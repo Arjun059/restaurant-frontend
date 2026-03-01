@@ -40,17 +40,14 @@ const RestaurantRegister = () => {
       user: value
     }
 
-    console.log(payload, "payload")
     mutation.mutate(payload, {
       onSuccess: () => {
-        console.log("hit on success restaurant register")
         toast.success('Restaurant has been created.', {
           description: "You can now login to your account to manage your restaurant",
         })
         navigate('/auth/login')
       },
       onError: (error: any) => {
-        console.log(error, "hit error restaurant register")
         toast.error(error.message || 'Something went wrong', {
           description: "Please try again with different email",
         })

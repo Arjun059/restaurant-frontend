@@ -52,7 +52,7 @@ export default function RestaurantHome() {
     if (restaurantUrl) {
       fetchRestaurant();
     } else {
-      console.log("restaurant url path is not valid")
+      console.error("Restaurant url path is not valid")
     }
 
     return () => {

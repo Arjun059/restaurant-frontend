@@ -29,7 +29,6 @@ export type RestaurantFormValues = z.infer<typeof restaurantSchema>;
 export default function RestaurantRegisterForm({onSubmit: onSubmitProp, initData}: {onSubmit: (values: any) => void, initData: any}) {
   // 2. Define a submit handler.
   function onSubmit(values: any) {
-    console.log(values, "values")
     onSubmitProp(values)
   }
 

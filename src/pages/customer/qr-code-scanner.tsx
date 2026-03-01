@@ -18,7 +18,6 @@ const ScanQrPage = () => {
   const [isCamEnable, setIsCamEnable] = useState(true)
 
   const onScanSuccess = useCallback((decodedText: string) => {
-    console.log(decodedText, "decodedText")
     // Use React Router navigation instead of window.location.href
     try {
       // Extract the restaurant URL from the decoded text

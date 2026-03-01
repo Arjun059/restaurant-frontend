@@ -25,7 +25,6 @@ const RestaurantPage = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleSubmit = (data: any) => {
-    console.log("Restaurant form submitted:", data);
     fetcher('/admin/dashboard/restaurant/update', {method: "PUT", body: JSON.stringify(data)})
       .then(
         () => {

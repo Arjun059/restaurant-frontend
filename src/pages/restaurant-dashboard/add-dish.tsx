@@ -42,14 +42,11 @@ export default function AddDish() {
       })
     },
     onSuccess: (data) => {
-      console.log(data, 'response data')
       toast.success('Dish added successfully')
       queryClient.invalidateQueries({queryKey: ["dishes"]})
       form.reset();
     },
     onError: (err: any) => {
-      console.log(err, 'this is error add dish')
-
       toast.error('Error occur on dish add')
     },
   })

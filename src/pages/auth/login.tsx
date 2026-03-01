@@ -18,7 +18,6 @@ export default function LoginPage() {
       })
     },
     onSuccess: (data) => {
-      console.log(data, "hit on success login")
       toast.success('Login successful', {
         description: "You are now logged in to your account",
       })
@@ -50,7 +49,6 @@ export default function LoginPage() {
 
   // 2. Define a submit handler.
   function onSubmit(values: any) {
-    // console.log(values)
     mutation.mutate(values)
   }
 

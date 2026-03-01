@@ -50,7 +50,6 @@ export default function OwnerInfoForm({onSubmit: onSubmitProp, initData, onBack,
 
   // 2. Define a submit handler.
   function onSubmit(values: any) {
-    console.log(values)
     onSubmitProp(values)
   }
 

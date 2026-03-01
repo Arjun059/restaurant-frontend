@@ -19,11 +19,9 @@ export default function LoginPage() {
       })
     },
     onSuccess: (data) => {
-      console.log(data, "hit on success login")
       toast.success('Login successful', {
         description: "You are now logged in to your account",
       })
-      console.log(data, "hit on success login")
 
       const {token, user} = data
       const {restaurant, ...userData} = user
@@ -32,7 +30,6 @@ export default function LoginPage() {
       setAuthValue({token, user: userData, restaurant})
     },
     onError: (error) => {
-      console.log(error, "hit on error login")
       toast.error('Invalid credentials', {
         duration: 3000,
         description: "Please try again with different email and password",
@@ -49,7 +46,6 @@ export default function LoginPage() {
 
   // 2. Define a submit handler.
   function onSubmit(values: LoginFormSchema) {
-    // console.log(values)
     mutation.mutate(values)
   }
 
